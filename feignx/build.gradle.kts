@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.lyflexi"
-version = "2.0.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("193")
-//        支持更高版本的IDEA.
+//        支持更高版本的IDEA. 版本不设限
         untilBuild.set("")
     }
 

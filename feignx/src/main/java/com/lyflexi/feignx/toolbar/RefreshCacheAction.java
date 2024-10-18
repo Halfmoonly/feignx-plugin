@@ -1,4 +1,4 @@
-package com.lyflexi.feignx.action;
+package com.lyflexi.feignx.toolbar;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
