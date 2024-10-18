@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 // http://localhost:9000/consumer/feign/order/get/1
 @FeignClient(value = "cloud-feign-server", contextId = "order", configuration = OrderConfiguration.class)
-public interface OrderClient {
+public interface Order2Client {
 
     @GetMapping(value = "/prefix/order/get/{id}")
     Order getOrderById(@PathVariable("id") Long id);

@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Description:
+ * @Description: 取消projectControllerCacheMap缓存
  * @Author: lyflexi
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:52
@@ -27,7 +27,7 @@ public class MyCacheManager {
     private static Map<String, List<Pair<String, ControllerInfo>>> projectCacheMap = new HashMap<>();
 
     // 缓存controller接口数据,主键是方法的完全限定名（fully qualified name）,值为接口路径
-    private static Map<String, Map<String, String>> projectControllerCacheMap = new HashMap<>();
+//    private static Map<String, Map<String, String>> projectControllerCacheMap = new HashMap<>();
 
     // 缓存Feign接口数据使用
     private static Map<String, List<Pair<String, ControllerInfo>>> projectFeignCacheMap = new HashMap<>();
@@ -35,7 +35,7 @@ public class MyCacheManager {
     public static void clear() {
         projectCacheMap = null;
         projectFeignCacheMap = null;
-        projectControllerCacheMap = null;
+//        projectControllerCacheMap = null;
     }
 
     public static List<Pair<String, ControllerInfo>> getCacheData(Project project) {
@@ -48,6 +48,7 @@ public class MyCacheManager {
         projectCacheMap.put(projectId, controllerCacheData);
     }
 
+
     public static List<Pair<String, ControllerInfo>> getFeignCacheData(Project project) {
         String projectId = project.getBasePath(); // 以项目路径作为唯一标识符
         return projectFeignCacheMap.get(projectId);
@@ -58,21 +59,41 @@ public class MyCacheManager {
         projectFeignCacheMap.put(projectId, feignCacheData);
     }
 
+    //    public static String getControllerPath(PsiMethod controllerMethod) {
+//        String basePath = controllerMethod.getProject().getBasePath();
+//        if (projectControllerCacheMap.get(basePath) == null) {
+//            if(projectCacheMap.get(basePath) == null){
+//                JavaSourceFileUtil.scanControllerPaths(controllerMethod.getProject());
+//            }
+//            Map<String, String> collect = projectCacheMap.get(basePath).stream()
+//                    .map(Pair::getRight)
+//                    .collect(Collectors.toMap(controllerInfo -> getKey(controllerInfo.getMethod()),
+//                            ControllerInfo::getPath,
+//                            (a1, a2) -> a1)
+//                    );
+//            projectControllerCacheMap.put(basePath, collect);
+//        }
+//        return projectControllerCacheMap.get(basePath).get(getKey(controllerMethod));
+//
+//    }
+
+    /**
+     *
+     * @param controllerMethod
+     * @return
+     */
     public static String getControllerPath(PsiMethod controllerMethod) {
         String basePath = controllerMethod.getProject().getBasePath();
-        if (projectControllerCacheMap.get(basePath) == null) {
-            if(projectCacheMap.get(basePath) == null){
-                JavaSourceFileUtil.scanControllerPaths(controllerMethod.getProject());
-            }
-            Map<String, String> collect = projectCacheMap.get(basePath).stream()
-                    .map(Pair::getRight)
-                    .collect(Collectors.toMap(controllerInfo -> getKey(controllerInfo.getMethod()),
-                            ControllerInfo::getPath,
-                            (a1, a2) -> a1)
-                    );
-            projectControllerCacheMap.put(basePath, collect);
+        if (projectCacheMap.get(basePath) == null) {
+            JavaSourceFileUtil.scanControllerPaths(controllerMethod.getProject());
         }
-        return projectControllerCacheMap.get(basePath).get(getKey(controllerMethod));
+        Map<String, String> collect = projectCacheMap.get(basePath).stream()
+                .map(Pair::getRight)
+                .collect(Collectors.toMap(controllerInfo -> getKey(controllerInfo.getMethod()),
+                        ControllerInfo::getPath,
+                        (a1, a2) -> a1)
+                );
+        return collect.get(getKey(controllerMethod));
 
     }
 
