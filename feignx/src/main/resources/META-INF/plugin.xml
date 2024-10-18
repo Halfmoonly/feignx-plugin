@@ -16,17 +16,14 @@
   <description><![CDATA[
 <b>FeignX is inspired by IDEA's star plugin MybatisX. You can flexibly jump back and forth between FeignClient and remote service ApiController through method-level navigation buttons. </b>
 <br>
-
 eg. feignClient -> ApiController
 <div align="left">
   <img src="https://github.com/user-attachments/assets/439a5792-7ea3-42a5-8b5b-af82642a28c6">
 </div>
-
 eg. ApiController -> feignClient
 <div align="left">
   <img src="https://github.com/user-attachments/assets/603f4c23-1a5a-4cfc-b2bc-6c7f03ce4436">
 </div>
-
 So, install the FeignX plugin as soon as possible!.
 ]]>
   </description>
@@ -42,30 +39,30 @@ So, install the FeignX plugin as soon as possible!.
                                     implementationClass="com.lyflexi.feignx.provider.Feign2ControllerLineMarkerProvider"/>
     <codeInsight.lineMarkerProvider language="JAVA"
                                     implementationClass="com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider"/>
-    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"
-                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>
+<!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
+<!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
   </extensions>
-  <actions>
-    <group id="FeignX" text="FeignX" description="FeignX" popup="true">
-      <add-to-group group-id="ToolsMenu" anchor="first"/>
-      <action class="com.lyflexi.feignx.toolbar.ScanControllerAction"
-              text="showAll"
-              description="扫描项目接口"
-      >
-      </action>
-      <action class="com.lyflexi.feignx.toolbar.SearchControllerAction"
-              text="search"
-              description="检索项目接口"
-      >
-        <keyboard-shortcut first-keystroke="control shift J"  keymap="$default"/>
-      </action>
-      <action class="com.lyflexi.feignx.toolbar.RefreshCacheAction"
-              text="refresh"
-              description="刷新插件缓存"
-      >
-      </action>
-    </group>
-  </actions>
+<!--  <actions>-->
+<!--    <group id="FeignX" text="FeignX" description="FeignX" popup="true">-->
+<!--      <add-to-group group-id="ToolsMenu" anchor="first"/>-->
+<!--      <action class="com.lyflexi.feignx.toolbar.ScanControllerAction"-->
+<!--              text="showAll"-->
+<!--              description="扫描项目接口"-->
+<!--      >-->
+<!--      </action>-->
+<!--      <action class="com.lyflexi.feignx.toolbar.SearchControllerAction"-->
+<!--              text="search"-->
+<!--              description="检索项目接口"-->
+<!--      >-->
+<!--        <keyboard-shortcut first-keystroke="control shift J"  keymap="$default"/>-->
+<!--      </action>-->
+<!--      <action class="com.lyflexi.feignx.toolbar.RefreshCacheAction"-->
+<!--              text="refresh"-->
+<!--              description="刷新插件缓存"-->
+<!--      >-->
+<!--      </action>-->
+<!--    </group>-->
+<!--  </actions>-->
 
   <!-- 添加 Lombok 依赖项 -->
   <!--    <depends>org.projectlombok</depends>-->
