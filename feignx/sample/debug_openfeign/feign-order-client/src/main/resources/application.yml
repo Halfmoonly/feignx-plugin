@@ -1,0 +1,10 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: feign-order-client
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.18.100:8848 #配置Nacos地址

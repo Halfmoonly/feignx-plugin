@@ -1,4 +1,3 @@
-
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.5.2"
@@ -40,6 +39,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("193")
+//        支持更高版本的IDEA.
         untilBuild.set("")
     }
 

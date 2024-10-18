@@ -1,0 +1,10 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: cloud-feign-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.18.100:8848 #配置Nacos地址

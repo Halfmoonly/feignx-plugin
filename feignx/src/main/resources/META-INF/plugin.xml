@@ -14,9 +14,23 @@
        Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
   <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-  ]]></description>
+<b>FeignX is inspired by IDEA's star plugin MybatisX. You can flexibly jump back and forth between FeignClient and remote service ApiController through method-level navigation buttons. </b>
+<br>
+
+eg. feignClient -> ApiController
+<div align="left">
+  <img src="https://github.com/user-attachments/assets/439a5792-7ea3-42a5-8b5b-af82642a28c6">
+</div>
+
+eg. ApiController -> feignClient
+<div align="left">
+  <img src="https://github.com/user-attachments/assets/603f4c23-1a5a-4cfc-b2bc-6c7f03ce4436">
+</div>
+
+So, install the FeignX plugin as soon as possible!.
+
+]]>
+  </description>
 
   <!-- Product and plugin compatibility requirements.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
