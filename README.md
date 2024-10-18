@@ -6,7 +6,7 @@
 已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX
 
 ![plugin-market.png](feignx/pics/plugin-market.png)
-
+ 
 FeignX is inspired by IDEA's star plugin MybatisX. 
 
 You can flexibly jump back and forth between FeignClient and remote service ApiController through method-level navigation buttons.
