@@ -9,6 +9,9 @@
  
 FeignX is inspired by IDEA's star plugin MybatisX. 
 
+The FeignX plugin monitors all FeignClient and ApiController in the project based on real-time scanning mechanism, and provides method-level navigation jump capability. 
+
+In short, You can flexibly jump back and forth between FeignClient and remote service ApiController through method-level navigation buttons.
 You can flexibly jump back and forth between FeignClient and remote service ApiController through method-level navigation buttons.
 
 eg. feignClient -> ApiController
