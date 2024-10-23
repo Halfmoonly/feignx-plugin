@@ -11,7 +11,7 @@ import javax.swing.*;
  * @Date: 2024/10/18 14:56
  */
 public interface MyIcons {
-    Icon STATEMENT_LINE_FEIGN_ICON = IconLoader.getIcon("/images/feign_method", MyIcons.class);
-    Icon STATEMENT_LINE_CONTROLLER_ICON = IconLoader.getIcon("/images/controller_method", MyIcons.class);
+    Icon STATEMENT_LINE_FEIGN_ICON = IconLoader.getIcon("/META-INF/pluginIcon", MyIcons.class);
+    Icon STATEMENT_LINE_CONTROLLER_ICON = IconLoader.getIcon("/META-INF/pluginIcon", MyIcons.class);
 }
 
