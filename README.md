@@ -6,6 +6,11 @@
 已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装
 
 ---
+<div align="center">
+  <img src="./feignx/pics/ReadmeMarketplace.png">
+  <p>Marketplace</p>
+</div>
+
 
 FeignX is inspired by IDEA's star plugin MybatisX. 
 
