@@ -30,3 +30,5 @@ eg. ApiController -> feignClient
 
 So, install the FeignX plugin as soon as possible!.</b>
 
+觉得好用，点个star⭐
+
