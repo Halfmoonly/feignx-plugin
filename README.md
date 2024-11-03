@@ -28,7 +28,56 @@ eg. ApiController -> feignClient
   <img src="./feignx/pics/c2f.png">
 </div>
 
-So, install the FeignX plugin as soon as possible!.</b>
 
 觉得好用，点个star⭐
 
+### Feignx:v1.0.0
+FeignClient-ApiController Mutually Navigation
+
+### Feignx:v2.1.0
+Adapted To Latest IDEA
+
+### Feignx:v3.0.0
+
+[fix]🐞 Major version fix , fix the bug that cannot dynamically detect new interfaces due to cache
+
+### Feignx:v3.1.0
+Design a unique logo
+
+### Feignx:v4.0.0
+adapted properties/yml/yaml of 1.server.servlet.context-path and 2.spring.mvc.servlet.path
+![DispatcherServlet.png](feignx/pics/DispatcherServlet.png)
+
+在 Spring Boot 出现之前，Dispatcher Servlet 是在 web.xml 文件中声明的，如下图
+```xml
+<web-app>
+   <servlet>
+         <servlet-name>example</servlet-name> 
+        <servlet class> 
+             org.springframework.web.servlet.DispatcherServlet 
+        </servlet-class> 
+        <load-on-startup>1</load -on-startup> 
+    </servlet>
+   <servlet-mapping>
+        <servlet-name>test</servlet-name> 
+        <url-pattern>*.test</url-pattern> 
+   </servlet-mapping>
+ </web-app>
+```
+
+这个DispatcherServlet是实际的Servlet，它继承自基类HttpServlet。
+
+在 Spring Boot 出现之后，spring-boot-starter-web starter 自动装配机制将DispatcherServlet默认配置为 URL 模式“/”。
+
+但是，如果需要，我们可以使用自定义 URL 模式。application.properties文件中如下
+```properties
+server.servlet.context-path=/hello
+spring.mvc.servlet.path=/world
+```
+
+通过上面的配置，DispatcherServlet被配置为处理 URL 模式/world，并且springboot根上下文路径将是/hello。因此，DispatcherServlet监听http://ip/port/hello/world
+
+yml/yaml配置同上。
+
+--- 
+So, install the Latest FeignX plugin as soon as possible!.
