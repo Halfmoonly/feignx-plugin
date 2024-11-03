@@ -77,7 +77,16 @@ server.servlet.context-path=/hello
 spring.mvc.servlet.path=/world
 ```
 
-通过上面的配置，DispatcherServlet被配置为处理 URL 模式/world，并且springboot根上下文路径将是/hello。因此，DispatcherServlet监听http://ip/port/hello/world
+通过上面的配置，DispatcherServlet被配置为处理 URL 模式/world，并且springboot根上下文路径将是/hello。因此，DispatcherServlet监听http://ip/port/hello/world，，as prefix path by @FeignClient，the sample is below
+```java
+@FeignClient(path = "/hello/world",value = "cloud-feign-server", contextId = "user", configuration = UserConfiguration.class)
+public interface UserClient {
+
+    @GetMapping(value = "/user/get/{id}")
+    User getUserById(@PathVariable("id") Long id);
+}
+```
+
 
 yml/yaml配置同上。
 
