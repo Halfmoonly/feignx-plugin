@@ -34,6 +34,8 @@ eg. ApiController -> feignClient
 ### Feignx:v1.0.0
 FeignClient-ApiController Mutually Navigation
 
+ApiController-FeignClient Mutually Navigation
+
 ### Feignx:v2.1.0
 Adapted To Latest IDEA
 
