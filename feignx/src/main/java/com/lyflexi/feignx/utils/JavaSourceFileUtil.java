@@ -9,6 +9,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.lyflexi.feignx.cache.MyCacheManager;
 import com.lyflexi.feignx.enums.SpringRequestMethodAnnotation;
 import com.lyflexi.feignx.model.ControllerInfo;
+import com.lyflexi.feignx.properties.ConfigReader;
+import com.lyflexi.feignx.properties.ServerParser;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,6 +36,9 @@ import static com.lyflexi.feignx.enums.SpringRequestMethodAnnotation.REQUEST_MAP
 public class JavaSourceFileUtil {
 
     private static List<ControllerInfo> controllerInfos = new ArrayList<ControllerInfo>();
+    
+    private static final String SPRINGBOOT_SERVER_PATH= "server.servlet.context-path";
+    private static final String SPRINGMVC_PATH= "spring.mvc.servlet.path";
 
     private JavaSourceFileUtil(){};
 
@@ -100,11 +105,15 @@ public class JavaSourceFileUtil {
         for (PsiClass psiClass : javaFiles) {
             // 判断类是否带有@Controller或@RestController注解
             if (isControllerClass(psiClass)) {
-                String parentPath = extractControllerPath(psiClass);
+                StringBuilder parentPath = new StringBuilder();
+                String serverPath = extractSpringProperties(psiClass,project,SPRINGBOOT_SERVER_PATH);
+                String mvcPath = extractSpringProperties(psiClass,project,SPRINGMVC_PATH);
+                String controllerPath = extractControllerPath(psiClass);
+                parentPath.append(serverPath).append(mvcPath).append(controllerPath);
                 // 解析类中的方法，提取接口路径和Swagger注解信息
                 PsiMethod[] methods = psiClass.getMethods();
                 for (PsiMethod method : methods) {
-                    ControllerInfo controllerInfo = extractControllerInfo(parentPath, method);
+                    ControllerInfo controllerInfo = extractControllerInfo(parentPath.toString(), method);
                     if (controllerInfo != null) {
                         // 设置方法信息
                         controllerInfo.setMethod(method);
@@ -121,6 +130,55 @@ public class JavaSourceFileUtil {
         MyCacheManager.setCacheData(project, cachedControllerInfos);
         return controllerInfos;
     }
+    /**
+     * resolve：
+     * eg.server.servlet.context-path=/hello 
+     * eg .spring.mvc.servlet.path=/world
+     * @param psiClass
+     * @param project
+     * @param configKey
+     * @return 
+     */
+
+    public static String extractSpringProperties(PsiClass psiClass, Project project, String configKey) {
+        Optional<PsiDirectory> serviceModuleDirectory = ServerParser.getServiceModuleResourcesDirectory(psiClass, project);
+        String propertyPath = null;
+
+        if (serviceModuleDirectory.isPresent()) {
+            // 读取 properties 文件
+            Properties properties = ConfigReader.readProperties(serviceModuleDirectory.get());
+            if (properties != null && properties.containsKey(configKey)) {
+                propertyPath = properties.getProperty(configKey);
+            }
+
+            // 如果在 properties 文件中未找到，继续在 yml 或 yaml 文件中查找
+            if (propertyPath == null) {
+                Map<String, Object> yml = ConfigReader.readYmlOrYaml(serviceModuleDirectory.get());
+                if (yml != null) {
+                    propertyPath = extractValueFromYml(yml, configKey);
+                }
+            }
+        }
+
+        return propertyPath==null?"":propertyPath;
+    }
+
+    // 从 YAML Map 中提取目标值，支持嵌套键
+    private static String extractValueFromYml(Map<String, Object> yml, String configKey) {
+        String[] keys = configKey.split("\\.");
+        Object value = yml;
+
+        for (String key : keys) {
+            if (value instanceof Map) {
+                value = ((Map<?, ?>) value).get(key);
+            } else {
+                return null;
+            }
+        }
+
+        return value != null ? value.toString() : null;
+    }
+
 
     public static List<PsiClass> getAllClasses(PsiPackage rootPackage, GlobalSearchScope searchScope) {
         List<PsiClass> javaFiles = new ArrayList<>();
