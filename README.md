@@ -92,3 +92,6 @@ yml/yaml配置同上。
 
 --- 
 So, install the Latest FeignX plugin as soon as possible!.
+
+兄弟们，➕star⭐! ➕star⭐!
+
