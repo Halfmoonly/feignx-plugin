@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./feignx/pics/ReadmeTitle.svg" height="64">
+  <img src="./feignx/src/main/resources/META-INF/pluginIcon.svg" height="64">
   <h2>FeignX</h2>
 </div>
 

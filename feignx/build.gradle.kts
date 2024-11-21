@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.lyflexi"
-version = "4.0.0"
+version = "4.0.1"
 
 repositories {
     mavenCentral()
@@ -56,4 +56,8 @@ tasks {
     runIde {
         jvmArgs("-Xmx4096m","-XX:ReservedCodeCacheSize=512m","-Xms128m")
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }
