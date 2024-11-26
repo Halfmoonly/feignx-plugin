@@ -90,6 +90,23 @@ public interface UserClient {
 
 yml/yaml配置同上。
 
+### Feignx:v4.0.1
+更换了icon和logo
+
+![feignxAction.png](feignx/src/main/resources/icons/feignxAction.png)
+### Feignx:v4.1.1
+
+feignx适配了最新版IDEA的Light主题，欢迎在IDEA内在线更新至4.1.1版本（三天后上线），或者提前安装离线版体验！
+https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
+
+![img_1.png](img_1.png)
+
+感谢官方工作人员的指引：Natalia Melnikova (JetBrains Marketplace) marketplace@jetbrains.com
+
+感谢社区的帮助与提示：https://intellij-support.jetbrains.com/hc/en-us/community/posts/22814305825042-Why-don-t-pluginIcon-svg-appear-in-Light-theme?page=1#community_comment_22848980293394
+
+感谢@yann Cebron：https://intellij-support.jetbrains.com/hc/en-us/profiles/1283051161-Yann-Cebron
+
 --- 
 So, install the Latest FeignX plugin as soon as possible!.
 
