@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.lyflexi"
-version = "4.0.1"
+version = "4.1.1"
 
 repositories {
     mavenCentral()
