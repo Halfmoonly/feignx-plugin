@@ -32,9 +32,9 @@ eg. ApiController -> feignClient
 觉得好用，点个star⭐
 
 ### Feignx:v1.0.0
-FeignClient-ApiController Mutually Navigation
+cross-module：FeignClient-ApiController Mutually Navigation
 
-ApiController-FeignClient Mutually Navigation
+cross-module：ApiController-FeignClient Mutually Navigation
 
 ### Feignx:v2.1.0
 Adapted To Latest IDEA
