@@ -107,6 +107,8 @@ https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 
 感谢@yann Cebron：https://intellij-support.jetbrains.com/hc/en-us/profiles/1283051161-Yann-Cebron
 
+开发社区：https://intellij-support.jetbrains.com/hc/en-us/community/topics/200366979-IntelliJ-IDEA-Open-API-and-Plugin-Development
+
 --- 
 So, install the Latest FeignX plugin as soon as possible!.
 
