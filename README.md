@@ -108,6 +108,8 @@ https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 感谢@yann Cebron：https://intellij-support.jetbrains.com/hc/en-us/profiles/1283051161-Yann-Cebron
 
 --- 
+
+https://star-history.com/#Halfmoonly/feignx-plugin&Date
 So, install the Latest FeignX plugin as soon as possible!.
 
 兄弟们，➕star⭐! ➕star⭐!
