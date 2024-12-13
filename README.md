@@ -111,7 +111,3 @@ https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 So, install the Latest FeignX plugin as soon as possible!.
 
 兄弟们，➕star⭐! ➕star⭐!
-
-<div>
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=Z2hwXzdmWFlMNFNieWVoWnpPNVlIa3lyWkJNN1M1Z2VuZzFWR1hRQg==#Halfmoonly/feignx-plugin&Date" frameBorder="0"></iframe>
-</div>
