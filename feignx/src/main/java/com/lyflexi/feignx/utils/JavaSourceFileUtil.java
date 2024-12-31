@@ -471,7 +471,8 @@ public class JavaSourceFileUtil {
             if ("path".equals(attribute.getName())) {
                 PsiAnnotationMemberValue value = attribute.getValue();
                 if (value instanceof PsiLiteralExpression) {
-                    return ((PsiLiteralExpression) value).getValue().toString();
+                    String path = ((PsiLiteralExpression) value).getValue().toString();
+                    return StringUtils.isNotBlank(path) && !path.startsWith("/") ? "/" + path : path;
                 }
             }
         }
