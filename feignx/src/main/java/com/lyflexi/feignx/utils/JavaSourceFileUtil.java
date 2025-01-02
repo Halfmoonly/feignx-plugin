@@ -472,12 +472,24 @@ public class JavaSourceFileUtil {
                 PsiAnnotationMemberValue value = attribute.getValue();
                 if (value instanceof PsiLiteralExpression) {
                     String path = ((PsiLiteralExpression) value).getValue().toString();
-                    return StringUtils.isNotBlank(path) && !path.startsWith("/") ? "/" + path : path;
+                    if(StringUtils.isBlank(path)){
+                        return "";
+                    }
+                    // 如果path不以/开头，添加/
+                    if (!path.startsWith("/")) {
+                        path = "/" + path;
+                    }
+                    // 如果path以/结尾，去除/
+                    if (path.endsWith("/")) {
+                        path = path.substring(0, path.length() - 1);
+                    }
+                    return path;
                 }
             }
         }
         return "";
     }
+
     // 判断类是否带有@FeignClient注解
     private static boolean isFeignInterface(PsiClass psiClass) {
         PsiAnnotation annotation = psiClass.getAnnotation("org.springframework.cloud.openfeign.FeignClient");
