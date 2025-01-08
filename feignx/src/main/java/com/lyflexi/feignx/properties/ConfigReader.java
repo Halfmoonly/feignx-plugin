@@ -24,6 +24,8 @@ public class ConfigReader {
     private static final String PROPERTIES_FILE_NAME = "application.properties";
     private static final String YML_FILE_NAME = "application.yml";
     private static final String YAML_FILE_NAME = "application.yaml";
+    private static final String YML2_FILE_NAME = "bootstrap.yml";
+    private static final String YAML2_FILE_NAME = "bootstrap.yaml";
 
     public static Properties readProperties(PsiDirectory moduleDirectory) {
         return readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME);
@@ -33,6 +35,12 @@ public class ConfigReader {
         Map<String, Object> yamlData = readYmlFromFile(moduleDirectory, YML_FILE_NAME);
         if (yamlData == null) {
             yamlData = readYmlFromFile(moduleDirectory, YAML_FILE_NAME);
+        }
+        if (yamlData == null) {
+            yamlData = readYmlFromFile(moduleDirectory, YML2_FILE_NAME);
+        }
+        if (yamlData == null) {
+            yamlData = readYmlFromFile(moduleDirectory, YAML2_FILE_NAME);
         }
         return yamlData;
     }
