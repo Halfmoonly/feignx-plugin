@@ -127,6 +127,14 @@ thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
 1. Adapted bootstrap.properties/bootstrap.yml/bootstrap.yaml
 2. Adapted many writtings of path，as @FeignClient(path = "/sys") and @FeignClient(path = "sys") and @FeignClient(path = "sys/")
 
+
+### Feignx:v4.1.5
+极少数分布式场景下的nacos需要以下配置，往往会配置在本地的bootstrap.yml/yaml中，而非application.yml/yaml中
+
+1. server.servlet.context-path = /hello
+2. spring.mvc.servlet.path = /world
+
+此版本修复了FeignX读取本地bootstrap.yml/yaml中上述配置失效的问题
    
 --- 
 
