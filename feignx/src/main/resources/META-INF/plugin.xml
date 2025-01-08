@@ -38,10 +38,12 @@ So, install the FeignX plugin as soon as possible!.
     <change-notes>
         <![CDATA[
         ### 更新内容
-        - 1. Adapted bootstrap.properties/bootstrap.yml/bootstrap.yaml
-        - 2. Adapted many writtings of path，as @FeignClient(path = "/sys") and @FeignClient(path = "sys") and @FeignClient(path = "sys/")
         <br>
-        thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
+        修复了读取bootstrap.yml/yaml中如下配置失效的问题
+        <br>
+        1. server.servlet.context-path = /hello
+        <br>
+        2. spring.mvc.servlet.path = /world
         ]]>
     </change-notes>
 

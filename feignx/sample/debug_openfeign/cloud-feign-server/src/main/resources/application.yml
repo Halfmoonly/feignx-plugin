@@ -1,11 +1,11 @@
-server:
-  port: 9001
-  servlet:
-    context-path: /hello
-spring:
-  mvc:
-    servlet:
-      path: /world
+#server:
+#  port: 9001
+#  servlet:
+#    context-path: /hello
+#spring:
+#  mvc:
+#    servlet:
+#      path: /world
 
   application:
     name: cloud-feign-server

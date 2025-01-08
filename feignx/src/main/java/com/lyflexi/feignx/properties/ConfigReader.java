@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.InputStream;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -22,16 +23,17 @@ import java.util.Properties;
 public class ConfigReader {
     //支持配置文件解析1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
     private static final String PROPERTIES_FILE_NAME = "application.properties";
+    private static final String PROPERTIES_BOOTSTRAP_FILE_NAME = "bootstrap.properties";
     private static final String YML_FILE_NAME = "application.yml";
     private static final String YAML_FILE_NAME = "application.yaml";
 
     //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
     // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-    private static final String YML2_FILE_NAME = "bootstrap.yml";
+    private static final String YML_BOOTSTRAP_FILE_NAME = "bootstrap.yml";
     //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
     // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-    private static final String YAML2_FILE_NAME = "bootstrap.yaml";
-    private static final String PROPERTIES_FILE_NAME2 = "bootstrap.properties";
+    private static final String YAML_BOOTSTRAP_FILE_NAME = "bootstrap.yaml";
+
 
     /**
      * 读取properties
@@ -39,12 +41,24 @@ public class ConfigReader {
      * @return
      */
     public static Properties readProperties(PsiDirectory moduleDirectory) {
-        Properties properties = readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME);
-        if (properties == null || properties.isEmpty()) {
-            properties = readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME2);
+        Properties properties1 = readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME);
+        Properties properties2 = readPropertiesFromFile(moduleDirectory, PROPERTIES_BOOTSTRAP_FILE_NAME);
+
+        // 创建一个新的 Properties 对象用于存储整合后的结果
+        Properties mergedProperties = new Properties();
+
+        // 将 properties1 和 properties2 合并到 mergedProperties
+        // 合并数据，后面的覆盖前面的
+        if (properties1 != null&&!properties1.isEmpty()) {
+            mergedProperties.putAll(properties1);
         }
-        return properties;
+        if (properties2 != null&&!properties1.isEmpty()) {
+            mergedProperties.putAll(properties2);
+        }
+
+        return mergedProperties;
     }
+
 
     /**
      * 读取yml
@@ -52,21 +66,31 @@ public class ConfigReader {
      * @return
      */
     public static Map<String, Object> readYmlOrYaml(PsiDirectory moduleDirectory) {
-        Map<String, Object> yamlData = readYmlFromFile(moduleDirectory, YML_FILE_NAME);
-        if (yamlData == null) {
-            yamlData = readYmlFromFile(moduleDirectory, YAML_FILE_NAME);
+        // 读取每个 YAML 文件的内容到对应的 Map 中
+
+        Map<String, Object> yamlData1 = readYmlFromFile(moduleDirectory, YAML_FILE_NAME);
+        Map<String, Object> yamlData2 = readYmlFromFile(moduleDirectory, YML_FILE_NAME);
+        Map<String, Object> yamlData3 = readYmlFromFile(moduleDirectory, YAML_BOOTSTRAP_FILE_NAME);
+        Map<String, Object> yamlData4 = readYmlFromFile(moduleDirectory, YML_BOOTSTRAP_FILE_NAME); // 注意最后文件变量是否正确
+
+        // 创建一个新的 Map 用于存储合并后的结果
+        Map<String, Object> mergedYamlData = new HashMap<>();
+
+        // 合并数据，后面的覆盖前面的
+        if (yamlData1 != null) {
+            mergedYamlData.putAll(yamlData1);
         }
-        //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
-        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-        if (yamlData == null) {
-            yamlData = readYmlFromFile(moduleDirectory, YML2_FILE_NAME);
+        if (yamlData2 != null) {
+            mergedYamlData.putAll(yamlData2);
         }
-        //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
-        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-        if (yamlData == null) {
-            yamlData = readYmlFromFile(moduleDirectory, YAML2_FILE_NAME);
+        if (yamlData3 != null) {
+            mergedYamlData.putAll(yamlData3);
         }
-        return yamlData;
+        if (yamlData4 != null) {
+            mergedYamlData.putAll(yamlData4);
+        }
+
+        return mergedYamlData;
     }
 
     /**
