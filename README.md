@@ -3,6 +3,10 @@
   <h2>FeignX</h2>
 </div>
 
+<a href="https://github.com/eryajf/learn-github/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=eryajf/learn-github" />
+</a>
+
 已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装，觉得好用，点个star⭐
 
 ---
