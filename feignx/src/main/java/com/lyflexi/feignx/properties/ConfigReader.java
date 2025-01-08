@@ -20,15 +20,25 @@ import java.util.Properties;
  */
 
 public class ConfigReader {
-
+    //支持配置文件解析1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
     private static final String PROPERTIES_FILE_NAME = "application.properties";
     private static final String YML_FILE_NAME = "application.yml";
     private static final String YAML_FILE_NAME = "application.yaml";
+
+    //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
+    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
     private static final String YML2_FILE_NAME = "bootstrap.yml";
+    //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
+    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
     private static final String YAML2_FILE_NAME = "bootstrap.yaml";
+    private static final String PROPERTIES_FILE_NAME2 = "bootstrap.properties";
 
     public static Properties readProperties(PsiDirectory moduleDirectory) {
-        return readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME);
+        Properties properties = readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME);
+        if (properties == null || properties.isEmpty()) {
+            properties = readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME2);
+        }
+        return properties;
     }
 
     public static Map<String, Object> readYmlOrYaml(PsiDirectory moduleDirectory) {
@@ -36,9 +46,13 @@ public class ConfigReader {
         if (yamlData == null) {
             yamlData = readYmlFromFile(moduleDirectory, YAML_FILE_NAME);
         }
+        //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
+        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
         if (yamlData == null) {
             yamlData = readYmlFromFile(moduleDirectory, YML2_FILE_NAME);
         }
+        //支持nacos场景，1.server.servlet.context-path and 2.spring.mvc.servlet.path仅存在于bootstrap.yml
+        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
         if (yamlData == null) {
             yamlData = readYmlFromFile(moduleDirectory, YAML2_FILE_NAME);
         }
