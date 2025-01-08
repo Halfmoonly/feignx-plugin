@@ -3,7 +3,7 @@
   <h2>FeignX</h2>
 </div>
 
-已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装
+已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装，觉得好用，点个star⭐
 
 ---
 <div align="center">
@@ -28,8 +28,6 @@ eg. ApiController -> feignClient
   <img src="./feignx/pics/c2f.png">
 </div>
 
-
-觉得好用，点个star⭐
 
 ### Feignx:v1.0.0
 cross-module：FeignClient-ApiController Mutually Navigation
@@ -109,7 +107,13 @@ https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 
 开发社区：https://intellij-support.jetbrains.com/hc/en-us/community/topics/200366979-IntelliJ-IDEA-Open-API-and-Plugin-Development
 
---- 
-So, install the Latest FeignX plugin as soon as possible!.
+### Feignx:v4.1.3
+thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
+1. Adapted bootstrap.properties/bootstrap.yml/bootstrap.yaml
+2. Adapted many writtings of path，as @FeignClient(path = "/sys") and @FeignClient(path = "sys") and @FeignClient(path = "sys/")
 
-兄弟们，➕star⭐! ➕star⭐!
+   
+--- 
+
+
+觉得好用，点个star⭐
