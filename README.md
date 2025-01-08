@@ -3,7 +3,15 @@
   <h2>FeignX</h2>
 </div>
 
-已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装
+## 贡献者
+
+<a href="https://github.com/Halfmoonly/feignx-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Halfmoonly/feignx-plugin" />
+</a>
+
+
+## 使用教程
+已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装，觉得好用，点个star⭐
 
 ---
 <div align="center">
@@ -12,11 +20,11 @@
 </div>
 
 
-FeignX is inspired by IDEA's star plugin MybatisX. 
+FeignX is a SpringCloud OpenFeign Assistant
 
-The FeignX plugin monitors all FeignClient and ApiController in the project based on real-time scanning mechanism, and provides method-level navigation jump capability. 
+FeignX is inspired by IDEA's star plugin MybatisX.
 
-In short, You can flexibly jump back and forth between FeignClient and remote service ApiController through method-level navigation buttons.
+You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation buttons `F`.
 
 eg. feignClient -> ApiController
 <div align="left">
@@ -28,9 +36,14 @@ eg. ApiController -> feignClient
   <img src="./feignx/pics/c2f.png">
 </div>
 
+Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of
 
-觉得好用，点个star⭐
+1.server.servlet.context-path 2.spring.mvc.servlet.path
 
+FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
+
+So, install the FeignX plugin as soon as possible!.
+## 版本迭代
 ### Feignx:v1.0.0
 cross-module：FeignClient-ApiController Mutually Navigation
 
@@ -109,7 +122,13 @@ https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 
 开发社区：https://intellij-support.jetbrains.com/hc/en-us/community/topics/200366979-IntelliJ-IDEA-Open-API-and-Plugin-Development
 
---- 
-So, install the Latest FeignX plugin as soon as possible!.
+### Feignx:v4.1.3
+thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
+1. Adapted bootstrap.properties/bootstrap.yml/bootstrap.yaml
+2. Adapted many writtings of path，as @FeignClient(path = "/sys") and @FeignClient(path = "sys") and @FeignClient(path = "sys/")
 
-兄弟们，➕star⭐! ➕star⭐!
+   
+--- 
+
+
+觉得好用，点个star⭐
