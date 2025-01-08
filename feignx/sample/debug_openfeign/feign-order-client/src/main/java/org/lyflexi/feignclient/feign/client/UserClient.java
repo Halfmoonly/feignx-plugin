@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Date: 2024/7/27 14:13
  */
 // http://localhost:9000/consumer/feign/user/get/1
-@FeignClient(path = "",value = "cloud-feign-server", contextId = "user", configuration = UserConfiguration.class)
+@FeignClient(path = "/hello/world/user",value = "cloud-feign-server", contextId = "user", configuration = UserConfiguration.class)
 public interface UserClient {
 
-    @GetMapping(value = "/user/get/{id}")
+    @GetMapping(value = "/get/{id}")
     User getUserById(@PathVariable("id") Long id);
 }

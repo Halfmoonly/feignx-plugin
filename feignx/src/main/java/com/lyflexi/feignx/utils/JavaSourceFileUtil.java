@@ -472,13 +472,16 @@ public class JavaSourceFileUtil {
                 PsiAnnotationMemberValue value = attribute.getValue();
                 if (value instanceof PsiLiteralExpression) {
                     String path = ((PsiLiteralExpression) value).getValue().toString();
+                    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
                     if(StringUtils.isBlank(path)){
                         return "";
                     }
+                    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
                     // 如果path不以/开头，添加/
                     if (!path.startsWith("/")) {
                         path = "/" + path;
                     }
+                    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
                     // 如果path以/结尾，去除/
                     if (path.endsWith("/")) {
                         path = path.substring(0, path.length() - 1);
