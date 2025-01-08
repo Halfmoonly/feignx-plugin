@@ -13,7 +13,7 @@ import java.util.Properties;
 
 
 /**
- * @Description:
+ * @Description: 项目初始化阶段配置文件读取与解析
  * @Author: lyflexi
  * @project: feignx-plugin
  * @Date: 2024/11/3 15:01 
@@ -33,6 +33,11 @@ public class ConfigReader {
     private static final String YAML2_FILE_NAME = "bootstrap.yaml";
     private static final String PROPERTIES_FILE_NAME2 = "bootstrap.properties";
 
+    /**
+     * 读取properties
+     * @param moduleDirectory
+     * @return
+     */
     public static Properties readProperties(PsiDirectory moduleDirectory) {
         Properties properties = readPropertiesFromFile(moduleDirectory, PROPERTIES_FILE_NAME);
         if (properties == null || properties.isEmpty()) {
@@ -41,6 +46,11 @@ public class ConfigReader {
         return properties;
     }
 
+    /**
+     * 读取yml
+     * @param moduleDirectory
+     * @return
+     */
     public static Map<String, Object> readYmlOrYaml(PsiDirectory moduleDirectory) {
         Map<String, Object> yamlData = readYmlFromFile(moduleDirectory, YML_FILE_NAME);
         if (yamlData == null) {
@@ -59,6 +69,12 @@ public class ConfigReader {
         return yamlData;
     }
 
+    /**
+     * 解析出properties中的属性
+     * @param moduleDirectory
+     * @param fileName
+     * @return
+     */
     private static Properties readPropertiesFromFile(PsiDirectory moduleDirectory, String fileName) {
         Properties properties = new Properties();
         VirtualFile[] files = findFilesByName(moduleDirectory, fileName);
@@ -73,6 +89,12 @@ public class ConfigReader {
         return properties;
     }
 
+    /**
+     * 解析出yml中的属性
+     * @param moduleDirectory
+     * @param fileName
+     * @return
+     */
     private static Map<String, Object> readYmlFromFile(PsiDirectory moduleDirectory, String fileName) {
         Yaml yaml = new Yaml();
         VirtualFile[] files = findFilesByName(moduleDirectory, fileName);

@@ -1,19 +1,19 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-  <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-  <id>com.lyflexi.feignx</id>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.lyflexi.feignx</id>
 
-  <!-- Public plugin name should be written in Title Case.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-  <name>FeignX</name>
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>FeignX</name>
 
-  <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-  <vendor email="liuyanoutsee@outlook.com" url="https://github.com/Halfmoonly">Halfmoonly</vendor>
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="liuyanoutsee@outlook.com" url="https://github.com/Halfmoonly">Halfmoonly</vendor>
 
-  <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-       Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-  <description><![CDATA[
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
 <b>FeignX is a SpringCloud OpenFeign Assistant</b>
 <br>
 FeignX is inspired by IDEA's star plugin MybatisX.
@@ -33,48 +33,71 @@ FeignX is sufficiently accurate than other feign plugins on the market, after ma
 <br>
 So, install the FeignX plugin as soon as possible!.
 ]]>
-  </description>
+    </description>
 
-  <!-- Product and plugin compatibility requirements.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
-  <depends>com.intellij.modules.platform</depends>
-  <depends>com.intellij.modules.java</depends>
-  <!-- Extension points defined by the plugin.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
-  <extensions defaultExtensionNs="com.intellij">
-    <codeInsight.lineMarkerProvider language="JAVA"
-                                    implementationClass="com.lyflexi.feignx.provider.Feign2ControllerLineMarkerProvider"/>
-    <codeInsight.lineMarkerProvider language="JAVA"
-                                    implementationClass="com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider"/>
-<!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
-<!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
-  </extensions>
-<!--  <actions>-->
-<!--    <group id="FeignX" text="FeignX" description="FeignX" popup="true">-->
-<!--      <add-to-group group-id="ToolsMenu" anchor="first"/>-->
-<!--      <action class="com.lyflexi.feignx.toolbar.ScanControllerAction"-->
-<!--              text="showAll"-->
-<!--              description="扫描项目接口"-->
-<!--      >-->
-<!--      </action>-->
-<!--      <action class="com.lyflexi.feignx.toolbar.SearchControllerAction"-->
-<!--              text="search"-->
-<!--              description="检索项目接口"-->
-<!--      >-->
-<!--        <keyboard-shortcut first-keystroke="control shift J"  keymap="$default"/>-->
-<!--      </action>-->
-<!--      <action class="com.lyflexi.feignx.toolbar.RefreshCacheAction"-->
-<!--              text="refresh"-->
-<!--              description="刷新插件缓存"-->
-<!--      >-->
-<!--      </action>-->
-<!--    </group>-->
-<!--  </actions>-->
+    <change-notes>
+        <![CDATA[
+        ### 更新内容
+        - 1. Adapted bootstrap.properties/bootstrap.yml/bootstrap.yaml
+        - 2. Adapted many writtings of path，as @FeignClient(path = "/sys") and @FeignClient(path = "sys") and @FeignClient(path = "sys/")
+        <br>
+        thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
+        ]]>
+    </change-notes>
 
-  <!-- 添加 Lombok 依赖项 -->
-  <!--    <depends>org.projectlombok</depends>-->
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
 
-  <!-- Extension points defined by the plugin.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+
+
+    <extensions defaultExtensionNs="com.intellij">
+
+
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.lyflexi.feignx.provider.Feign2ControllerLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider"/>
+
+        <!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
+        <!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
+
+
+
+    </extensions>
+
+
+
+
+    <!--  <actions>-->
+    <!--    <group id="FeignX" text="FeignX" description="FeignX" popup="true">-->
+    <!--      <add-to-group group-id="ToolsMenu" anchor="first"/>-->
+    <!--      <action class="com.lyflexi.feignx.toolbar.ScanControllerAction"-->
+    <!--              text="showAll"-->
+    <!--              description="扫描项目接口"-->
+    <!--      >-->
+    <!--      </action>-->
+    <!--      <action class="com.lyflexi.feignx.toolbar.SearchControllerAction"-->
+    <!--              text="search"-->
+    <!--              description="检索项目接口"-->
+    <!--      >-->
+    <!--        <keyboard-shortcut first-keystroke="control shift J"  keymap="$default"/>-->
+    <!--      </action>-->
+    <!--      <action class="com.lyflexi.feignx.toolbar.RefreshCacheAction"-->
+    <!--              text="refresh"-->
+    <!--              description="刷新插件缓存"-->
+    <!--      >-->
+    <!--      </action>-->
+    <!--    </group>-->
+    <!--  </actions>-->
+
+    <!-- 添加 Lombok 依赖项 -->
+    <!--    <depends>org.projectlombok</depends>-->
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
 
 </idea-plugin>

@@ -4,16 +4,19 @@ plugins {
 }
 
 group = "com.lyflexi"
-version = "4.1.3"
+version = "4.1.4"
 
 repositories {
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
     mavenCentral()
+    gradlePluginPortal()
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     version.set("2021.2")
     type.set("IU") // Target IDE Platform
+    //gradle的下载idea安装包位置: %USERPROFILE%\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea
     plugins.set(listOf("com.intellij.java"))
 }
 
@@ -33,7 +36,7 @@ tasks {
         targetCompatibility = "11"
     }
 
-    withType<Javadoc>{
+    withType<Javadoc> {
         options.encoding = "UTF-8"
 
     }
@@ -54,7 +57,7 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
     runIde {
-        jvmArgs("-Xmx4096m","-XX:ReservedCodeCacheSize=512m","-Xms128m")
+        jvmArgs("-Xmx4096m", "-XX:ReservedCodeCacheSize=512m", "-Xms128m")
     }
 }
 
