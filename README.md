@@ -4,9 +4,11 @@
 </div>
 
 ## 贡献者
-<a href="https://github.com/Halfmoonly/feignx-plugin">
-  <img src="https://contrib.rocks/image?repo=eryajf/learn-github" />
+
+<a href="https://github.com/Halfmoonly/feignx-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Halfmoonly/feignx-plugin" />
 </a>
+
 
 ## 使用教程
 已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装，觉得好用，点个star⭐
