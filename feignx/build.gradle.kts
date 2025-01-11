@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.lyflexi"
-version = "4.1.6"
+version = "4.1.7"
 
 repositories {
     maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
