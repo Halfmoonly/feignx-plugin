@@ -14,17 +14,17 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-<b>FeignX is a SpringCloud OpenFeign Assistant</b>
+<b>FeignX is a SpringCloud OpenFeign Assistant.</b>
 <br>
 FeignX is inspired by IDEA's star plugin MybatisX.
 <br>
 You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation buttons `F`.
 <br>
-eg. feignClient -> ApiController
+eg. feignClient -> ApiController.
 <br>
-eg. ApiController -> feignClient
+eg. ApiController -> feignClient.
 <br>
-Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of
+Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of.
 <br>
 1.server.servlet.context-path
 2.spring.mvc.servlet.path
@@ -39,11 +39,13 @@ So, install the FeignX plugin as soon as possible!.
         <![CDATA[
         ### 更新内容
         <br>
-        修复了读取bootstrap.yml/yaml中如下配置失效的问题
+        1. 修复了读取bootstrap.yml/yaml中如下配置失效的问题
         <br>
-        1. server.servlet.context-path = /hello
+        - server.servlet.context-path = /hello
         <br>
-        2. spring.mvc.servlet.path = /world
+        - spring.mvc.servlet.path = /world
+        <br>
+        2. 替换了废弃的API：PsiEditorUtil.findEditor(file) which can lead to NoSuchMethodError
         ]]>
     </change-notes>
 
