@@ -24,7 +24,7 @@ FeignX is a SpringCloud OpenFeign Assistant
 
 FeignX is inspired by IDEA's star plugin MybatisX.
 
-You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation buttons `F`.
+You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
 
 eg. feignClient -> ApiController
 <div align="left">
@@ -38,7 +38,9 @@ eg. ApiController -> feignClient
 
 Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of
 
-1.server.servlet.context-path 2.spring.mvc.servlet.path
+1.server.servlet.context-path 
+
+2.spring.mvc.servlet.path
 
 FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
 
@@ -55,9 +57,6 @@ Adapted To Latest IDEA
 ### Feignx:v3.0.0
 
 [fix]🐞 Major version fix , fix the bug that cannot dynamically detect new interfaces due to cache
-
-### Feignx:v3.1.0
-Design a unique logo
 
 ### Feignx:v4.0.0
 adapted properties/yml/yaml of 1.server.servlet.context-path and 2.spring.mvc.servlet.path
@@ -103,16 +102,13 @@ public interface UserClient {
 
 yml/yaml配置同上。
 
-### Feignx:v4.0.1
-更换了icon和logo
-
 ![feignxAction.png](feignx/src/main/resources/icons/feignxAction.png)
 ### Feignx:v4.1.1
 
 feignx适配了最新版IDEA的Light主题，欢迎在IDEA内在线更新至4.1.1版本（三天后上线），或者提前安装离线版体验！
 https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 
-![img_1.png](img_1.png)
+![light-theme.png](feignx/pics/light-theme.png)
 
 感谢官方工作人员的指引：Natalia Melnikova (JetBrains Marketplace) marketplace@jetbrains.com
 
@@ -135,7 +131,17 @@ thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
 2. spring.mvc.servlet.path = /world
 
 此版本修复了FeignX读取本地bootstrap.yml/yaml中上述配置失效的问题
-   
+
+### Feignx:v4.1.6
+FeignX 4.1.5 is binary incompatible with IntelliJ IDEA Ultimate IU-193.7288.26 due to the following problem Method not found . This can lead to NoSuchMethodError exception at runtime.
+
+Feignx:v4.1.6 resolve IntelliJ IDEA Ultimate 2019.3.51 compatibility problem.
+
+- remove 1 usage of deprecated API (V1.381)
+- Invocation of unresolved method PsiEditorUtil.findEditor(PsiElement)
+- Method SearchControllerAction.navigateToControllerCode(...) contains an invokestatic instruction referencing an unresolved method PsiEditorUtil.findEditor(PsiElement).
+
+
 --- 
 
 

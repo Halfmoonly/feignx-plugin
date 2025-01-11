@@ -18,7 +18,7 @@
 <br>
 FeignX is inspired by IDEA's star plugin MybatisX.
 <br>
-You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation buttons `F`.
+You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
 <br>
 eg. feignClient -> ApiController.
 <br>
