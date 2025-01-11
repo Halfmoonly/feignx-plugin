@@ -39,13 +39,9 @@ So, install the FeignX plugin as soon as possible!.
         <![CDATA[
         ### 更新内容
         <br>
-        1. 修复了读取bootstrap.yml/yaml中如下配置失效的问题
+        1. 替换了废弃的API：PsiEditorUtil.findEditor(file) which can lead to NoSuchMethodError
         <br>
-        - server.servlet.context-path = /hello
-        <br>
-        - spring.mvc.servlet.path = /world
-        <br>
-        2. 替换了废弃的API：PsiEditorUtil.findEditor(file) which can lead to NoSuchMethodError
+        2. 重绘gutter
         ]]>
     </change-notes>
 
