@@ -9,6 +9,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiEditorUtil;
+import com.intellij.psi.util.PsiUtilBase;
 import com.lyflexi.feignx.model.ControllerInfo;
 import com.lyflexi.feignx.utils.JavaSourceFileUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -166,7 +167,13 @@ public class SearchControllerAction extends AnAction {
                 PsiMethod targetMethod = controllerInfo.getMethod();
                 if (targetMethod != null) {
                     int offset = targetMethod.getTextOffset();
-                    Editor editor = PsiEditorUtil.findEditor(file);
+                    //Invocation of unresolved method PsiEditorUtil.findEditor(PsiElement) (1 problem)
+                    //Method SearchControllerAction.navigateToControllerCode(...) contains an invokestatic instruction
+                    // referencing an unresolved method PsiEditorUtil.findEditor(PsiElement).
+                    // This can lead to NoSuchMethodError exception at runtime.
+//                    Editor editor = PsiEditorUtil.findEditor(file);
+                    //临时替换为PsiUtilBase.findEditor(file);
+                    Editor editor = PsiUtilBase.findEditor(file);
                     if (editor != null) {
                         editor.getCaretModel().moveToOffset(offset);
                         editor.getScrollingModel().scrollToCaret(ScrollType.CENTER_UP);
