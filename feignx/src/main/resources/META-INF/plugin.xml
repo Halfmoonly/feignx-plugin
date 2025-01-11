@@ -14,24 +14,16 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-<b>FeignX is a SpringCloud OpenFeign Assistant.</b>
+<b>FeignX is a SpringCloud OpenFeign Assistant. Author 刘岩.</b>
 <br>
-FeignX is inspired by IDEA's star plugin MybatisX.
+1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module. eg. feignClient -> ApiController. eg. ApiController -> feignClient.
 <br>
-You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
 <br>
-eg. feignClient -> ApiController.
+2. By parsing yml/yaml/properties, FeignX supports `server.servlet.context-path` and `spring.mvc.servlet.path`
 <br>
-eg. ApiController -> feignClient.
 <br>
-Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of.
+3. Most importantly, FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
 <br>
-1.server.servlet.context-path
-2.spring.mvc.servlet.path
-<br>
-FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
-<br>
-So, install the FeignX plugin as soon as possible!.
 ]]>
     </description>
 
