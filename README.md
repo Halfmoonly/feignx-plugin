@@ -102,11 +102,14 @@ public interface UserClient {
 
 yml/yaml配置同上。
 
-![feignxAction.png](feignx/src/main/resources/icons/feignxAction.png)
 ### Feignx:v4.1.1
+此版本feignx重绘了gutter
+![feignxAction.svg](feignx/src/main/resources/icons/feignxAction.svg)
 
-feignx适配了最新版IDEA的Light主题，欢迎在IDEA内在线更新至4.1.1版本（三天后上线），或者提前安装离线版体验！
+同时适配了最新版IDEA的Light主题，欢迎在IDEA内在线更新至4.1.1版本（三天后上线），或者提前安装离线版体验！
 https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
+
+修复了issues:https://github.com/Halfmoonly/feignx-plugin/issues/3
 
 ![light-theme.png](feignx/pics/light-theme.png)
 
