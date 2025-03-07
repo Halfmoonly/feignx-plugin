@@ -15,7 +15,8 @@ repositories {
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     version.set("2021.2")
-    type.set("IU") // Target IDE Platform
+//    type.set("IU") // Target IDE Platform
+    type.set("IC") // Target IDE Platform
     //gradle的下载idea安装包位置: %USERPROFILE%\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea
     plugins.set(listOf("com.intellij.java"))
 }

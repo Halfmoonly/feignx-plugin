@@ -1,7 +1,7 @@
 package com.lyflexi.feignx.model;
 
 import com.intellij.openapi.ui.DialogWrapper;
-import com.lyflexi.feignx.utils.JavaSourceFileUtil;
+import com.lyflexi.feignx.utils.ProviderUtil;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.util.List;
 public class CustomDialog extends DialogWrapper {
     private final int dialogWidth = 600;  // 自定义对话框的宽度
     private final int dialogHeight = 400; // 自定义对话框的高度
-    private List<ControllerInfo> controllerInfos;
+    private List<HttpMappingInfo> httpMappingInfos;
 
     @Override
     protected void init() {
@@ -25,9 +25,9 @@ public class CustomDialog extends DialogWrapper {
         setSize(dialogWidth, dialogHeight);
     }
 
-    public CustomDialog(List<ControllerInfo> controllerInfos) {
+    public CustomDialog(List<HttpMappingInfo> httpMappingInfos) {
         super(true);
-        this.controllerInfos = controllerInfos;
+        this.httpMappingInfos = httpMappingInfos;
         init();
         setTitle("接口信息");
     }
@@ -38,7 +38,7 @@ public class CustomDialog extends DialogWrapper {
         // 创建内容面板
         JPanel panel = new JPanel(new BorderLayout());
         JTextArea textArea = new JTextArea();
-        textArea.setText(JavaSourceFileUtil.showResult(controllerInfos));
+        textArea.setText(ProviderUtil.showResult(httpMappingInfos));
 
         // 将文本区域放入滚动面板中
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -48,7 +48,7 @@ public class CustomDialog extends DialogWrapper {
         JButton exportButton = new JButton("导出列表");
         exportButton.addActionListener(e -> {
             // 将列表导出到 CSV 文件
-            JavaSourceFileUtil.exportToCSV(controllerInfos);
+            ProviderUtil.exportToCSV(httpMappingInfos);
         });
 
         panel.add(exportButton, BorderLayout.SOUTH);
