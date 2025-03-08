@@ -45,8 +45,7 @@ public class ProviderUtil {
      * @return
      */
     public static List<HttpMappingInfo> scanControllerPaths(Project project) {
-        //每次扫描Controller前，清理旧的Controller缓存，原因是用户会修改目标Controller类
-        CacheManager.clearAllControllers();
+
         PsiManager psiManager = PsiManager.getInstance(project);
         GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
@@ -90,8 +89,7 @@ public class ProviderUtil {
      * @return
      */
     public static List<HttpMappingInfo> scanFeignInterfaces(Project project) {
-        //每次扫描Feign前，清理旧的Feign缓存，原因是用户会修改目标Feign类
-        CacheManager.clearAllFeigns();
+
         PsiManager psiManager = PsiManager.getInstance(project);
         GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");

@@ -24,6 +24,7 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
+        CacheManager.clearAll();
         if (element instanceof PsiMethod && ProviderUtil.isElementWithinController(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
