@@ -1,6 +1,6 @@
 <div align="center">
   <img src="./feignx/src/main/resources/META-INF/pluginIcon.svg" height="64">
-  <h2>FeignX</h2>
+  <h2>OpenFeign Assistant</h2>
 </div>
 
 ## 贡献者
