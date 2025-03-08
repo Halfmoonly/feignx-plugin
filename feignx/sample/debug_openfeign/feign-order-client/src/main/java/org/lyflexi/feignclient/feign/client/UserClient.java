@@ -17,4 +17,7 @@ public interface UserClient {
 
     @GetMapping(value = "/get/{id}")
     User getUserById(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/update2/{id}")
+    User update(@PathVariable("id") Long id);
 }

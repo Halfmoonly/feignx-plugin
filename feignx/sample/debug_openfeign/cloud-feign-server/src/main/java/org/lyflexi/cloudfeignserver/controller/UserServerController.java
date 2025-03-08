@@ -18,4 +18,9 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
+    @GetMapping(value = "/user/update2/{id}")
+    public User update(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
 }

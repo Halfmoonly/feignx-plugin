@@ -9,10 +9,10 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.lyflexi.feignx.cache.MyCacheManager;
+import com.lyflexi.feignx.cache.CacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
-import com.lyflexi.feignx.model.ControllerInfo;
-import com.lyflexi.feignx.utils.JavaSourceFileUtil;
+import com.lyflexi.feignx.model.HttpMappingInfo;
+import com.lyflexi.feignx.utils.JavaResourceUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,8 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        JavaSourceFileUtil.clear();
+        Project project = element.getProject();
+        CacheManager.clear(project);
         if (element instanceof PsiMethod && isElementWithinController(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
@@ -60,11 +61,11 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
         List<PsiElement> elementList = new ArrayList<>();
         // 获取当前项目
         Project project = controllerMethod.getProject();
-        List<ControllerInfo> feignInfos = JavaSourceFileUtil.scanFeignInterfaces(project);
+        List<HttpMappingInfo> feignInfos = JavaResourceUtil.scanFeignInterfaces(project);
         if (feignInfos != null) {
             // 遍历 Controller 类的所有方法
-            for (ControllerInfo feignInfo : feignInfos) {
-                if (isMethodMatch(feignInfo, controllerMethod)) {
+            for (HttpMappingInfo feignInfo : feignInfos) {
+                if (match2F(feignInfo, controllerMethod)) {
                     elementList.add(feignInfo.getMethod());
                 }
             }
@@ -73,8 +74,8 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
         return elementList;
     }
 
-    private static boolean isMethodMatch(ControllerInfo feignInfo, PsiMethod controllerMethod) {
-        String controllerPath = MyCacheManager.getControllerPath(controllerMethod);
+    private static boolean match2F(HttpMappingInfo feignInfo, PsiMethod controllerMethod) {
+        String controllerPath = CacheManager.getControllerPath(controllerMethod);
         if (StringUtils.isNotBlank(controllerPath)) {
             return controllerPath.equals(feignInfo.getPath());
         }
@@ -92,7 +93,7 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
             PsiClass psiClass = (PsiClass) element;
 
             // 检查类上是否存在 FeignClient 注解
-            return JavaSourceFileUtil.isControllerClass(psiClass);
+            return JavaResourceUtil.isControllerClass(psiClass);
         }
         PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
         return type != null && isElementWithinController(type);
