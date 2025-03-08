@@ -10,7 +10,7 @@
 </a>
 
 
-##🚀🚀🚀 OpenFeign Assistant:v4.1.8
+## 🚀🚀🚀 OpenFeign Assistant:v4.1.8
 v4.1.8发布——对应分支main-fix-chchev2
 
         1. 我们更名啦，由FeignX更名为OpenFeign Assistant
