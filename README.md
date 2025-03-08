@@ -10,8 +10,18 @@
 </a>
 
 
+##🚀🚀🚀 OpenFeign Assistant:v4.1.8
+v4.1.8发布——对应分支main-fix-chchev2
+
+        1. 我们更名啦，由FeignX更名为OpenFeign Assistant
+        2. 极致提升性能，引入CacheManager，管理双边缓存FeignInterface和ApiController
+        3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
+
+[feignx-4.1.8.zip](https://github.com/user-attachments/files/19140074/feignx-4.1.8.zip)
+
+
 ## 使用教程
-已上架idea插件市场：https://plugins.jetbrains.com , 搜索FeignX下载安装，觉得好用，点个star⭐
+已上架idea插件市场：https://plugins.jetbrains.com , 搜索OpenFeign Assistant下载安装，觉得好用，点个star⭐
 
 ---
 <div align="center">
@@ -20,7 +30,7 @@
 </div>
 
 
-FeignX is a SpringCloud OpenFeign Assistant
+OpenFeign Assistant is a Free SpringCloud Assistant
 
 FeignX is inspired by IDEA's star plugin MybatisX.
 
@@ -43,6 +53,8 @@ Most importantly, FeignX supports configuration file parsing，such as yml/yaml/
 2.spring.mvc.servlet.path
 
 FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
+
+FeignX is sufficiently high-performance than other feign plugins on the market, after many rounds of optimization.
 
 So, install the FeignX plugin as soon as possible!.
 ## 版本迭代
@@ -144,14 +156,6 @@ Feignx:v4.1.6 resolve IntelliJ IDEA Ultimate 2019.3.51 compatibility problem.
 - Invocation of unresolved method PsiEditorUtil.findEditor(PsiElement)
 - Method SearchControllerAction.navigateToControllerCode(...) contains an invokestatic instruction referencing an unresolved method PsiEditorUtil.findEditor(PsiElement).
 
-### OpenFeign Assistant:v4.1.8
-v4.1.8发布——对应分支main-fix-chchev2
-
-        1. 我们更名啦，由FeignX更名为OpenFeign Assistant
-        2. 极致提升性能，引入CacheManager，管理双边缓存FeignInterface和ApiController
-        3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
-
-[feignx-4.1.8.zip](https://github.com/user-attachments/files/19140074/feignx-4.1.8.zip)
 --- 
 
 
