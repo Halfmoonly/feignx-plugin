@@ -3,7 +3,7 @@
   <h2>OpenFeign Assistant</h2>
 </div>
 
-## 贡献者
+## 贡献者名单
 
 <a href="https://github.com/Halfmoonly/feignx-plugin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Halfmoonly/feignx-plugin" />
@@ -48,20 +48,20 @@ FeignX is sufficiently accurate than other feign plugins on the market, after ma
 FeignX is sufficiently high-performance than other feign plugins on the market, after many rounds of optimization.
 
 So, install the FeignX plugin as soon as possible!.
-## 版本迭代
-### Feignx:v1.0.0
+## 更新日志
+### 🚀Feignx:v1.0.0
 cross-module：FeignClient-ApiController Mutually Navigation
 
 cross-module：ApiController-FeignClient Mutually Navigation
 
-### Feignx:v2.1.0
+### 🚀Feignx:v2.1.0
 Adapted To Latest IDEA
 
-### Feignx:v3.0.0
+### 🐞Feignx:v3.0.0
 
-[fix]🐞 Major version fix , fix the bug that cannot dynamically detect new interfaces due to cache
+[fix] Major version fix , fix the bug that cannot dynamically detect new interfaces due to cache
 
-### Feignx:v4.0.0
+### 🚀Feignx:v4.0.0
 adapted properties/yml/yaml of 1.server.servlet.context-path and 2.spring.mvc.servlet.path
 ![DispatcherServlet.png](feignx/pics/DispatcherServlet.png)
 
@@ -105,7 +105,7 @@ public interface UserClient {
 
 yml/yaml配置同上。
 
-### Feignx:v4.1.1
+### 🚀Feignx:v4.1.1
 此版本feignx重绘了gutter
 ![feignxAction.svg](feignx/src/main/resources/icons/feignxAction.svg)
 
@@ -124,13 +124,13 @@ https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 
 开发社区：https://intellij-support.jetbrains.com/hc/en-us/community/topics/200366979-IntelliJ-IDEA-Open-API-and-Plugin-Development
 
-### Feignx:v4.1.3
+### 🚀Feignx:v4.1.3
 thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
 1. Adapted bootstrap.properties/bootstrap.yml/bootstrap.yaml
 2. Adapted many writtings of path，as @FeignClient(path = "/sys") and @FeignClient(path = "sys") and @FeignClient(path = "sys/")
 
 
-### Feignx:v4.1.5
+### 🚀Feignx:v4.1.5
 极少数分布式场景下的nacos需要以下配置，往往会配置在本地的bootstrap.yml/yaml中，而非application.yml/yaml中
 
 1. server.servlet.context-path = /hello
@@ -138,7 +138,7 @@ thanks my friend's pr : https://github.com/Halfmoonly/feignx-plugin/pull/9
 
 此版本修复了FeignX读取本地bootstrap.yml/yaml中上述配置失效的问题
 
-### Feignx:v4.1.6
+### 🐞Feignx:v4.1.6
 FeignX 4.1.5 is binary incompatible with IntelliJ IDEA Ultimate IU-193.7288.26 due to the following problem Method not found . This can lead to NoSuchMethodError exception at runtime.
 
 Feignx:v4.1.6 resolve IntelliJ IDEA Ultimate 2019.3.51 compatibility problem.
@@ -148,7 +148,7 @@ Feignx:v4.1.6 resolve IntelliJ IDEA Ultimate 2019.3.51 compatibility problem.
 - Method SearchControllerAction.navigateToControllerCode(...) contains an invokestatic instruction referencing an unresolved method PsiEditorUtil.findEditor(PsiElement).
 
 --- 
-### 🚀🚀🚀 OpenFeign Assistant:v4.1.8
+### 🚀 OpenFeign Assistant:v4.1.8
 v4.1.8发布——对应分支main-fix-cachev2
 
 reslove issue #10：https://github.com/Halfmoonly/feignx-plugin/issues/10
@@ -160,7 +160,7 @@ reslove issue #10：https://github.com/Halfmoonly/feignx-plugin/issues/10
 [feignx-4.1.8.zip](https://github.com/user-attachments/files/19140074/feignx-4.1.8.zip)
 
 
-### OpenFeign Assistant:v4.1.9
+### 🐞OpenFeign Assistant:v4.1.9
 v4.1.9发布——对应分支main-fix-cachev3
 
 我们优化了双边缓存更新策略（Optimize cache update policies）
