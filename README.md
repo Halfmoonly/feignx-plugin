@@ -21,31 +21,32 @@
 </div>
 
 
-OpenFeign Assistant is a Free SpringCloud Assistant
+<p>OpenFeign Assistant(FeignX) is a Free SpringCloud Assistant. Author 刘岩</p>
 
 FeignX is inspired by IDEA's star plugin MybatisX.
 
-You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
+1. You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
 
-eg. feignClient -> ApiController
+- eg. feignClient -> ApiController
 <div align="left">
   <img src="./feignx/pics/f2c.png">
 </div>
 
-eg. ApiController -> feignClient
+- eg. ApiController -> feignClient
 <div align="left">
   <img src="./feignx/pics/c2f.png">
 </div>
 
 Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of
 
-1.server.servlet.context-path 
+- server.servlet.context-path 
 
-2.spring.mvc.servlet.path
+- spring.mvc.servlet.path
+   
+2. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
 
-FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
+3. OpenFeign Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
 
-FeignX is sufficiently high-performance than other feign plugins on the market, after many rounds of optimization.
 
 So, install the FeignX plugin as soon as possible!.
 ## 更新日志
