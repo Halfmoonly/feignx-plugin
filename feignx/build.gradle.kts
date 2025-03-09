@@ -43,8 +43,9 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("193")
-//        支持更高版本的IDEA. 版本不设限
+        // 起始支持版本，2020.3 (IDEA 201)
+        sinceBuild.set("203")
+        // 支持至更高版本的IDEA. 版本不设限
         untilBuild.set("")
     }
 
