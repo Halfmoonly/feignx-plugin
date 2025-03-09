@@ -1,6 +1,6 @@
 <div align="center">
   <img src="./feignx/src/main/resources/META-INF/pluginIcon.svg" height="64">
-  <h2>OpenFeign Assistant</h2>
+  <h2>OpenFeign Assistant(FeignX)</h2>
 </div>
 
 ## 贡献者名单
@@ -37,15 +37,15 @@ FeignX is inspired by IDEA's star plugin MybatisX.
   <img src="./feignx/pics/c2f.png">
 </div>
 
-Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of
+2. OpenFeign Assistant supports configuration file parsing，such as yml/yaml/properties of
 
 - server.servlet.context-path 
 
 - spring.mvc.servlet.path
    
-2. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
+3. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
 
-3. OpenFeign Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
+4. OpenFeign Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
 
 
 So, install the FeignX plugin as soon as possible!.
@@ -166,7 +166,7 @@ v4.1.9发布——对应分支main-fix-cachev3
 
 我们优化了双边缓存更新策略（Optimize cache update policies）
 
-https://github.com/user-attachments/files/19147696/OpenFeign.Assistant-4.1.9.zip
+https://github.com/user-attachments/files/19148594/OpenFeign.Assistant-4.1.9.zip
 
 
 觉得好用，点个star⭐
