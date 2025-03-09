@@ -177,11 +177,23 @@ reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
 2. 为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
 3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
 
+CopyFeignUrlLineMarkerProvider：
+
+![CopyFeignUrlLineMarkerProvider.png](feignx/pics/CopyFeignUrlLineMarkerProvider.png)![img.png](feignx/pics/img.png)
+
+CopyControllerUrlLineMarkerProvider：
+
+![CopyControllerUrlLineMarkerProvider.png](feignx/pics/CopyControllerUrlLineMarkerProvider.png)
 
 朋友们记得先将zip解压出jar包，再离线安装jar包哟~~：https://github.com/user-attachments/files/19149196/Navigator4URL.OpenFeign.RestController-5.1.0.zip
-
 
 
 ---
 
 觉得好用，点个star⭐
+
+最新版本，请即时关注IntelliJ IDEA插件市场更新Navigator4URL OpenFeign RestController
+
+https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
+
+IDEA内插件市场一键安装最方便哟~~
