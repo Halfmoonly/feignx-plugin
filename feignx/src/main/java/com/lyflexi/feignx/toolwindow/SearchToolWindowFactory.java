@@ -14,8 +14,9 @@ import com.intellij.psi.util.PsiUtilBase;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.lyflexi.feignx.toolbar.RefreshCacheAction;
-import com.lyflexi.feignx.model.ControllerInfo;
-import com.lyflexi.feignx.utils.JavaSourceFileUtil;
+import com.lyflexi.feignx.model.HttpMappingInfo;
+import com.lyflexi.feignx.utils.JavaResourceUtil;
+import com.lyflexi.feignx.utils.ToolBarUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,14 +64,14 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
         private JPanel createControlsPanel(ToolWindow toolWindow) {
             JPanel parentPanel = new JPanel();
             // 扫描项目中的Java源文件
-            java.util.List<ControllerInfo> controllerInfos = JavaSourceFileUtil.scanAllProjectControllerInfo();
+            java.util.List<HttpMappingInfo> httpMappingInfos = ToolBarUtil.scanAllProjectControllerInfo();
             // 执行搜索
-            parentPanel.add(startSearch(controllerInfos));
+            parentPanel.add(startSearch(httpMappingInfos));
 
             return parentPanel;
         }
 
-        private JPanel startSearch(java.util.List<ControllerInfo> controllerInfos) {
+        private JPanel startSearch(java.util.List<HttpMappingInfo> httpMappingInfos) {
             resultTextArea = new JTextArea();
             resultTextArea.setText(" 刚开始打开项目时idea建立索引前功能不可用！\n 按回车跳转第一个接口\n 可以通过空格+数字传递行数，例如：\n /user/list 2\n 可以自定义快捷键");
             resultTextArea.setEditable(false);
@@ -85,25 +86,25 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
             searchField.getDocument().addDocumentListener(new DocumentListener() {
                 @Override
                 public void insertUpdate(DocumentEvent e) {
-                    performSearch(controllerInfos);
+                    performSearch(httpMappingInfos);
                 }
 
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-                    performSearch(controllerInfos);
+                    performSearch(httpMappingInfos);
                 }
 
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-                    performSearch(controllerInfos);
+                    performSearch(httpMappingInfos);
                 }
 
-                private void performSearch(java.util.List<ControllerInfo> controllerInfos) {
+                private void performSearch(java.util.List<HttpMappingInfo> httpMappingInfos) {
                     String searchText = searchField.getText().strip();
-                    if(controllerInfos.isEmpty()){
-                        controllerInfos = JavaSourceFileUtil.getControllerInfos();
+                    if(httpMappingInfos.isEmpty()){
+                        httpMappingInfos = ToolBarUtil.getControllerInfos();
                     }
-                    java.util.List<ControllerInfo> searchResults = searchControllerInfos(controllerInfos, searchText.split(" ")[0]);
+                    java.util.List<HttpMappingInfo> searchResults = searchControllerInfos(httpMappingInfos, searchText.split(" ")[0]);
                     showControllerInfo(searchResults, resultTextArea);
                 }
             });
@@ -111,7 +112,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        navigateToFirstControllerCode(controllerInfos, searchField.getText().strip());
+                        navigateToFirstControllerCode(httpMappingInfos, searchField.getText().strip());
                     }
                 }
             });
@@ -147,8 +148,8 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
 
     }
 
-    private static void showControllerInfo(java.util.List<ControllerInfo> controllerInfos, JTextArea resultTextArea) {
-        resultTextArea.setText(JavaSourceFileUtil.showResult(controllerInfos));
+    private static void showControllerInfo(java.util.List<HttpMappingInfo> httpMappingInfos, JTextArea resultTextArea) {
+        resultTextArea.setText(JavaResourceUtil.showResult(httpMappingInfos));
         resultTextArea.setCaretPosition(0);
     }
 
@@ -177,29 +178,29 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
     }
 
 
-    private static java.util.List<ControllerInfo> searchControllerInfos(java.util.List<ControllerInfo> controllerInfos, String searchText) {
-        return controllerInfos.stream()
+    private static java.util.List<HttpMappingInfo> searchControllerInfos(java.util.List<HttpMappingInfo> httpMappingInfos, String searchText) {
+        return httpMappingInfos.stream()
                 .filter(info -> isMatched(info, searchText))
                 .collect(Collectors.toList());
     }
-    private static void navigateToFirstControllerCode(java.util.List<ControllerInfo> controllerInfos, String searchText) {
-        List<ControllerInfo> searchResults = null;
+    private static void navigateToFirstControllerCode(java.util.List<HttpMappingInfo> httpMappingInfos, String searchText) {
+        List<HttpMappingInfo> searchResults = null;
         int i = 0;
         String[] s = searchText.split(" ");
         if(s.length == 1){
-            searchResults = searchControllerInfos(controllerInfos, searchText);
+            searchResults = searchControllerInfos(httpMappingInfos, searchText);
         }else if(s.length == 2){
-            searchResults = searchControllerInfos(controllerInfos, s[0]);
+            searchResults = searchControllerInfos(httpMappingInfos, s[0]);
             i = Integer.parseInt(s[1])-1;
         }
         if (CollectionUtils.isNotEmpty(searchResults)) {
-            ControllerInfo iResult = searchResults.get(i);
+            HttpMappingInfo iResult = searchResults.get(i);
             navigateToControllerCode(iResult);
         }
     }
 
-    private static void navigateToControllerCode(ControllerInfo controllerInfo) {
-        PsiFile file = controllerInfo.getMethod().getContainingFile();
+    private static void navigateToControllerCode(HttpMappingInfo httpMappingInfo) {
+        PsiFile file = httpMappingInfo.getMethod().getContainingFile();
         if (file instanceof PsiJavaFile) {
             PsiJavaFile javaFile = (PsiJavaFile) file;
             PsiClass[] classes = javaFile.getClasses();
@@ -207,7 +208,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
                 PsiClass psiClass = classes[0];
                 psiClass.navigate(true);
                 // 定位到对应的方法
-                PsiMethod targetMethod = controllerInfo.getMethod();
+                PsiMethod targetMethod = httpMappingInfo.getMethod();
                 if (targetMethod != null) {
                     int offset = targetMethod.getTextOffset();
                     Editor editor = PsiUtilBase.findEditor(file);
@@ -220,18 +221,18 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
         }
     }
 
-    private static boolean isMatched(ControllerInfo controllerInfo, String searchText) {
+    private static boolean isMatched(HttpMappingInfo httpMappingInfo, String searchText) {
         String lowerCase = searchText.toLowerCase();
-        if(controllerInfo.getRequestMethod().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getRequestMethod().toLowerCase().contains(lowerCase)){
             return true;
         }
-        if(controllerInfo.getPath().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getPath().toLowerCase().contains(lowerCase)){
             return true;
         }
-        if(controllerInfo.getSwaggerInfo() != null && controllerInfo.getSwaggerInfo().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getSwaggerInfo() != null && httpMappingInfo.getSwaggerInfo().toLowerCase().contains(lowerCase)){
             return true;
         }
-        if(controllerInfo.getSwaggerNotes() != null && controllerInfo.getSwaggerNotes().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getSwaggerNotes() != null && httpMappingInfo.getSwaggerNotes().toLowerCase().contains(lowerCase)){
             return true;
         }
         return false;

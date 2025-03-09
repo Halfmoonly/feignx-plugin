@@ -6,12 +6,11 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.lyflexi.feignx.cache.MyCacheManager;
+import com.lyflexi.feignx.cache.CacheManager;
 import com.lyflexi.feignx.enums.SpringRequestMethodAnnotation;
-import com.lyflexi.feignx.model.ControllerInfo;
+import com.lyflexi.feignx.model.HttpMappingInfo;
 import com.lyflexi.feignx.properties.ConfigReader;
 import com.lyflexi.feignx.properties.ServerParser;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -33,56 +32,16 @@ import static com.lyflexi.feignx.enums.SpringRequestMethodAnnotation.REQUEST_MAP
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:50
  */
-public class JavaSourceFileUtil {
+public class JavaResourceUtil {
 
-    private static List<ControllerInfo> controllerInfos = new ArrayList<ControllerInfo>();
-    
+
     private static final String SPRINGBOOT_SERVER_PATH= "server.servlet.context-path";
     private static final String SPRINGMVC_PATH= "spring.mvc.servlet.path";
 
-    private JavaSourceFileUtil(){};
-
-    /**
-     * 获取所有打开的项目列表
-     *
-     * @return {@link Project[]}
-     */
-    private static Project[] getOpenProjects() {
-        // 获取ProjectManager实例
-        ProjectManager projectManager = ProjectManager.getInstance();
-        // 获取所有打开的项目列表
-        return projectManager.getOpenProjects();
-    }
-    public static void clear() {
-        Project[] openProjects = getOpenProjects();
-        for (Project project : openProjects) {
-            // 扫描项目中的Java源文件
-            MyCacheManager.setCacheData(project,null);
-            MyCacheManager.setFeignCacheData(project,null);
-        }
-    }
-
-    public static List<ControllerInfo>  getControllerInfos(){
-        return controllerInfos;
-    }
-    public static List<ControllerInfo> scanAllProjectControllerInfo() {
-        Project[] openProjects = getOpenProjects();
-        List<ControllerInfo> collect = Arrays.stream(openProjects)
-                .flatMap(project -> JavaSourceFileUtil.scanControllerPaths(project).stream())
-                .collect(Collectors.toList());
-        controllerInfos = collect;
-        return collect;
-    }
-
-    public static List<ControllerInfo> scanAllProjectFeignInfo() {
-        Project[] openProjects = getOpenProjects();
-        return Arrays.stream(openProjects)
-                .flatMap(project -> JavaSourceFileUtil.scanFeignInterfaces(project).stream())
-                .collect(Collectors.toList());
-    }
+    private JavaResourceUtil(){};
 
 
-    public static List<ControllerInfo> scanControllerPaths(Project project) {
+    public static List<HttpMappingInfo> scanControllerPaths(Project project) {
         PsiManager psiManager = PsiManager.getInstance(project);
         GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
@@ -90,14 +49,16 @@ public class JavaSourceFileUtil {
         if (DumbService.isDumb(project)) {
             return Collections.emptyList();
         }
-        List<Pair<String, ControllerInfo>> cachedControllerInfos = MyCacheManager.getCacheData(project);
-        if (CollectionUtils.isNotEmpty(cachedControllerInfos)) {
-            return cachedControllerInfos.stream()
-                    .map(Pair::getRight)
-                    .collect(Collectors.toList());
-        }
-        cachedControllerInfos = new ArrayList<>();
-        List<ControllerInfo> controllerInfos = new ArrayList<>();
+//        List<Pair<String, ControllerInfo>> cachedControllerInfos = MyCacheManager.getCacheData(project);
+//        if (CollectionUtils.isNotEmpty(cachedControllerInfos)) {
+//            return cachedControllerInfos.stream()
+//                    .map(Pair::getRight)
+//                    .collect(Collectors.toList());
+//        }
+//        cachedControllerInfos = new ArrayList<>();
+
+        List<Pair<String, HttpMappingInfo>> cachedControllerInfos = new ArrayList<>();
+        List<HttpMappingInfo> httpMappingInfos = new ArrayList<>();
 
         // 获取项目中的所有Java源文件
         List<PsiClass> javaFiles = getAllClasses(rootPackage, searchScope);
@@ -113,22 +74,22 @@ public class JavaSourceFileUtil {
                 // 解析类中的方法，提取接口路径和Swagger注解信息
                 PsiMethod[] methods = psiClass.getMethods();
                 for (PsiMethod method : methods) {
-                    ControllerInfo controllerInfo = extractControllerInfo(parentPath.toString(), method);
-                    if (controllerInfo != null) {
+                    HttpMappingInfo httpMappingInfo = extractControllerInfo(parentPath.toString(), method);
+                    if (httpMappingInfo != null) {
                         // 设置方法信息
-                        controllerInfo.setMethod(method);
-                        controllerInfos.add(controllerInfo);
+                        httpMappingInfo.setMethod(method);
+                        httpMappingInfos.add(httpMappingInfo);
                     }
                 }
             }
         }
 
         // 将结果添加到缓存中
-        cachedControllerInfos.addAll(controllerInfos.stream()
+        cachedControllerInfos.addAll(httpMappingInfos.stream()
                 .map(info -> Pair.of(info.getPath(), info))
                 .collect(Collectors.toList()));
-        MyCacheManager.setCacheData(project, cachedControllerInfos);
-        return controllerInfos;
+        CacheManager.setControllerCacheData(project, cachedControllerInfos);
+        return httpMappingInfos;
     }
     /**
      * resolve：
@@ -180,6 +141,7 @@ public class JavaSourceFileUtil {
     }
 
 
+
     public static List<PsiClass> getAllClasses(PsiPackage rootPackage, GlobalSearchScope searchScope) {
         List<PsiClass> javaFiles = new ArrayList<>();
         processPackage(rootPackage, searchScope, javaFiles);
@@ -197,7 +159,7 @@ public class JavaSourceFileUtil {
     }
 
 
-    public static String showResult(List<ControllerInfo> controllerInfos) {
+    public static String showResult(List<HttpMappingInfo> httpMappingInfos) {
         StringBuilder message = new StringBuilder();
         // 表头信息
         int i = 0;
@@ -206,7 +168,7 @@ public class JavaSourceFileUtil {
         message.append(String.format("%-52s", "Path")).append("\t");
         message.append(String.format("%-25s", "Swagger Info")).append("\t");
         message.append(String.format("%-25s", "Swagger Notes")).append("\n");
-        for (ControllerInfo info : controllerInfos) {
+        for (HttpMappingInfo info : httpMappingInfos) {
             message.append(String.format("%-3d", ++i)).append("\t");
             message.append(String.format("%-7s", info.getRequestMethod())).append("\t");
             // 接口路径
@@ -238,17 +200,17 @@ public class JavaSourceFileUtil {
      *
      * @param parentPath 父路径
      * @param method     方法
-     * @return {@link ControllerInfo}
+     * @return {@link HttpMappingInfo}
      */
-    public static ControllerInfo extractControllerInfo(String parentPath, PsiMethod method) {
-        ControllerInfo controllerInfo = new ControllerInfo();
-        controllerInfo.setPath(parentPath);
+    public static HttpMappingInfo extractControllerInfo(String parentPath, PsiMethod method) {
+        HttpMappingInfo httpMappingInfo = new HttpMappingInfo();
+        httpMappingInfo.setPath(parentPath);
         PsiAnnotation[] annotations = method.getAnnotations();
         for (PsiAnnotation annotation : annotations) {
             String annotationName = annotation.getQualifiedName();
             // 处理 @RequestMapping 注解
             if (annotationName != null && annotationName.equals(REQUEST_MAPPING.getQualifiedName())) {
-                controllerInfo.setRequestMethod("REQUEST");
+                httpMappingInfo.setRequestMethod("REQUEST");
                 // 提取 method 属性值
                 PsiAnnotationMemberValue methodValue = annotation.findAttributeValue("method");
                 if (methodValue instanceof PsiReferenceExpression) {
@@ -256,15 +218,15 @@ public class JavaSourceFileUtil {
                     if (resolvedElement instanceof PsiField) {
                         String methodName = ((PsiField) resolvedElement).getName();
                         // 使用字典映射设置请求方法
-                        controllerInfo.setRequestMethod(getRequestMethodFromMethodName(methodName));
+                        httpMappingInfo.setRequestMethod(getRequestMethodFromMethodName(methodName));
                     }
                 }
-                return getValue(annotation, controllerInfo, method);
+                return getValue(annotation, httpMappingInfo, method);
             } else if (SpringRequestMethodAnnotation.getByQualifiedName(annotationName) != null) {
                 // 处理其他常用注解
                 SpringRequestMethodAnnotation requestMethod = SpringRequestMethodAnnotation.getByQualifiedName(annotationName);
-                controllerInfo.setRequestMethod(requestMethod !=null? requestMethod.methodName(): "REQUEST");
-                return getValue(annotation, controllerInfo, method);
+                httpMappingInfo.setRequestMethod(requestMethod !=null? requestMethod.methodName(): "REQUEST");
+                return getValue(annotation, httpMappingInfo, method);
             }
 
         }
@@ -310,23 +272,23 @@ public class JavaSourceFileUtil {
      * 获得价值
      * 路径：类文件接口路径+方法接口路径
      *
-     * @param controllerInfo 控制器信息
+     * @param httpMappingInfo 控制器信息
      * @param method         方法
      * @param annotation     注释
-     * @return {@link ControllerInfo}
+     * @return {@link HttpMappingInfo}
      */
-    public static ControllerInfo getValue(PsiAnnotation annotation, ControllerInfo controllerInfo, PsiMethod method) {
+    public static HttpMappingInfo getValue(PsiAnnotation annotation, HttpMappingInfo httpMappingInfo, PsiMethod method) {
         String path = getValueFromPsiAnnotation(annotation);
-        controllerInfo.setPath(controllerInfo.getPath() + path);
-        extractSwaggerInfo(method, controllerInfo);
-        return controllerInfo;
+        httpMappingInfo.setPath(httpMappingInfo.getPath() + path);
+        extractSwaggerInfo(method, httpMappingInfo);
+        return httpMappingInfo;
     }
-    private static void extractSwaggerInfo(PsiMethod method, ControllerInfo controllerInfo) {
+    private static void extractSwaggerInfo(PsiMethod method, HttpMappingInfo httpMappingInfo) {
         PsiModifierList methodModifierList = method.getModifierList();
         PsiAnnotation swaggerAnnotation = methodModifierList.findAnnotation("io.swagger.annotations.ApiOperation");
         if (swaggerAnnotation != null) {
-            extractSwaggerValue(swaggerAnnotation, "value", controllerInfo::setSwaggerInfo);
-            extractSwaggerValue(swaggerAnnotation, "notes", controllerInfo::setSwaggerNotes);
+            extractSwaggerValue(swaggerAnnotation, "value", httpMappingInfo::setSwaggerInfo);
+            extractSwaggerValue(swaggerAnnotation, "notes", httpMappingInfo::setSwaggerNotes);
         }
     }
 
@@ -362,13 +324,13 @@ public class JavaSourceFileUtil {
         // 获取当前项目
         Project project = psiMethod.getProject();
 
-        List<ControllerInfo> controllerInfos = JavaSourceFileUtil.scanControllerPaths(project);
+        List<HttpMappingInfo> httpMappingInfos = JavaResourceUtil.scanControllerPaths(project);
 
-        if (controllerInfos != null) {
+        if (httpMappingInfos != null) {
             // 遍历 Controller 类的所有方法
-            for (ControllerInfo controllerInfo : controllerInfos) {
-                if (isMethodMatch(controllerInfo, psiMethod)) {
-                    elementList.add(controllerInfo.getMethod());
+            for (HttpMappingInfo httpMappingInfo : httpMappingInfos) {
+                if (match2C(httpMappingInfo, psiMethod)) {
+                    elementList.add(httpMappingInfo.getMethod());
                 }
             }
         }
@@ -376,14 +338,23 @@ public class JavaSourceFileUtil {
         return elementList;
     }
 
-    private static boolean isMethodMatch(ControllerInfo controllerInfo, PsiMethod feignMethod) {
-        PsiClass psiClass = feignMethod.getContainingClass();
-        ControllerInfo feignInfo = JavaSourceFileUtil.extractControllerInfo(extractFeignParentPathFromClassAnnotation(psiClass), feignMethod);
-        if(feignInfo != null){
-            String path = feignInfo.getPath();
-            if(StringUtils.isNotBlank(path)){
-                return path.equals(controllerInfo.getPath());
-            }
+//    private static boolean isMethodMatch(HttpMappingInfo httpMappingInfo, PsiMethod feignMethod) {
+//        PsiClass psiClass = feignMethod.getContainingClass();
+//        HttpMappingInfo feignInfo = JavaSourceFileUtil.extractControllerInfo(extractFeignParentPathFromClassAnnotation(psiClass), feignMethod);
+//        if(feignInfo != null){
+//            String path = feignInfo.getPath();
+//            if(StringUtils.isNotBlank(path)){
+//                return path.equals(httpMappingInfo.getPath());
+//            }
+//        }
+//        return false;
+//    }
+
+
+    private static boolean match2C(HttpMappingInfo controllerInfo, PsiMethod feignMethod) {
+        String feignPath = CacheManager.getFeignPath(feignMethod);
+        if (StringUtils.isNotBlank(feignPath)) {
+            return feignPath.equals(controllerInfo.getPath());
         }
         return false;
     }
@@ -413,9 +384,9 @@ public class JavaSourceFileUtil {
      * 扫描Feign接口信息添加到缓存里面
      *
      * @param project 项目
-     * @return {@link List}<{@link ControllerInfo}>
+     * @return {@link List}<{@link HttpMappingInfo}>
      */
-    public static List<ControllerInfo> scanFeignInterfaces(Project project) {
+    public static List<HttpMappingInfo> scanFeignInterfaces(Project project) {
         PsiManager psiManager = PsiManager.getInstance(project);
         GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
@@ -425,14 +396,15 @@ public class JavaSourceFileUtil {
             return Collections.emptyList();
         }
 
-        List<Pair<String, ControllerInfo>> feignCacheData = MyCacheManager.getFeignCacheData(project);
-        if (CollectionUtils.isNotEmpty(feignCacheData)) {
-            return feignCacheData.stream()
-                    .map(Pair::getRight)
-                    .collect(Collectors.toList());
-        }
-        feignCacheData = new ArrayList<>();
-        List<ControllerInfo> feignInfos = new ArrayList<>();
+//        List<Pair<String, ControllerInfo>> feignCacheData = MyCacheManager.getFeignCacheData(project);
+//        if (CollectionUtils.isNotEmpty(feignCacheData)) {
+//            return feignCacheData.stream()
+//                    .map(Pair::getRight)
+//                    .collect(Collectors.toList());
+//        }
+//        feignCacheData = new ArrayList<>();
+        List<Pair<String, HttpMappingInfo>> feignCacheData = feignCacheData = new ArrayList<>();
+        List<HttpMappingInfo> feignInfos = new ArrayList<>();
         // 获取项目中的所有Java源文件
         List<PsiClass> javaFiles = getAllClasses(rootPackage, searchScope);
         for (PsiClass psiClass : javaFiles) {
@@ -442,7 +414,7 @@ public class JavaSourceFileUtil {
                 PsiMethod[] methods = psiClass.getMethods();
                 String parentPath = extractFeignParentPathFromClassAnnotation(psiClass);
                 for (PsiMethod method : methods) {
-                    ControllerInfo feignInfo = extractControllerInfo(parentPath, method);
+                    HttpMappingInfo feignInfo = extractControllerInfo(parentPath, method);
                     if (feignInfo != null) {
                         // 设置方法信息
                         feignInfo.setMethod(method);
@@ -456,7 +428,7 @@ public class JavaSourceFileUtil {
         feignCacheData.addAll(feignInfos.stream()
                 .map(info -> Pair.of(info.getPath(), info))
                 .collect(Collectors.toList()));
-        MyCacheManager.setFeignCacheData(project, feignCacheData);
+        CacheManager.setFeignCacheData(project, feignCacheData);
 
         return feignInfos;
     }
@@ -500,7 +472,7 @@ public class JavaSourceFileUtil {
     }
 
 
-    public static void exportToCSV(List<ControllerInfo> controllerInfos) {
+    public static void exportToCSV(List<HttpMappingInfo> httpMappingInfos) {
         // 获取文件选择器
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -523,14 +495,14 @@ public class JavaSourceFileUtil {
 
             // 写入列表数据
             Integer i = 0;
-            for (ControllerInfo controllerInfo : controllerInfos) {
+            for (HttpMappingInfo httpMappingInfo : httpMappingInfos) {
                 i++;
                 String[] data = {
                         i.toString(),
-                        controllerInfo.getRequestMethod(),
-                        controllerInfo.getPath(),
-                        controllerInfo.getSwaggerInfo(),
-                        controllerInfo.getSwaggerNotes()
+                        httpMappingInfo.getRequestMethod(),
+                        httpMappingInfo.getPath(),
+                        httpMappingInfo.getSwaggerInfo(),
+                        httpMappingInfo.getSwaggerNotes()
                 };
                 fileWriter.write(String.join(",", data) + "\n");
             }

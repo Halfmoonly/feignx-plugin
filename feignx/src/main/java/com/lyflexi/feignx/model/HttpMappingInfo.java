@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:51
  */
-public class ControllerInfo implements Serializable {
+public class HttpMappingInfo implements Serializable {
     private String path="";
     private String swaggerInfo="";
     private String swaggerNotes="";
@@ -18,9 +18,9 @@ public class ControllerInfo implements Serializable {
 
     private String requestMethod;
 
-    public ControllerInfo() {    }
+    public HttpMappingInfo() {    }
 
-    public ControllerInfo(String path, String swaggerInfo, String swaggerNotes, PsiMethod method) {
+    public HttpMappingInfo(String path, String swaggerInfo, String swaggerNotes, PsiMethod method) {
         this.path = path;
         this.swaggerInfo = swaggerInfo;
         this.swaggerNotes = swaggerNotes;
@@ -69,8 +69,8 @@ public class ControllerInfo implements Serializable {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof ControllerInfo)) return false;
-        final ControllerInfo other = (ControllerInfo) o;
+        if (!(o instanceof HttpMappingInfo)) return false;
+        final HttpMappingInfo other = (HttpMappingInfo) o;
         if (!other.canEqual((Object) this)) return false;
         final Object this$path = this.getPath();
         final Object other$path = other.getPath();
@@ -94,7 +94,7 @@ public class ControllerInfo implements Serializable {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof ControllerInfo;
+        return other instanceof HttpMappingInfo;
     }
 
     public int hashCode() {

@@ -18,4 +18,27 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
+    @GetMapping(value = "/user/update2/{id}")
+    public User update(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+
+    @GetMapping(value = "/user/del/{id}")
+    public User del(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+
+    @GetMapping(value = "/user/getfather/{id}")
+    public User getfather(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+
+    @GetMapping(value = "/user/getmather/{id}")
+    public User getmather(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
 }
