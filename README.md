@@ -9,16 +9,7 @@
   <img src="https://contrib.rocks/image?repo=Halfmoonly/feignx-plugin" />
 </a>
 
-
-## 🚀🚀🚀 OpenFeign Assistant:v4.1.8
-v4.1.8发布——对应分支main-fix-chchev2
-
-        1. 我们更名啦，由FeignX更名为OpenFeign Assistant
-        2. 极致提升性能，引入CacheManager，管理双边缓存FeignInterface和ApiController
-        3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
-
-[feignx-4.1.8.zip](https://github.com/user-attachments/files/19140074/feignx-4.1.8.zip)
-
+## 我们更名啦，由FeignX更名为OpenFeign Assistant
 
 ## 使用教程
 已上架idea插件市场：https://plugins.jetbrains.com , 搜索OpenFeign Assistant下载安装，觉得好用，点个star⭐
@@ -157,6 +148,22 @@ Feignx:v4.1.6 resolve IntelliJ IDEA Ultimate 2019.3.51 compatibility problem.
 - Method SearchControllerAction.navigateToControllerCode(...) contains an invokestatic instruction referencing an unresolved method PsiEditorUtil.findEditor(PsiElement).
 
 --- 
+### 🚀🚀🚀 OpenFeign Assistant:v4.1.8
+v4.1.8发布——对应分支main-fix-cachev2
+
+        1. 我们更名啦，由FeignX更名为OpenFeign Assistant
+        2. 极致提升性能，引入CacheManager，管理双边缓存FeignInterface和ApiController
+        3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
+
+[feignx-4.1.8.zip](https://github.com/user-attachments/files/19140074/feignx-4.1.8.zip)
+
+
+### OpenFeign Assistant:v4.1.9
+v4.1.9发布——对应分支main-fix-cachev3
+
+我们优化了双边缓存更新策略（Optimize cache update policies）
+
+https://github.com/user-attachments/files/19147696/OpenFeign.Assistant-4.1.9.zip
 
 
 觉得好用，点个star⭐
