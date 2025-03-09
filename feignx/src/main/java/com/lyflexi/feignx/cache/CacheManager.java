@@ -55,9 +55,24 @@ public class CacheManager {
      * @param project
      */
     public static void clear(Project project) {
-        // 扫描项目中的Java源文件
         CacheManager.setControllerCacheData(project,null);
         CacheManager.setFeignCacheData(project,null);
+    }
+
+    /**
+     * 清除指定项目的Feign接口缓存
+     * @param project
+     */
+    public static void clearFeignCache(Project project) {
+        CacheManager.setFeignCacheData(project,null);
+    }
+
+    /**
+     * 清除指定项目的Controller缓存
+     * @param project
+     */
+    public static void clearControllerCache(Project project) {
+        CacheManager.setControllerCacheData(project,null);
     }
     /**
      * 获取所有打开的项目列表
