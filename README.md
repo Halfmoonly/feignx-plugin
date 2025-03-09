@@ -1,6 +1,6 @@
 <div align="center">
   <img src="./feignx/src/main/resources/META-INF/pluginIcon.svg" height="64">
-  <h2>OpenFeign Assistant(FeignX)</h2>
+  <h2>Navigator4URL OpenFeign RestController(FeignX)</h2>
 </div>
 
 ## 贡献者名单
@@ -9,10 +9,10 @@
   <img src="https://contrib.rocks/image?repo=Halfmoonly/feignx-plugin" />
 </a>
 
-## 我们更名啦，由FeignX更名为OpenFeign Assistant
+## 我们更名啦，由FeignX更名为Navigator4URL OpenFeign RestController
 
 ## 使用教程
-已上架idea插件市场：https://plugins.jetbrains.com , 搜索OpenFeign Assistant下载安装，觉得好用，点个star⭐
+已上架idea插件市场：https://plugins.jetbrains.com , 搜索Navigator4URL OpenFeign RestController下载安装，觉得好用，点个star⭐
 
 ---
 <div align="center">
@@ -21,7 +21,7 @@
 </div>
 
 
-<p>OpenFeign Assistant(FeignX) is a Free SpringCloud Assistant. Author 刘岩</p>
+<p>Navigator4URL OpenFeign RestController(FeignX) is a Free SpringCloud Assistant. Author 刘岩</p>
 
 FeignX is inspired by IDEA's star plugin MybatisX.
 
@@ -37,15 +37,15 @@ FeignX is inspired by IDEA's star plugin MybatisX.
   <img src="./feignx/pics/c2f.png">
 </div>
 
-2. OpenFeign Assistant supports configuration file parsing，such as yml/yaml/properties of
+2. Navigator4URL OpenFeign RestController supports configuration file parsing，such as yml/yaml/properties of
 
 - server.servlet.context-path 
 
 - spring.mvc.servlet.path
    
-3. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
+3. Navigator4URL OpenFeign RestController is sufficiently accurate with options, after many rounds of optimization.
 
-4. OpenFeign Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
+4. Navigator4URL OpenFeign RestController is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
 
 
 So, install the FeignX plugin as soon as possible!.
