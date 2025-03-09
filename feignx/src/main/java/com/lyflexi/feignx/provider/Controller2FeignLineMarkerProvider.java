@@ -34,7 +34,7 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         Project project = element.getProject();
         CacheManager.clearFeignCache(project);
-        if (element instanceof PsiMethod && isElementWithinController(element)) {
+        if (element instanceof PsiMethod && JavaResourceUtil.isElementWithinController(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
             if (psiClass != null) {
@@ -80,22 +80,5 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
             return controllerPath.equals(feignInfo.getPath());
         }
         return false;
-    }
-
-    /**
-     * 元素是否为FeignClient下的方法
-     *
-     * @param element 元素
-     * @return boolean
-     */
-    private static boolean isElementWithinController(PsiElement element) {
-        if (element instanceof PsiClass) {
-            PsiClass psiClass = (PsiClass) element;
-
-            // 检查类上是否存在 FeignClient 注解
-            return JavaResourceUtil.isControllerClass(psiClass);
-        }
-        PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        return type != null && isElementWithinController(type);
     }
 }

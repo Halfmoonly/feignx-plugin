@@ -29,4 +29,10 @@ public interface UserClient2 {
 
     @GetMapping(value = "/getmather/{id}")
     User getmather(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/clipboard/{id}")
+    User clipboard(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/clipboard2/{id}")
+    User clipboard2(@PathVariable("id") Long id);
 }

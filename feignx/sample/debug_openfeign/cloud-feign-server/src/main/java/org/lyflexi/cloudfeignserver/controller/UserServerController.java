@@ -41,4 +41,14 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
+    @GetMapping(value = "/user/clipboard/{id}")
+    public User clipboard(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+    @GetMapping(value = "/user/clipboard2/{id}")
+    public User clipboard2(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
 }

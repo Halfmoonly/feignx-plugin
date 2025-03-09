@@ -2,7 +2,6 @@ package com.lyflexi.feignx.utils;
 
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -365,7 +364,7 @@ public class JavaResourceUtil {
      * @param element 元素
      * @return boolean
      */
-    public static boolean isElementWithinInterface(PsiElement element) {
+    public static boolean isElementWithinFeign(PsiElement element) {
         if (element instanceof PsiClass && ((PsiClass) element).isInterface()) {
             PsiClass psiClass = (PsiClass) element;
 
@@ -376,7 +375,23 @@ public class JavaResourceUtil {
             }
         }
         PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        return type != null && isElementWithinInterface(type);
+        return type != null && isElementWithinFeign(type);
+    }
+    /**
+     * 元素是否为Controller下的方法
+     *
+     * @param element 元素
+     * @return boolean
+     */
+    public static boolean isElementWithinController(PsiElement element) {
+        if (element instanceof PsiClass) {
+            PsiClass psiClass = (PsiClass) element;
+
+            // 检查类上是否存在 CONTROLLER/RESTCONTROLLER 注解
+            return JavaResourceUtil.isControllerClass(psiClass);
+        }
+        PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+        return type != null && isElementWithinController(type);
     }
 
 

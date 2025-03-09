@@ -13,5 +13,6 @@ import javax.swing.*;
 public interface MyIcons {
     Icon STATEMENT_LINE_FEIGN_ICON = IconLoader.getIcon("/icons/feignxAction.svg", MyIcons.class);
     Icon STATEMENT_LINE_CONTROLLER_ICON = IconLoader.getIcon("/icons/feignxAction.svg", MyIcons.class);
+    Icon STATEMENT_LINE_CLIPBOARD_ICON = IconLoader.getIcon("/icons/clipboard.svg", MyIcons.class);
 }
 

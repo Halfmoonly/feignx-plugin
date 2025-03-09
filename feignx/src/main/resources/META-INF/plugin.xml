@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>OpenFeign Assistant</name>
+    <name>OpenFeign4URL-Assistant</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="liuyanoutsee@outlook.com" url="https://github.com/Halfmoonly">Halfmoonly</vendor>
@@ -22,10 +22,13 @@
 2. By parsing yml/yaml/properties, OpenFeign Assistant supports `server.servlet.context-path` and `spring.mvc.servlet.path`
 <br>
 <br>
-3. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
+3. OpenFeign4URL-Assistant is sufficiently accurate with options, after many rounds of optimization.
 <br>
 <br>
-4. OpenFeign Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+4. OpenFeign4URL-Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+<br>
+<br>
+5. OpenFeign4URL-Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friend.
 <br>
 ]]>
     </description>
@@ -34,7 +37,9 @@
         <![CDATA[
         ### 更新内容
         <br>
-        1. 我们优化了双边缓存更新策略（Optimize cache update policies）
+        1. 重大版本更新OpenFeign4URL-Assistant.v5.0.0：为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
+
+        Major Update 5.0.0: To help the Vim friends, We support url full path copying to the clipboard (both Feign and Controller interfaces)
         ]]>
     </change-notes>
 
@@ -54,6 +59,13 @@
                                         implementationClass="com.lyflexi.feignx.provider.Feign2ControllerLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider"/>
+
+
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.lyflexi.feignx.provider.CopyControllerUrlLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.lyflexi.feignx.provider.CopyFeignUrlLineMarkerProvider"/>
+
 
         <!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
         <!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
