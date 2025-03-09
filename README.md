@@ -166,7 +166,7 @@ v4.1.9发布——对应分支main-fix-cachev3
 
 我们优化了双边缓存更新策略（Optimize cache update policies）
 
-https://github.com/user-attachments/files/19147696/OpenFeign.Assistant-4.1.9.zip
+https://github.com/user-attachments/files/19148594/OpenFeign.Assistant-4.1.9.zip
 
 
 觉得好用，点个star⭐
