@@ -170,6 +170,8 @@ https://github.com/user-attachments/files/19148594/OpenFeign.Assistant-4.1.9.zip
 
 
 ### 🚀 V5.1.0 更新内容
+reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
+
 
 1. 我们又更名啦[笑哭]，由FeignX更名为Navigator4URL OpenFeign RestController
 2. 为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
