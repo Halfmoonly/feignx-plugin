@@ -4,11 +4,13 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import com.lyflexi.feignx.cache.CacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
-import com.lyflexi.feignx.utils.JavaSourceFileUtil;
+import com.lyflexi.feignx.utils.JavaResourceUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -26,12 +28,13 @@ public class Feign2ControllerLineMarkerProvider extends RelatedItemLineMarkerPro
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        JavaSourceFileUtil.clear();
-        if (element instanceof PsiMethod && JavaSourceFileUtil.isElementWithinInterface(element)) {
+        Project project = element.getProject();
+        CacheManager.clearControllerCache(project);
+        if (element instanceof PsiMethod && JavaResourceUtil.isElementWithinFeign(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
             if (psiClass != null) {
-                List<PsiElement> resultList = JavaSourceFileUtil.process(psiMethod);
+                List<PsiElement> resultList = JavaResourceUtil.process(psiMethod);
                 if (!resultList.isEmpty()) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
                             .create(MyIcons.STATEMENT_LINE_FEIGN_ICON)

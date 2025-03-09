@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.lyflexi"
-version = "4.1.7"
+version = "5.1.0"
 
 repositories {
     maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
@@ -15,7 +15,8 @@ repositories {
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     version.set("2021.2")
-    type.set("IU") // Target IDE Platform
+//    type.set("IU") // Target IDE Platform
+    type.set("IC") // Target IDE Platform
     //gradle的下载idea安装包位置: %USERPROFILE%\.gradle\caches\modules-2\files-2.1\com.jetbrains.intellij.idea
     plugins.set(listOf("com.intellij.java"))
 }
@@ -42,8 +43,9 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("193")
-//        支持更高版本的IDEA. 版本不设限
+        // 起始支持版本，2020.3 (IDEA 201)
+        sinceBuild.set("203")
+        // 支持至更高版本的IDEA. 版本不设限
         untilBuild.set("")
     }
 

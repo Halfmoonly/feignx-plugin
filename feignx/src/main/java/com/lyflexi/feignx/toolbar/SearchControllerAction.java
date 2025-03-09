@@ -8,10 +8,10 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.util.PsiEditorUtil;
 import com.intellij.psi.util.PsiUtilBase;
-import com.lyflexi.feignx.model.ControllerInfo;
-import com.lyflexi.feignx.utils.JavaSourceFileUtil;
+import com.lyflexi.feignx.model.HttpMappingInfo;
+import com.lyflexi.feignx.utils.JavaResourceUtil;
+import com.lyflexi.feignx.utils.ToolBarUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,11 +41,11 @@ public class SearchControllerAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent event) {
 
         // 扫描项目中的Java源文件
-        List<ControllerInfo> controllerInfos = JavaSourceFileUtil.scanAllProjectControllerInfo();
+        List<HttpMappingInfo> httpMappingInfos = ToolBarUtil.scanAllProjectControllerInfo();
         // 执行搜索
-        startSearch(controllerInfos);
+        startSearch(httpMappingInfos);
     }
-    private void startSearch(List<ControllerInfo> controllerInfos) {
+    private void startSearch(List<HttpMappingInfo> httpMappingInfos) {
         if(searchFrame == null){
             searchFrame = new JFrame("搜索");
         }
@@ -81,7 +81,7 @@ public class SearchControllerAction extends AnAction {
 
             private void performSearch() {
                 String searchText = searchField.getText().strip();
-                List<ControllerInfo> searchResults = searchControllerInfos(controllerInfos, searchText.split(" ")[0]);
+                List<HttpMappingInfo> searchResults = searchControllerInfos(httpMappingInfos, searchText.split(" ")[0]);
                 showControllerInfo(searchResults, resultTextArea);
             }
         });
@@ -90,7 +90,7 @@ public class SearchControllerAction extends AnAction {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    navigateToFirstControllerCode(controllerInfos, searchField.getText().strip());
+                    navigateToFirstControllerCode(httpMappingInfos, searchField.getText().strip());
                 }
             }
         });
@@ -129,34 +129,34 @@ public class SearchControllerAction extends AnAction {
         }
     }
 
-    private void showControllerInfo(List<ControllerInfo> controllerInfos, JTextArea resultTextArea) {
-        resultTextArea.setText(JavaSourceFileUtil.showResult(controllerInfos));
+    private void showControllerInfo(List<HttpMappingInfo> httpMappingInfos, JTextArea resultTextArea) {
+        resultTextArea.setText(JavaResourceUtil.showResult(httpMappingInfos));
         resultTextArea.setCaretPosition(0);
     }
 
 
-    private List<ControllerInfo> searchControllerInfos(List<ControllerInfo> controllerInfos, String searchText) {
-        return controllerInfos.stream()
+    private List<HttpMappingInfo> searchControllerInfos(List<HttpMappingInfo> httpMappingInfos, String searchText) {
+        return httpMappingInfos.stream()
                 .filter(info -> isMatched(info, searchText))
                 .collect(Collectors.toList());
     }
-    private void navigateToFirstControllerCode(List<ControllerInfo> controllerInfos, String searchText) {
-        List<ControllerInfo> searchResults = null;
+    private void navigateToFirstControllerCode(List<HttpMappingInfo> httpMappingInfos, String searchText) {
+        List<HttpMappingInfo> searchResults = null;
         int i = 0;
         String[] s = searchText.split(" ");
         if(s.length == 1){
-            searchResults = searchControllerInfos(controllerInfos, searchText);
+            searchResults = searchControllerInfos(httpMappingInfos, searchText);
         }else if(s.length == 2){
-            searchResults = searchControllerInfos(controllerInfos, s[0]);
+            searchResults = searchControllerInfos(httpMappingInfos, s[0]);
             i = Integer.parseInt(s[1])-1;
         }
         if (CollectionUtils.isNotEmpty(searchResults)) {
-            ControllerInfo iResult = searchResults.get(i);
+            HttpMappingInfo iResult = searchResults.get(i);
             navigateToControllerCode(iResult);
         }
     }
-    private void navigateToControllerCode(ControllerInfo controllerInfo) {
-        PsiFile file = controllerInfo.getMethod().getContainingFile();
+    private void navigateToControllerCode(HttpMappingInfo httpMappingInfo) {
+        PsiFile file = httpMappingInfo.getMethod().getContainingFile();
         if (file instanceof PsiJavaFile) {
             PsiJavaFile javaFile = (PsiJavaFile) file;
             PsiClass[] classes = javaFile.getClasses();
@@ -164,7 +164,7 @@ public class SearchControllerAction extends AnAction {
                 PsiClass psiClass = classes[0];
                 psiClass.navigate(true);
                 // 定位到对应的方法
-                PsiMethod targetMethod = controllerInfo.getMethod();
+                PsiMethod targetMethod = httpMappingInfo.getMethod();
                 if (targetMethod != null) {
                     int offset = targetMethod.getTextOffset();
                     //Invocation of unresolved method PsiEditorUtil.findEditor(PsiElement) (1 problem)
@@ -183,18 +183,18 @@ public class SearchControllerAction extends AnAction {
         }
     }
     // 添加辅助方法isMatched：
-    private boolean isMatched(ControllerInfo controllerInfo, String searchText) {
+    private boolean isMatched(HttpMappingInfo httpMappingInfo, String searchText) {
         String lowerCase = searchText.toLowerCase();
-        if(controllerInfo.getRequestMethod().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getRequestMethod().toLowerCase().contains(lowerCase)){
             return true;
         }
-        if(controllerInfo.getPath().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getPath().toLowerCase().contains(lowerCase)){
             return true;
         }
-        if(controllerInfo.getSwaggerInfo() != null && controllerInfo.getSwaggerInfo().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getSwaggerInfo() != null && httpMappingInfo.getSwaggerInfo().toLowerCase().contains(lowerCase)){
             return true;
         }
-        if(controllerInfo.getSwaggerNotes() != null && controllerInfo.getSwaggerNotes().toLowerCase().contains(lowerCase)){
+        if(httpMappingInfo.getSwaggerNotes() != null && httpMappingInfo.getSwaggerNotes().toLowerCase().contains(lowerCase)){
             return true;
         }
         return false;

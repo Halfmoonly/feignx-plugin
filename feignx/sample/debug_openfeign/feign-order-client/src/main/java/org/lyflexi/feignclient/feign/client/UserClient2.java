@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 // http://localhost:9000/consumer/feign/user/get/1
 @FeignClient(path = "/hello/world/user",value = "cloud-feign-server", contextId = "user", configuration = UserConfiguration.class)
-public interface UserClient {
+public interface UserClient2 {
 
     @GetMapping(value = "/get/{id}")
     User getUserById(@PathVariable("id") Long id);
@@ -26,4 +26,13 @@ public interface UserClient {
 
     @GetMapping(value = "/getfather/{id}")
     User getfather(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/getmather/{id}")
+    User getmather(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/clipboard/{id}")
+    User clipboard(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/clipboard2/{id}")
+    User clipboard2(@PathVariable("id") Long id);
 }
