@@ -151,6 +151,8 @@ Feignx:v4.1.6 resolve IntelliJ IDEA Ultimate 2019.3.51 compatibility problem.
 ### 🚀🚀🚀 OpenFeign Assistant:v4.1.8
 v4.1.8发布——对应分支main-fix-cachev2
 
+reslove issue #10：https://github.com/Halfmoonly/feignx-plugin/issues/10
+
         1. 我们更名啦，由FeignX更名为OpenFeign Assistant
         2. 极致提升性能，引入CacheManager，管理双边缓存FeignInterface和ApiController
         3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
