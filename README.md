@@ -161,12 +161,25 @@ reslove issue #10：https://github.com/Halfmoonly/feignx-plugin/issues/10
 [feignx-4.1.8.zip](https://github.com/user-attachments/files/19140074/feignx-4.1.8.zip)
 
 
-### 🐞OpenFeign Assistant:v4.1.9
+### 🐞 OpenFeign Assistant:v4.1.9
 v4.1.9发布——对应分支main-fix-cachev3
 
 我们优化了双边缓存更新策略（Optimize cache update policies）
 
 https://github.com/user-attachments/files/19148594/OpenFeign.Assistant-4.1.9.zip
 
+
+### 🚀 V5.1.0 更新内容
+
+1. 我们又更名啦[笑哭]，由FeignX更名为Navigator4URL OpenFeign RestController
+2. 为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
+3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
+
+
+朋友们记得先将zip解压出jar包，再离线安装jar包哟~~：https://github.com/user-attachments/files/19149196/Navigator4URL.OpenFeign.RestController-5.1.0.zip
+
+
+
+---
 
 觉得好用，点个star⭐
