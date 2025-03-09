@@ -37,15 +37,15 @@ FeignX is inspired by IDEA's star plugin MybatisX.
   <img src="./feignx/pics/c2f.png">
 </div>
 
-Most importantly, FeignX supports configuration file parsing，such as yml/yaml/properties of
+2. OpenFeign Assistant supports configuration file parsing，such as yml/yaml/properties of
 
 - server.servlet.context-path 
 
 - spring.mvc.servlet.path
    
-2. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
+3. OpenFeign Assistant is sufficiently accurate with options, after many rounds of optimization.
 
-3. OpenFeign Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
+4. OpenFeign Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
 
 
 So, install the FeignX plugin as soon as possible!.
