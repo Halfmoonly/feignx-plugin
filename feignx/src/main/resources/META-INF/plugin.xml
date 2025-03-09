@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>FeignX</name>
+    <name>Navigator4URL OpenFeign RestController</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="liuyanoutsee@outlook.com" url="https://github.com/Halfmoonly">Halfmoonly</vendor>
@@ -14,15 +14,21 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-<b>FeignX is a SpringCloud OpenFeign Assistant. Author 刘岩.</b>
+<b>Navigator4URL OpenFeign RestController（FeignX） is a Free SpringCloud OpenFeign And RestController Assistant. Author 刘岩.</b>
 <br>
 1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module. eg. feignClient -> ApiController. eg. ApiController -> feignClient.
 <br>
 <br>
-2. By parsing yml/yaml/properties, FeignX supports `server.servlet.context-path` and `spring.mvc.servlet.path`
+2. By parsing yml/yaml/properties, OpenFeign Assistant supports `server.servlet.context-path` and `spring.mvc.servlet.path`
 <br>
 <br>
-3. Most importantly, FeignX is sufficiently accurate than other feign plugins on the market, after many rounds of optimization.
+3. Navigator4URL OpenFeign RestController is sufficiently accurate with options, after many rounds of optimization.
+<br>
+<br>
+4. Navigator4URL OpenFeign RestController is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+<br>
+<br>
+5. Navigator4URL OpenFeign RestController supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friend.
 <br>
 ]]>
     </description>
@@ -31,9 +37,9 @@
         <![CDATA[
         ### 更新内容
         <br>
-        1. 替换了废弃的API：PsiEditorUtil.findEditor(file) which can lead to NoSuchMethodError
-        <br>
-        2. 重绘gutter
+        1. 重大版本更新Navigator4URL OpenFeign RestController.v5.1.0：为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
+
+        Major Update 5.1.0: To help the Vim friends, We support url full path copying to the clipboard (both Feign and Controller interfaces)
         ]]>
     </change-notes>
 
@@ -53,6 +59,13 @@
                                         implementationClass="com.lyflexi.feignx.provider.Feign2ControllerLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider"/>
+
+
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.lyflexi.feignx.provider.CopyControllerUrlLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.lyflexi.feignx.provider.CopyFeignUrlLineMarkerProvider"/>
+
 
         <!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
         <!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
