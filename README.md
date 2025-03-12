@@ -10,9 +10,13 @@
 </a>
 
 ## 我们更名啦，由FeignX更名为Navigator4URL OpenFeign RestController
+已上架IntelliJ IDEA插件市场：https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
+- 2025/03/12 官方市场用户下载量突破5000
+-
 
+求star⭐⭐
 ## 使用教程
-已上架idea插件市场：https://plugins.jetbrains.com , 搜索Navigator4URL OpenFeign RestController下载安装，觉得好用，点个star⭐
+IntelliJ IDEA内Settings->plugins->Marketplace->搜索Navigator4URL OpenFeign RestController下载安装
 
 ---
 <div align="center">
