@@ -27,26 +27,29 @@ FeignX is inspired by IDEA's star plugin MybatisX.
 
 1. You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
 
-- eg. feignClient -> ApiController
-<div align="left">
-  <img src="./feignx/pics/f2c.png">
-</div>
-
-- eg. ApiController -> feignClient
-<div align="left">
-  <img src="./feignx/pics/c2f.png">
-</div>
-
 2. Navigator4URL OpenFeign RestController supports configuration file parsing，such as yml/yaml/properties of
 
-- server.servlet.context-path 
+   - server.servlet.context-path 
 
-- spring.mvc.servlet.path
+   - spring.mvc.servlet.path
    
 3. Navigator4URL OpenFeign RestController is sufficiently accurate with options, after many rounds of optimization.
 
 4. Navigator4URL OpenFeign RestController is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
 
+5. Navigator4URL OpenFeign RestController supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
+
+eg. FeignClient -> ApiController
+
+<div align="left">
+  <img src="./feignx/pics/snipping-feignClient.png">
+</div>
+
+eg. ApiController -> FeignClient
+
+<div align="left">
+  <img src="./feignx/pics/snipping-apiController.png">
+</div>
 
 So, install the FeignX plugin as soon as possible!.
 ## 更新日志
@@ -187,6 +190,16 @@ CopyControllerUrlLineMarkerProvider：
 
 朋友们记得先将zip解压出jar包，再离线安装jar包哟~~：https://github.com/user-attachments/files/19149196/Navigator4URL.OpenFeign.RestController-5.1.0.zip
 
+### 🐞 V5.1.1 更新内容
+修复分支：hotfix/main-copy-notify
+
+1. 我们修复了一键复制URL功能的消息通知失败的问题，以及偶先空指针的现象
+
+2. 我们优化了Copy-Gutter和Bird-Gutter的展现位置，将其从方法签名处移至RequestMapping等Rest注解处，这样更加符合直觉
+
+3. 我们优化了Copy-Gutter和Bird-Gutter的动态解析，使用户后期在修改方法签名的时候（如添加/**/注释或者添加自定义业务注解的时候），Gutter的位置随着RequestMapping等Rest注解的位置动态生效
+
+4. 我们优化了一键复制URL功能的Copy-Gutter图标设计，更加的优雅
 
 ---
 
