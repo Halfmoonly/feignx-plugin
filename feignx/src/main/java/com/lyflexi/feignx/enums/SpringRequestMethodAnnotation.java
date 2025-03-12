@@ -1,5 +1,9 @@
 package com.lyflexi.feignx.enums;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @Description:
  * @Author: lyflexi
@@ -68,5 +72,19 @@ public enum SpringRequestMethodAnnotation {
 
     public String getShortName() {
         return qualifiedName.substring(qualifiedName.lastIndexOf(".") - 1);
+    }
+
+    /**
+     * 获取所有的keys
+     *             "org.springframework.web.bind.annotation.RequestMapping",
+     *             "org.springframework.web.bind.annotation.GetMapping",
+     *             "org.springframework.web.bind.annotation.PostMapping",
+     *             "org.springframework.web.bind.annotation.PutMapping",
+     *             "org.springframework.web.bind.annotation.DeleteMapping",
+     *             "org.springframework.web.bind.annotation.PatchMapping"
+     * @return
+     */
+    public static List<String> allQualifiedNames() {
+        return Arrays.stream(SpringRequestMethodAnnotation.values()).map(SpringRequestMethodAnnotation::getQualifiedName).collect(Collectors.toList());
     }
 }

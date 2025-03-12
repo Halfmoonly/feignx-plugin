@@ -1,6 +1,7 @@
 package org.lyflexi.cloudfeignserver.controller;
 
 import org.lyflexi.cloudfeignapi.User;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +14,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserServerController {
 
-    @GetMapping(value = "/user/get/{id}")
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/user/get/{id}")
     public User getUserById(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
+
+    /**
+     * hhh
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/user/update2/{id}")
+    /**
+     * 哈哈哈
+     */
     public User update(@PathVariable("id") Long id)
     {
         return new User(id, "user");
@@ -30,13 +45,29 @@ public class UserServerController {
         return new User(id, "user");
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/user/getfather/{id}")
+    /**
+     *
+     */
     public User getfather(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/user/getmather/{id}")
+    /**
+     *
+     */
     public User getmather(@PathVariable("id") Long id)
     {
         return new User(id, "user");

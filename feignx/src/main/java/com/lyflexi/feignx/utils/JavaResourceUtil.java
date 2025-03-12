@@ -5,7 +5,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.lyflexi.feignx.cache.CacheManager;
+import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.enums.SpringRequestMethodAnnotation;
 import com.lyflexi.feignx.model.HttpMappingInfo;
 import com.lyflexi.feignx.properties.ConfigReader;
@@ -87,7 +87,7 @@ public class JavaResourceUtil {
         cachedControllerInfos.addAll(httpMappingInfos.stream()
                 .map(info -> Pair.of(info.getPath(), info))
                 .collect(Collectors.toList()));
-        CacheManager.setControllerCacheData(project, cachedControllerInfos);
+        BilateralCacheManager.setControllerCacheData(project, cachedControllerInfos);
         return httpMappingInfos;
     }
     /**
@@ -351,7 +351,7 @@ public class JavaResourceUtil {
 
 
     private static boolean match2C(HttpMappingInfo controllerInfo, PsiMethod feignMethod) {
-        String feignPath = CacheManager.getFeignPath(feignMethod);
+        String feignPath = BilateralCacheManager.getFeignPath(feignMethod);
         if (StringUtils.isNotBlank(feignPath)) {
             return feignPath.equals(controllerInfo.getPath());
         }
@@ -360,22 +360,51 @@ public class JavaResourceUtil {
 
     /**
      * 元素是否为FeignClient下的方法
-     *
+     * 当传入的是PsiMethod，则该方法失效
      * @param element 元素
      * @return boolean
      */
-    public static boolean isElementWithinFeign(PsiElement element) {
-        if (element instanceof PsiClass && ((PsiClass) element).isInterface()) {
-            PsiClass psiClass = (PsiClass) element;
+//    public static boolean isElementWithinFeign(PsiElement element) {
+//        if (element instanceof PsiClass && ((PsiClass) element).isInterface()) {
+//            PsiClass psiClass = (PsiClass) element;
+//
+//            // 检查类上是否存在 FeignClient 注解
+//            PsiAnnotation feignAnnotation = psiClass.getAnnotation("org.springframework.cloud.openfeign.FeignClient");
+//            if (feignAnnotation != null) {
+//                return true;
+//            }
+//        }
+//        PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+//        return type != null && isElementWithinFeign(type);
+//    }
 
-            // 检查类上是否存在 FeignClient 注解
-            PsiAnnotation feignAnnotation = psiClass.getAnnotation("org.springframework.cloud.openfeign.FeignClient");
-            if (feignAnnotation != null) {
-                return true;
+    /**
+     * 元素是否为FeignClient下的方法
+     *
+     * 更保险的方式是
+     * 当传进去的是 PsiMethod，需要手动判断所有的getParentOfType是否含有注解org.springframework.cloud.openfeign.FeignClient
+     * @param element
+     * @return
+     */
+    public static boolean isElementWithinFeign(PsiElement element) {
+        PsiClass psiClass = null;
+
+        if (element instanceof PsiClass) {
+            psiClass = (PsiClass) element;
+        } else {
+            psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+        }
+
+        if (psiClass != null && psiClass.isInterface()) {
+            PsiAnnotation[] annotations = psiClass.getModifierList().getAnnotations();
+            for (PsiAnnotation annotation : annotations) {
+                if ("org.springframework.cloud.openfeign.FeignClient".equals(annotation.getQualifiedName())) {
+                    return true;
+                }
             }
         }
-        PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        return type != null && isElementWithinFeign(type);
+
+        return false;
     }
     /**
      * 元素是否为Controller下的方法
@@ -443,7 +472,7 @@ public class JavaResourceUtil {
         feignCacheData.addAll(feignInfos.stream()
                 .map(info -> Pair.of(info.getPath(), info))
                 .collect(Collectors.toList()));
-        CacheManager.setFeignCacheData(project, feignCacheData);
+        BilateralCacheManager.setFeignCacheData(project, feignCacheData);
 
         return feignInfos;
     }

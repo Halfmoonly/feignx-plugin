@@ -1,10 +1,17 @@
+
+idea{
+    module{
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
+}
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.5.2"
 }
 
 group = "com.lyflexi"
-version = "5.1.0"
+version = "5.1.1"
 
 repositories {
     maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }

@@ -5,13 +5,14 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.lyflexi.feignx.cache.CacheManager;
+import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
 import com.lyflexi.feignx.model.HttpMappingInfo;
+import com.lyflexi.feignx.utils.MappingAnnotationUtil;
 import com.lyflexi.feignx.utils.JavaResourceUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @Description:
+ * @Description: 将导航Gutter绘制在注解旁
  * @Author: lyflexi
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:55
@@ -33,7 +34,7 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         Project project = element.getProject();
-        CacheManager.clearFeignCache(project);
+        BilateralCacheManager.clearFeignCache(project);
         if (element instanceof PsiMethod && JavaResourceUtil.isElementWithinController(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
@@ -45,7 +46,8 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Feign");
-                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(psiMethod.getNameIdentifier())));
+                    PsiAnnotation targetAnnotation = MappingAnnotationUtil.findTargetMappingAnnotation(psiMethod);
+                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
                 }
             }
         }
@@ -75,7 +77,7 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
     }
 
     private static boolean match2F(HttpMappingInfo feignInfo, PsiMethod controllerMethod) {
-        String controllerPath = CacheManager.getControllerPath(controllerMethod);
+        String controllerPath = BilateralCacheManager.getControllerPath(controllerMethod);
         if (StringUtils.isNotBlank(controllerPath)) {
             return controllerPath.equals(feignInfo.getPath());
         }

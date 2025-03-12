@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -19,9 +20,15 @@ import java.util.stream.Collectors;
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:52
  */
-public class CacheManager {
+/**
+ * @Description: 缓存管理器
+ * @Author: lyflexi
+ * @Project: feignx-plugin
+ * @Date: 2025/3/12
+ */
+public class BilateralCacheManager {
 
-    private CacheManager() {
+    private BilateralCacheManager() {
     }
 
     // 缓存接口数据使用(controller)  projectid - map
@@ -37,7 +44,7 @@ public class CacheManager {
 //    public static void clear() {
 //        projectControllerCacheMap = null;
 //        projectFeignCacheMap = null;
-////        projectControllerCacheMap = null;
+    ////        projectControllerCacheMap = null;
 //    }
 
     //清除所有打开项目的缓存
@@ -45,8 +52,8 @@ public class CacheManager {
         Project[] openProjects = getOpenProjects();
         for (Project project : openProjects) {
             // 扫描项目中的Java源文件
-            CacheManager.setControllerCacheData(project,null);
-            CacheManager.setFeignCacheData(project,null);
+            BilateralCacheManager.setControllerCacheData(project,null);
+            BilateralCacheManager.setFeignCacheData(project,null);
         }
     }
 
@@ -55,8 +62,8 @@ public class CacheManager {
      * @param project
      */
     public static void clear(Project project) {
-        CacheManager.setControllerCacheData(project,null);
-        CacheManager.setFeignCacheData(project,null);
+        BilateralCacheManager.setControllerCacheData(project,null);
+        BilateralCacheManager.setFeignCacheData(project,null);
     }
 
     /**
@@ -64,7 +71,7 @@ public class CacheManager {
      * @param project
      */
     public static void clearFeignCache(Project project) {
-        CacheManager.setFeignCacheData(project,null);
+        BilateralCacheManager.setFeignCacheData(project,null);
     }
 
     /**
@@ -72,7 +79,7 @@ public class CacheManager {
      * @param project
      */
     public static void clearControllerCache(Project project) {
-        CacheManager.setControllerCacheData(project,null);
+        BilateralCacheManager.setControllerCacheData(project,null);
     }
     /**
      * 获取所有打开的项目列表
@@ -165,8 +172,19 @@ public class CacheManager {
 
     }
 
+    // -------------------- Key 构造 --------------------
+
     @NotNull
-    private static String getKey(PsiMethod controllerMethod) {
-        return controllerMethod.getContainingClass().getQualifiedName() + controllerMethod.getName();
+    private static String getKey(PsiMethod method) {
+        if (method.getContainingClass() == null || method.getContainingClass().getQualifiedName() == null) {
+            return method.getName(); // 退而求其次
+        }
+        return method.getContainingClass().getQualifiedName() + method.getName();
+    }
+
+    @NotNull
+    private static String getProjectId(Project project) {
+        String path = project.getBasePath();
+        return path != null ? path : String.valueOf(project.hashCode());
     }
 }

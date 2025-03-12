@@ -37,9 +37,13 @@
         <![CDATA[
         ### 更新内容
         <br>
-        1. 重大版本更新Navigator4URL OpenFeign RestController.v5.1.0：为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
+        1. 我们修复了一键复制URL功能的消息通知失败的问题，以及偶先空指针的现象
 
-        Major Update 5.1.0: To help the Vim friends, We support url full path copying to the clipboard (both Feign and Controller interfaces)
+        2. 我们优化了Copy-Gutter和Bird-Gutter的展现位置，将其从方法签名处移至RequestMapping等Rest注解处，这样更加符合直觉
+
+        3. 我们优化了Copy-Gutter和Bird-Gutter的动态解析，使用户后期在修改方法签名的时候（如添加/**/注释或者添加自定义注解的时候），Gutter的位置随着RequestMapping等Rest注解的位置动态生效
+
+        4. 我们优化了一键复制URL功能的Copy-Gutter图标设计，更加的优雅
         ]]>
     </change-notes>
 
@@ -70,7 +74,9 @@
         <!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
         <!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
 
-
+        <notificationGroup id="Navigator4URL OpenFeign RestController"
+                           displayType="BALLOON"
+                           key="notification.group.name"/>
 
     </extensions>
 
