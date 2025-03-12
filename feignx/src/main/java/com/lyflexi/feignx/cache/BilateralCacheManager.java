@@ -1,5 +1,6 @@
 package com.lyflexi.feignx.cache;
 
+import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.PsiMethod;
@@ -138,6 +139,10 @@ public class BilateralCacheManager {
      * @return
      */
     public static String getControllerPath(PsiMethod controllerMethod) {
+        if (DumbService.isDumb(controllerMethod.getProject())) {
+            // IDE 正在 indexing，等下次再处理
+            return null;
+        }
         String basePath = controllerMethod.getProject().getBasePath();
         if (projectControllerCacheMap.get(basePath) == null) {
             JavaResourceUtil.scanControllerPaths(controllerMethod.getProject());
@@ -158,6 +163,10 @@ public class BilateralCacheManager {
      * @return
      */
     public static String getFeignPath(PsiMethod feignMethod) {
+        if (DumbService.isDumb(feignMethod.getProject())) {
+            // IDE 正在 indexing，等下次再处理
+            return null;
+        }
         String basePath = feignMethod.getProject().getBasePath();
         if (projectFeignCacheMap.get(basePath) == null) {
             JavaResourceUtil.scanFeignInterfaces(feignMethod.getProject());

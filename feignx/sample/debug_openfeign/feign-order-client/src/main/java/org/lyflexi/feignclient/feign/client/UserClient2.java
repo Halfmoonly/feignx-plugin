@@ -35,15 +35,32 @@ public interface UserClient2 {
      * @return
      */
     @GetMapping(value = "/getfather/{id}")
+    /**
+     *
+     */
     User getfather(@PathVariable("id") Long id);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/getmather/{id}")
     /**
      *
      */
     User getmather(@PathVariable("id") Long id);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Deprecated
     @GetMapping(value = "/clipboard/{id}")
+    /**
+     *
+     */
     User clipboard(@PathVariable("id") Long id);
 
     @GetMapping(value = "/clipboard2/{id}")
