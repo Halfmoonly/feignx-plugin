@@ -182,7 +182,7 @@ reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
 
 CopyFeignUrlLineMarkerProvider：
 
-![CopyFeignUrlLineMarkerProvider.png](feignx/pics/CopyFeignUrlLineMarkerProvider.png)![img.png](feignx/pics/img.png)
+![CopyFeignUrlLineMarkerProvider.png](feignx/pics/CopyFeignUrlLineMarkerProvider.png)
 
 CopyControllerUrlLineMarkerProvider：
 
