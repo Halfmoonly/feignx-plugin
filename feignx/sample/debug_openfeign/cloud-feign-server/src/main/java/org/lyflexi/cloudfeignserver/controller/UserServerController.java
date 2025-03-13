@@ -82,4 +82,24 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
+    @GetMapping(value = "/user/clipboard3/{id}")
+    public User clipboard3(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/user/clipboard4/{id}")
+    @Deprecated
+    /**
+     *
+     */
+    public User clipboard4(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
 }

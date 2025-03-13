@@ -65,4 +65,18 @@ public interface UserClient2 {
 
     @GetMapping(value = "/clipboard2/{id}")
     User clipboard2(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/clipboard3/{id}")
+    User clipboard3(@PathVariable("id") Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/clipboard4/{id}")
+    /**
+     *
+     */
+    User clipboard4(@PathVariable("id") Long id);
 }

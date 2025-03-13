@@ -19,7 +19,7 @@
 1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module. eg. feignClient -> ApiController. eg. ApiController -> feignClient.
 <br>
 <br>
-2. By parsing yml/yaml/properties, OpenFeign Assistant supports `server.servlet.context-path` and `spring.mvc.servlet.path`
+2. By parsing yml/yaml/properties, Navigator4URL OpenFeign RestController supports `server.servlet.context-path` and `spring.mvc.servlet.path`
 <br>
 <br>
 3. Navigator4URL OpenFeign RestController is sufficiently accurate with options, after many rounds of optimization.
@@ -28,7 +28,7 @@
 4. Navigator4URL OpenFeign RestController is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
 <br>
 <br>
-5. Navigator4URL OpenFeign RestController supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friend.
+5. Navigator4URL OpenFeign RestController supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
 <br>
 ]]>
     </description>
@@ -37,13 +37,7 @@
         <![CDATA[
         ### 更新内容
         <br>
-        1. 我们修复了一键复制URL功能的消息通知失败的问题，以及偶先空指针的现象
-
-        2. 我们优化了Copy-Gutter和Bird-Gutter的展现位置，将其从方法签名处移至RequestMapping等Rest注解处，这样更加符合直觉
-
-        3. 我们优化了Copy-Gutter和Bird-Gutter的动态解析，使用户后期在修改方法签名的时候（如添加/**/注释或者添加自定义注解的时候），Gutter的位置随着RequestMapping等Rest注解的位置动态生效
-
-        4. 我们优化了一键复制URL功能的Copy-Gutter图标设计，更加的优雅
+            1. 我们修复了https://github.com/Halfmoonly/feignx-plugin/issues/11，这曾经是个已经被修复但忘记合并至主分支的修复分支：hotfix/main-fix-bootstrap，见：https://github.com/Halfmoonly/feignx-plugin/issues/8
         ]]>
     </change-notes>
 

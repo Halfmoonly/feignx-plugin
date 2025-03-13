@@ -205,6 +205,11 @@ CopyControllerUrlLineMarkerProvider：
 
 4. 我们优化了一键复制URL功能的Copy-Gutter图标设计，更加的优雅
 
+
+### 🐞 V5.1.2 更新内容
+
+1. 我们修复了https://github.com/Halfmoonly/feignx-plugin/issues/11，这曾经是个已经被修复但忘记合并至主分支的修复分支：hotfix/main-fix-bootstrap，见：https://github.com/Halfmoonly/feignx-plugin/issues/8
+
 ---
 
 觉得好用，点个star⭐
