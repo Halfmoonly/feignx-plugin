@@ -1,7 +1,7 @@
-#server:
-#  servlet:
-#    context-path: /hello
-#spring:
-#  mvc:
-#    servlet:
-#      path: /world
+server:
+  servlet:
+    context-path: /hello
+spring:
+  mvc:
+    servlet:
+      path: /world
