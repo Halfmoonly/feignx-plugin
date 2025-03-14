@@ -13,8 +13,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
-import com.lyflexi.feignx.utils.MappingAnnotationUtil;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
+import com.lyflexi.feignx.entity.HttpMappingInfo;
+import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -81,7 +81,7 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
         return null;
     }
     /**
-     * 当你随后写了注释后，LineMarkerProviderDescriptor.getLineMarkerInfo() 在调用时传入的 element 可能不再是 PsiMethod 或目标注解了，
+     * 当用户在写注释/***的一瞬间，LineMarkerProviderDescriptor.getLineMarkerInfo() 在调用时传入的 element 可能不再是 PsiMethod 或目标注解了，
      *
      * 而是 JavaDoc 里的某个 PsiElement（比如 PsiDocComment）或者换行符、空格、标签等。
      *
@@ -99,16 +99,17 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
             if (!(element instanceof PsiMethod)) continue;
 
             // 判断是不是 Feign 方法
-            if (!JavaResourceUtil.isElementWithinFeign(element)) continue;
+            if (!AnnotationParserUtils.isElementWithinFeign(element)) continue;
 
             PsiMethod psiMethod = (PsiMethod) element;
 
             // 找到目标注解（RequestMapping / GetMapping 等）
-            PsiAnnotation targetAnnotation = MappingAnnotationUtil.findTargetMappingAnnotation(psiMethod);
+            PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
             if (targetAnnotation == null) continue;
 
             // 获取拼接后的 Feign URL
-            String url = BilateralCacheManager.getFeignPath(psiMethod);
+            HttpMappingInfo feignCache = BilateralCacheManager.getOrSetFeignCache(psiMethod);
+            String url = feignCache.getPath();
             if (StringUtils.isBlank(url)) continue;
 
             // 构建图标点击逻辑

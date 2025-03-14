@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:54
  */
-public enum SpringRequestMethodAnnotation {
+public enum SpringBootMethodAnnotation {
     /**
      * RequestMapping
      */
@@ -39,13 +39,13 @@ public enum SpringRequestMethodAnnotation {
     private final String qualifiedName;
     private final String methodName;
 
-    SpringRequestMethodAnnotation(String qualifiedName, String methodName) {
+    SpringBootMethodAnnotation(String qualifiedName, String methodName) {
         this.qualifiedName = qualifiedName;
         this.methodName = methodName;
     }
 
-    public static SpringRequestMethodAnnotation getByQualifiedName(String qualifiedName) {
-        for (SpringRequestMethodAnnotation springRequestAnnotation : SpringRequestMethodAnnotation.values()) {
+    public static SpringBootMethodAnnotation getByQualifiedName(String qualifiedName) {
+        for (SpringBootMethodAnnotation springRequestAnnotation : SpringBootMethodAnnotation.values()) {
             if (springRequestAnnotation.getQualifiedName().equals(qualifiedName)) {
                 return springRequestAnnotation;
             }
@@ -53,14 +53,6 @@ public enum SpringRequestMethodAnnotation {
         return null;
     }
 
-    public static SpringRequestMethodAnnotation getByShortName(String requestMapping) {
-        for (SpringRequestMethodAnnotation springRequestAnnotation : SpringRequestMethodAnnotation.values()) {
-            if (springRequestAnnotation.getQualifiedName().endsWith(requestMapping)) {
-                return springRequestAnnotation;
-            }
-        }
-        return null;
-    }
 
     public String methodName() {
         return this.methodName;
@@ -85,6 +77,6 @@ public enum SpringRequestMethodAnnotation {
      * @return
      */
     public static List<String> allQualifiedNames() {
-        return Arrays.stream(SpringRequestMethodAnnotation.values()).map(SpringRequestMethodAnnotation::getQualifiedName).collect(Collectors.toList());
+        return Arrays.stream(SpringBootMethodAnnotation.values()).map(SpringBootMethodAnnotation::getQualifiedName).collect(Collectors.toList());
     }
 }

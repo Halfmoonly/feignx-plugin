@@ -14,9 +14,8 @@ import com.intellij.psi.util.PsiUtilBase;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.lyflexi.feignx.toolbar.RefreshCacheAction;
-import com.lyflexi.feignx.model.HttpMappingInfo;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
-import com.lyflexi.feignx.utils.ToolBarUtil;
+import com.lyflexi.feignx.entity.HttpMappingInfo;
+import com.lyflexi.feignx.utils.ToolBarUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,7 +63,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
         private JPanel createControlsPanel(ToolWindow toolWindow) {
             JPanel parentPanel = new JPanel();
             // 扫描项目中的Java源文件
-            java.util.List<HttpMappingInfo> httpMappingInfos = ToolBarUtil.scanAllProjectControllerInfo();
+            java.util.List<HttpMappingInfo> httpMappingInfos = ToolBarUtils.scanAllProjectControllerInfo();
             // 执行搜索
             parentPanel.add(startSearch(httpMappingInfos));
 
@@ -102,7 +101,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
                 private void performSearch(java.util.List<HttpMappingInfo> httpMappingInfos) {
                     String searchText = searchField.getText().strip();
                     if(httpMappingInfos.isEmpty()){
-                        httpMappingInfos = ToolBarUtil.getControllerInfos();
+                        httpMappingInfos = ToolBarUtils.getControllerInfos();
                     }
                     java.util.List<HttpMappingInfo> searchResults = searchControllerInfos(httpMappingInfos, searchText.split(" ")[0]);
                     showControllerInfo(searchResults, resultTextArea);
@@ -149,7 +148,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
     }
 
     private static void showControllerInfo(java.util.List<HttpMappingInfo> httpMappingInfos, JTextArea resultTextArea) {
-        resultTextArea.setText(JavaResourceUtil.showResult(httpMappingInfos));
+        resultTextArea.setText(ToolBarUtils.showResult(httpMappingInfos));
         resultTextArea.setCaretPosition(0);
     }
 
@@ -200,7 +199,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
     }
 
     private static void navigateToControllerCode(HttpMappingInfo httpMappingInfo) {
-        PsiFile file = httpMappingInfo.getMethod().getContainingFile();
+        PsiFile file = httpMappingInfo.getPsiMethod().getContainingFile();
         if (file instanceof PsiJavaFile) {
             PsiJavaFile javaFile = (PsiJavaFile) file;
             PsiClass[] classes = javaFile.getClasses();
@@ -208,7 +207,7 @@ public class SearchToolWindowFactory implements ToolWindowFactory, DumbAware {
                 PsiClass psiClass = classes[0];
                 psiClass.navigate(true);
                 // 定位到对应的方法
-                PsiMethod targetMethod = httpMappingInfo.getMethod();
+                PsiMethod targetMethod = httpMappingInfo.getPsiMethod();
                 if (targetMethod != null) {
                     int offset = targetMethod.getTextOffset();
                     Editor editor = PsiUtilBase.findEditor(file);

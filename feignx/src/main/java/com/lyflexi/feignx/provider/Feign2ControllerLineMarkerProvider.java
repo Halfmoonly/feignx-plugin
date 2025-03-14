@@ -11,8 +11,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
-import com.lyflexi.feignx.utils.MappingAnnotationUtil;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
+import com.lyflexi.feignx.utils.AnnotationParserUtils;
+import com.lyflexi.feignx.utils.ControllerClassScanUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @Description: 将导航Gutter绘制在注解旁
+ * @Description: 将导航Gutter绘制在注解旁,目前只能跳转到当前项目下的文件否则会报Element from alien project错误
  * @Author: lyflexi
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:56
@@ -30,21 +30,24 @@ public class Feign2ControllerLineMarkerProvider extends RelatedItemLineMarkerPro
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        Project project = element.getProject();
-        BilateralCacheManager.clearControllerCache(project);
-        if (element instanceof PsiMethod && JavaResourceUtil.isElementWithinFeign(element)) {
+        if (element instanceof PsiMethod && AnnotationParserUtils.isElementWithinFeign(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
+            //为了支持用户对当前feign接口更新，无论缓存是否存在，设置或者覆盖缓存
+            BilateralCacheManager.setOrCoverFeignCache(psiMethod);
             if (psiClass != null) {
-                List<PsiElement> resultList = JavaResourceUtil.process(psiMethod);
+                List<PsiElement> resultList = ControllerClassScanUtils.process(psiMethod);
                 if (!resultList.isEmpty()) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
                             .create(MyIcons.STATEMENT_LINE_FEIGN_ICON)
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Controller");
-                    PsiAnnotation targetAnnotation = MappingAnnotationUtil.findTargetMappingAnnotation(psiMethod);
-                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
+                    PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
+                    //在用户打注释/***/期间，psiMethod会有一瞬间不再拥有注解
+                    if (Objects.nonNull(targetAnnotation)) {
+                        result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
+                    }
                 }
             }
         }

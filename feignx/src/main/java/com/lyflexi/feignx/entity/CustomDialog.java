@@ -1,7 +1,8 @@
-package com.lyflexi.feignx.model;
+package com.lyflexi.feignx.entity;
 
 import com.intellij.openapi.ui.DialogWrapper;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
+import com.lyflexi.feignx.utils.ControllerClassScanUtils;
+import com.lyflexi.feignx.utils.ToolBarUtils;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class CustomDialog extends DialogWrapper {
         // 创建内容面板
         JPanel panel = new JPanel(new BorderLayout());
         JTextArea textArea = new JTextArea();
-        textArea.setText(JavaResourceUtil.showResult(httpMappingInfos));
+        textArea.setText(ToolBarUtils.showResult(httpMappingInfos));
 
         // 将文本区域放入滚动面板中
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -48,7 +49,7 @@ public class CustomDialog extends DialogWrapper {
         JButton exportButton = new JButton("导出列表");
         exportButton.addActionListener(e -> {
             // 将列表导出到 CSV 文件
-            JavaResourceUtil.exportToCSV(httpMappingInfos);
+            ControllerClassScanUtils.exportToCSV(httpMappingInfos);
         });
 
         panel.add(exportButton, BorderLayout.SOUTH);

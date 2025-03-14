@@ -15,9 +15,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(value = "cloud-feign-server", contextId = "order", configuration = OrderConfiguration.class)
 public interface OrderClient {
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/prefix/order/get/{id}")
     Order getOrderById(@PathVariable("id") Long id);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/prefix/order/get/{id}")
+    /**
+     *
+     */
     Order getOrderById2(@PathVariable("id") Long id);
 }

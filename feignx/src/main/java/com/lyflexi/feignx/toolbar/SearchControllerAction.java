@@ -9,9 +9,8 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiUtilBase;
-import com.lyflexi.feignx.model.HttpMappingInfo;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
-import com.lyflexi.feignx.utils.ToolBarUtil;
+import com.lyflexi.feignx.entity.HttpMappingInfo;
+import com.lyflexi.feignx.utils.ToolBarUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +40,7 @@ public class SearchControllerAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent event) {
 
         // 扫描项目中的Java源文件
-        List<HttpMappingInfo> httpMappingInfos = ToolBarUtil.scanAllProjectControllerInfo();
+        List<HttpMappingInfo> httpMappingInfos = ToolBarUtils.scanAllProjectControllerInfo();
         // 执行搜索
         startSearch(httpMappingInfos);
     }
@@ -130,7 +129,7 @@ public class SearchControllerAction extends AnAction {
     }
 
     private void showControllerInfo(List<HttpMappingInfo> httpMappingInfos, JTextArea resultTextArea) {
-        resultTextArea.setText(JavaResourceUtil.showResult(httpMappingInfos));
+        resultTextArea.setText(ToolBarUtils.showResult(httpMappingInfos));
         resultTextArea.setCaretPosition(0);
     }
 
@@ -156,7 +155,7 @@ public class SearchControllerAction extends AnAction {
         }
     }
     private void navigateToControllerCode(HttpMappingInfo httpMappingInfo) {
-        PsiFile file = httpMappingInfo.getMethod().getContainingFile();
+        PsiFile file = httpMappingInfo.getPsiMethod().getContainingFile();
         if (file instanceof PsiJavaFile) {
             PsiJavaFile javaFile = (PsiJavaFile) file;
             PsiClass[] classes = javaFile.getClasses();
@@ -164,7 +163,7 @@ public class SearchControllerAction extends AnAction {
                 PsiClass psiClass = classes[0];
                 psiClass.navigate(true);
                 // 定位到对应的方法
-                PsiMethod targetMethod = httpMappingInfo.getMethod();
+                PsiMethod targetMethod = httpMappingInfo.getPsiMethod();
                 if (targetMethod != null) {
                     int offset = targetMethod.getTextOffset();
                     //Invocation of unresolved method PsiEditorUtil.findEditor(PsiElement) (1 problem)

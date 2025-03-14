@@ -42,5 +42,6 @@ public interface UserClient {
     User del(@PathVariable("id") Long id);
 
     @GetMapping(value = "/getfather/{id}")
+
     User getfather(@PathVariable("id") Long id);
 }

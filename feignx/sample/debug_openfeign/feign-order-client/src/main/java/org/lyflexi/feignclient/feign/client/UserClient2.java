@@ -66,6 +66,11 @@ public interface UserClient2 {
     @GetMapping(value = "/clipboard2/{id}")
     User clipboard2(@PathVariable("id") Long id);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/clipboard3/{id}")
     User clipboard3(@PathVariable("id") Long id);
 
@@ -79,4 +84,28 @@ public interface UserClient2 {
      *
      */
     User clipboard4(@PathVariable("id") Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/optimizedCache/{id}")
+    User optimizedCache(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/optimizedCache2/{id}")
+    User optimizedCache2(@PathVariable("id") Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/optimizedCache3/{id}")
+    User optimizedCache3(@PathVariable("id") Long id);
+    @GetMapping(value = "/parallelScan/{id}")
+    User parallelScan(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/parallelScan2/{id}")
+    User parallelScan2(@PathVariable("id") Long id);
 }

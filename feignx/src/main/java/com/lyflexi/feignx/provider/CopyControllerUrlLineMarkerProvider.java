@@ -10,8 +10,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
-import com.lyflexi.feignx.utils.MappingAnnotationUtil;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
+import com.lyflexi.feignx.entity.HttpMappingInfo;
+import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -80,7 +80,7 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
 //    }
 
     /**
-     * 当你随后写了注释后，LineMarkerProviderDescriptor.getLineMarkerInfo() 在调用时传入的 element 可能不再是 PsiMethod 或目标注解了，
+     * 当用户在写注释/***的一瞬间，LineMarkerProviderDescriptor.getLineMarkerInfo() 在调用时传入的 element 可能不再是 PsiMethod 或目标注解了，
      *
      * 而是 JavaDoc 里的某个 PsiElement（比如 PsiDocComment）或者换行符、空格、标签等。
      *
@@ -101,16 +101,17 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
 
             PsiMethod method = (PsiMethod) element;
 
-            if (!JavaResourceUtil.isElementWithinController(method)) {
+            if (!AnnotationParserUtils.isElementWithinController(method)) {
                 continue;
             }
 
-            PsiAnnotation targetAnnotation = MappingAnnotationUtil.findTargetMappingAnnotation(method);
+            PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(method);
             if (targetAnnotation == null) {
                 continue;
             }
 
-            String url = BilateralCacheManager.getControllerPath(method);
+            HttpMappingInfo controllerCache = BilateralCacheManager.getOrSetControllerCache(method);
+            String url = controllerCache.getPath();
             if (StringUtils.isBlank(url)) {
                 continue;
             }

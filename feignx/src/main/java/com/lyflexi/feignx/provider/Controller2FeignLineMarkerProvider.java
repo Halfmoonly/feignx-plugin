@@ -11,19 +11,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.constant.MyIcons;
-import com.lyflexi.feignx.model.HttpMappingInfo;
-import com.lyflexi.feignx.utils.MappingAnnotationUtil;
-import com.lyflexi.feignx.utils.JavaResourceUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.lyflexi.feignx.utils.AnnotationParserUtils;
+import com.lyflexi.feignx.utils.FeignClassScanUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * @Description: 将导航Gutter绘制在注解旁
+ * @Description: 将导航Gutter绘制在注解旁, 目前只能跳转到当前项目下的文件否则会报Element from alien project错误
  * @Author: lyflexi
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:55
@@ -33,54 +30,27 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        Project project = element.getProject();
-        BilateralCacheManager.clearFeignCache(project);
-        if (element instanceof PsiMethod && JavaResourceUtil.isElementWithinController(element)) {
+        if (element instanceof PsiMethod && AnnotationParserUtils.isElementWithinController(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
+            //为了支持用户对当前controller接口更新，无论缓存是否存在，设置或者覆盖缓存
+            BilateralCacheManager.setOrCoverControllerCache(psiMethod);
             if (psiClass != null) {
-                List<PsiElement> resultList = process(psiMethod);
+                List<PsiElement> resultList = FeignClassScanUtils.process(psiMethod);
                 if (!resultList.isEmpty()) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
                             .create(MyIcons.STATEMENT_LINE_CONTROLLER_ICON)
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Feign");
-                    PsiAnnotation targetAnnotation = MappingAnnotationUtil.findTargetMappingAnnotation(psiMethod);
-                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
+                    PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
+                    //在用户打注释/***/期间，psiMethod会有一瞬间不再拥有注解
+                    if (Objects.nonNull(targetAnnotation)) {
+                        result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
+                    }
                 }
             }
         }
     }
 
-    /**
-     * 调转到调用该controller的Feign
-     *
-     * @param controllerMethod psi方法
-     * @return {@link List}<{@link PsiElement}>
-     */
-    private List<PsiElement> process(PsiMethod controllerMethod) {
-        List<PsiElement> elementList = new ArrayList<>();
-        // 获取当前项目
-        Project project = controllerMethod.getProject();
-        List<HttpMappingInfo> feignInfos = JavaResourceUtil.scanFeignInterfaces(project);
-        if (feignInfos != null) {
-            // 遍历 Controller 类的所有方法
-            for (HttpMappingInfo feignInfo : feignInfos) {
-                if (match2F(feignInfo, controllerMethod)) {
-                    elementList.add(feignInfo.getMethod());
-                }
-            }
-        }
-
-        return elementList;
-    }
-
-    private static boolean match2F(HttpMappingInfo feignInfo, PsiMethod controllerMethod) {
-        String controllerPath = BilateralCacheManager.getControllerPath(controllerMethod);
-        if (StringUtils.isNotBlank(controllerPath)) {
-            return controllerPath.equals(feignInfo.getPath());
-        }
-        return false;
-    }
 }

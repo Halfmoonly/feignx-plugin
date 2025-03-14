@@ -1,0 +1,204 @@
+package com.lyflexi.feignx.utils;
+
+import com.intellij.psi.*;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.lyflexi.feignx.enums.SpringBootClassAnnotation;
+import com.lyflexi.feignx.enums.SpringCloudClassAnnotation;
+import com.lyflexi.feignx.enums.SpringBootMethodAnnotation;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
+import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.CONTROLLER;
+import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.RESTCONTROLLER;
+import com.lyflexi.feignx.entity.HttpMappingInfo;
+
+/**
+ * @Author: hmly
+ * @Date: 2025/3/12 19:44
+ * @Project: feignx-plugin
+ * @Version: 1.0.0
+ * @Description: 注解解析类
+ */
+public class AnnotationParserUtils {
+
+    /**
+     * 寻找Restful注解
+     * @param method
+     * @return
+     */
+    public static PsiAnnotation findRestfulAnnotation(PsiMethod method) {
+        List<String> targetAnnotations = SpringBootMethodAnnotation.allQualifiedNames();
+
+        for (PsiAnnotation annotation : method.getModifierList().getAnnotations()) {
+            String qualifiedName = annotation.getQualifiedName();
+            if (qualifiedName != null && targetAnnotations.contains(qualifiedName)) {
+                return annotation;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 判断当前类时controlller
+     * @param psiClass
+     * @return
+     */
+    public static boolean isControllerClass(PsiClass psiClass) {
+//        PsiAnnotation[] annotations = psiClass.getAnnotations();
+//        for (PsiAnnotation annotation : annotations) {
+//            String annotationName = annotation.getQualifiedName();
+//            if (annotationName != null && (annotationName.equals(CONTROLLER.getQualifiedName())
+//                    || annotationName.equals(RESTCONTROLLER.getQualifiedName()))) {
+//                return true;
+//            }
+//        }
+//        return false;
+        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
+        return psiClass.hasAnnotation(CONTROLLER.getQualifiedName())||psiClass.hasAnnotation(RESTCONTROLLER.getQualifiedName());
+    }
+    /**
+     * 判断当前元素是否为Controller下的方法
+     *
+     * @param element 元素
+     * @return boolean
+     */
+    public static boolean isElementWithinController(PsiElement element) {
+        if (element instanceof PsiClass) {
+            PsiClass psiClass = (PsiClass) element;
+
+            // 检查类上是否存在 CONTROLLER/RESTCONTROLLER 注解
+            return isControllerClass(psiClass);
+        }
+        PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+        return type != null && isElementWithinController(type);
+    }
+
+
+    /**
+     * 判断当前类是否是Feign类
+     * @param psiClass
+     * @return
+     */
+    public static boolean isFeignInterface(PsiClass psiClass) {
+//        PsiAnnotation annotation = psiClass.getAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
+//        return annotation != null;
+        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
+        return psiClass.hasAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
+    }
+
+    /**
+     * 元素是否为FeignClient下的方法
+     * 当传入的是PsiMethod，则该方法失效
+     * @param element 元素
+     * @return boolean
+     */
+//    public static boolean isElementWithinFeign(PsiElement element) {
+//        if (element instanceof PsiClass && ((PsiClass) element).isInterface()) {
+//            PsiClass psiClass = (PsiClass) element;
+//
+//            // 检查类上是否存在 FeignClient 注解
+//            PsiAnnotation feignAnnotation = psiClass.getAnnotation("org.springframework.cloud.openfeign.FeignClient");
+//            if (feignAnnotation != null) {
+//                return true;
+//            }
+//        }
+//        PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+//        return type != null && isElementWithinFeign(type);
+//    }
+
+    /**
+     * 元素是否为FeignClient下的方法
+     *
+     * 更保险的方式是
+     * 当传进去的是 PsiMethod，需要手动判断所有的getParentOfType是否含有注解org.springframework.cloud.openfeign.FeignClient
+     * @param element
+     * @return
+     */
+    public static boolean isElementWithinFeign(PsiElement element) {
+        PsiClass psiClass = null;
+
+        if (element instanceof PsiClass) {
+            psiClass = (PsiClass) element;
+        } else {
+            psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+        }
+
+        if (psiClass != null && psiClass.isInterface()) {
+            PsiAnnotation[] annotations = psiClass.getModifierList().getAnnotations();
+            for (PsiAnnotation annotation : annotations) {
+                if (SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName().equals(annotation.getQualifiedName())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static String getRequestMethodFromMethodName(String methodName) {
+        // 使用字典映射替代多个条件分支
+        Map<String, String> methodMappings = new HashMap<>();
+        methodMappings.put("GET", "GET");
+        methodMappings.put("POST", "POST");
+        methodMappings.put("PUT", "PUT");
+        methodMappings.put("DELETE", "DELETE");
+        return methodMappings.getOrDefault(methodName, "REQUEST");
+    }
+
+    /**
+     * 获得价值
+     * 路径：类文件接口路径+方法接口路径
+     *
+     * @param httpMappingInfo 控制器信息
+     * @param method          方法
+     * @param annotation      注释
+     * @return {@link HttpMappingInfo}
+     */
+    public static HttpMappingInfo getValue(PsiAnnotation annotation, HttpMappingInfo httpMappingInfo, PsiMethod method) {
+        String path = getValueFromRestful(annotation);
+        httpMappingInfo.setPath(httpMappingInfo.getPath() + path);
+        extractSwaggerInfo(method, httpMappingInfo);
+        return httpMappingInfo;
+    }
+
+    public static String getValueFromRestful(PsiAnnotation annotation) {
+        PsiAnnotationParameterList parameterList = annotation.getParameterList();
+        PsiNameValuePair[] attributes = parameterList.getAttributes();
+        for (PsiNameValuePair attribute : attributes) {
+            String attributeName = attribute.getAttributeName();
+            if ("value".equals(attributeName) || "path".equals(attributeName)) {
+                PsiAnnotationMemberValue attributeValue = attribute.getValue();
+                if (attributeValue instanceof PsiLiteralExpression) {
+                    Object value = ((PsiLiteralExpression) attributeValue).getValue();
+                    if (value instanceof String) {
+                        return ((String) value).startsWith("/") ? (String) value : "/" + value;
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public static void extractSwaggerInfo(PsiMethod method, HttpMappingInfo httpMappingInfo) {
+        PsiModifierList methodModifierList = method.getModifierList();
+        PsiAnnotation swaggerAnnotation = methodModifierList.findAnnotation("io.swagger.annotations.ApiOperation");
+        if (swaggerAnnotation != null) {
+            extractSwaggerValue(swaggerAnnotation, "value", httpMappingInfo::setSwaggerInfo);
+            extractSwaggerValue(swaggerAnnotation, "notes", httpMappingInfo::setSwaggerNotes);
+        }
+    }
+
+    public static void extractSwaggerValue(PsiAnnotation swaggerAnnotation, String attributeName, Consumer<String> setter) {
+        PsiAnnotationMemberValue attributeValue = swaggerAnnotation.findAttributeValue(attributeName);
+        if (attributeValue instanceof PsiLiteralExpression) {
+            Object value = ((PsiLiteralExpression) attributeValue).getValue();
+            if (value instanceof String) {
+                setter.accept((String) value);
+            }
+        }
+    }
+
+}

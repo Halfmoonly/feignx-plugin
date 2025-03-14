@@ -3,7 +3,7 @@ package com.lyflexi.feignx.toolbar;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
-import com.lyflexi.feignx.utils.ToolBarUtil;
+import com.lyflexi.feignx.utils.ToolBarUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,13 +21,13 @@ public class RefreshCacheAction extends AnAction {
         this.event = event;
         BilateralCacheManager.clear(event.getProject());
         // 扫描项目中的Java源文件
-        ToolBarUtil.scanAllProjectControllerInfo();
-        ToolBarUtil.scanAllProjectFeignInfo();
+        ToolBarUtils.scanAllProjectControllerInfo();
+        ToolBarUtils.scanAllProjectFeignInfo();
     }
 
     public void refresh(){
         BilateralCacheManager.clear(event.getProject());
         // 扫描项目中的Java源文件
-        ToolBarUtil.scanAllProjectControllerInfo();
+        ToolBarUtils.scanAllProjectControllerInfo();
     }
 }

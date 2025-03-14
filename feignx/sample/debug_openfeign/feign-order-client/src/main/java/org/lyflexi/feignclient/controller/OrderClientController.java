@@ -21,6 +21,9 @@ public class OrderClientController {
     private OrderClient orderClient;
 
     @GetMapping(value = "/consumer/feign/order/get/{id}")
+    /**
+     *
+     */
     public Result<Order> getOrderById(@PathVariable("id") Long id)
     {
         Order order = orderClient.getOrderById(id);
