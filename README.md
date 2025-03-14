@@ -210,6 +210,22 @@ CopyControllerUrlLineMarkerProvider：
 
 1. 我们修复了https://github.com/Halfmoonly/feignx-plugin/issues/11，这曾经是个已经被修复但忘记合并至主分支的修复分支：hotfix/main-fix-bootstrap，见：https://github.com/Halfmoonly/feignx-plugin/issues/8
 
+
+### 🐞 V5.2.0 更新内容
+本次对应修复/缓存优化/多线程优化/API优化的分支：main-fix-cachev4
+
+1. 我们优化了双边缓存的更新机制，同时重构了缓存框架，大大提升了插件性能
+2. 我们优化了用户打注释/***/的时候，由于psiMethod丢失，可能导致的空指针异常
+3. 我们使用了IntelliJ的类快速索引缓存系统PsiShortNamesCache，狠狠加速了原来的手写磁盘递归扫描Class（allJavaFileClass）
+4. 我们使用了Java线程池，加速了初始化过程中，构建出全量接口方法对象HttpMappingInfos的速度（ApiControllers和FeignClients）
+5. 我们使用了IntelliJ的带缓存的注解判断方法psiMethod.hasAnnotation，加速了类型判断（ApiController和FeignClient）
+
+重构的双边缓存架构：
+
+![Bilateral-cache.png](feignx/docs/Bilateral-cache.png)
+
+有匪君子，如切入错如琢如磨--2025/03/15 凌晨两点
+
 ---
 
 觉得好用，点个star⭐
