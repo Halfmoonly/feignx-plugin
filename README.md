@@ -231,6 +231,11 @@ CopyControllerUrlLineMarkerProvider：
 
 默认IOU密集型程序核心线程数为`2*N`，并自定义了线程池，优化初始化过程中，构建出全量接口方法对象HttpMappingInfos的速度（ApiControllers和FeignClients）
 
+### 🚀 V5.3.0 更新内容
+对应分支：feat/main-cache
+
+我们额外自定义了项目初始化PsiClass缓存管理器InitialPsiClassCacheManager，将原先的两次全盘allJavaFileClass扫描降低为1次，狠狠加速了原来手写的磁盘递归扫描
+
 ---
 
 觉得好用，点个star⭐
