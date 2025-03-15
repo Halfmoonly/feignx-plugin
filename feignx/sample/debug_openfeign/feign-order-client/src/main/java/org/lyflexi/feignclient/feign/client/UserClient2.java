@@ -80,9 +80,6 @@ public interface UserClient2 {
      * @return
      */
     @GetMapping(value = "/clipboard4/{id}")
-    /**
-     *
-     */
     User clipboard4(@PathVariable("id") Long id);
 
     /**
@@ -110,4 +107,19 @@ public interface UserClient2 {
     User parallelScan2(@PathVariable("id") Long id);
     @GetMapping(value = "/parallelScan3/{id}")
     User parallelScan3(@PathVariable("id") Long id);
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/parallelScan4/{id}")
+    User parallelScan4(@PathVariable("id") Long id);
+
+    /**
+     * parallelScan5. v3.2.1
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/parallelScan5/{id}")
+    User parallelScan5(@PathVariable("id") Long id);
 }
