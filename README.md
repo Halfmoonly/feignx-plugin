@@ -224,7 +224,12 @@ CopyControllerUrlLineMarkerProvider：
 
 ![Bilateral-cache.png](feignx/docs/Bilateral-cache.png)
 
-有匪君子，如切入错如琢如磨--2025/03/15 凌晨两点
+有匪君子，如切如磋错，如琢如磨--2025/03/15 凌晨两点
+
+### 🚀 V5.2.1 更新内容
+对应分支：feat/main-parallel
+
+默认IOU密集型程序核心线程数为`2*N`，并自定义了线程池，优化初始化过程中，构建出全量接口方法对象HttpMappingInfos的速度（ApiControllers和FeignClients）
 
 ---
 
