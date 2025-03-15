@@ -37,11 +37,11 @@
         <![CDATA[
         ### 更新内容
         <br>
-        1. 我们优化了双边缓存的更新机制，同时重构了缓存框架，大大提升了插件性能
+        1. 我们优化了双边缓存BilateralCacheManager的更新机制，同时重构了缓存框架，大大提升了插件性能
         <br>
         2. 我们优化了用户打注释/***/的时候，由于psiMethod丢失，可能导致的多处空指针异常
         <br>
-        3. 我们使用了IntelliJ的类快速索引缓存系统PsiShortNamesCache，狠狠加速了原来的手写磁盘递归扫描Class（allJavaFileClass）
+        3. 我们额外自定义了项目初始化PsiClass缓存管理器InitialPsiClassCacheManager，将原先的两次全盘allJavaFileClass扫描降低为1次，狠狠加速了原来手写的磁盘递归扫描
         <br>
         4. 我们使用了多线程，加速了初始化过程中，构建出全量接口方法对象HttpMappingInfos的速度（ApiControllers和FeignClients）
         <br>

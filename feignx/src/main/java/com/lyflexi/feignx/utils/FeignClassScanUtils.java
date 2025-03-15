@@ -7,6 +7,7 @@ import com.intellij.openapi.util.Computable;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
+import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.enums.SpringCloudClassAnnotation;
 import org.apache.commons.lang3.StringUtils;
@@ -14,8 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @Author: hmly
@@ -25,7 +27,10 @@ import java.util.concurrent.Future;
  * @Description: feign类扫描工具类
  */
 public class FeignClassScanUtils {
-
+    // 初始化PsiClass缓存管理器
+    private static final InitialPsiClassCacheManager initialPsiClassCacheManager = InitialPsiClassCacheManager.getInstance();
+    //初始化线程池
+    private static final ExecutorService executor = ThreadPoolUtils.createExecutor();
     /**
      * 当前controller，扫描待跳转的所有目标Feign
      *
@@ -80,15 +85,22 @@ public class FeignClassScanUtils {
             return Collections.emptyList();
         }
         Map<String, HttpMappingInfo> feignCaches = BilateralCacheManager.queryFeignCaches(project);
-        if (org.apache.commons.collections.MapUtils.isNotEmpty(feignCaches)) {
+        if (MapUtils.isNotEmpty(feignCaches)) {
             return new ArrayList<>(feignCaches.values());
         }
-        // 获取项目中的所有Feign源文件
-        List<PsiClass> javaFiles = ProjectUtils.scanAllFeignClassesByPsiShortNamesCache(project,searchScope);
+        // 获取项目ID
+        String projectId = project.getBasePath();
+
+        List<PsiClass> javaFiles = initialPsiClassCacheManager.queryAllClassesCache(projectId);
+
+        if (CollectionUtils.isEmpty(javaFiles)) {
+            javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
+            initialPsiClassCacheManager.init(projectId, javaFiles);
+        }
+        //获取项目中的所有Feign源文件
         List<HttpMappingInfo> feignInfos = new ArrayList<>();
         List<Future<List<HttpMappingInfo>>> futures = new ArrayList<>();
-        //创建线程池
-        ExecutorService executor = ThreadPoolUtils.createExecutor();
+        //创建子线程
         for (PsiClass psiClass : javaFiles) {
             // 判断类是否带有@Controller或@RestController注解
             // java.lang.Throwable: Read access is allowed from inside read-action (or EDT) only (see com.intellij.openapi.application.Application.runReadAction())

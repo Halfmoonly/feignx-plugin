@@ -7,6 +7,7 @@ import com.intellij.openapi.util.Computable;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
+import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.properties.ConfigReader;
 import com.lyflexi.feignx.properties.ServerParser;
@@ -20,9 +21,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
+import org.apache.commons.collections.CollectionUtils;
 import static com.lyflexi.feignx.enums.SpringBootMethodAnnotation.REQUEST_MAPPING;
 
 /**
@@ -36,7 +36,10 @@ public class ControllerClassScanUtils {
 
     private static final String SPRINGBOOT_SERVER_PATH = "server.servlet.context-path";
     private static final String SPRINGMVC_PATH = "spring.mvc.servlet.path";
-
+    // 初始化PsiClass缓存管理器
+    private static final InitialPsiClassCacheManager initialPsiClassCacheManager = InitialPsiClassCacheManager.getInstance();
+    //初始化线程池
+    private static final ExecutorService executor = ThreadPoolUtils.createExecutor();
     private ControllerClassScanUtils() {
     }
 
@@ -49,6 +52,7 @@ public class ControllerClassScanUtils {
         PsiManager psiManager = PsiManager.getInstance(project);
 
         GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
+
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
         // 检查是否在 Dumb 模式下，以避免在项目构建期间执行代码
         if (DumbService.isDumb(project)) {
@@ -60,14 +64,20 @@ public class ControllerClassScanUtils {
         if (MapUtils.isNotEmpty(controllerCaches)) {
             return new ArrayList<>(controllerCaches.values());
         }
-
+        //获取项目中的所有源文件
         List<HttpMappingInfo> httpMappingInfos = new ArrayList<>();
         List<Future<List<HttpMappingInfo>>> futures = new ArrayList<>();
 
-        // 获取项目中的所有Controller源文件
-        List<PsiClass> javaFiles = ProjectUtils.scanAllControllerClassesByPsiShortNamesCache(project, searchScope);
-        //创建线程池
-        ExecutorService executor = ThreadPoolUtils.createExecutor();
+        // 获取项目ID
+        String projectId = project.getBasePath();
+
+        List<PsiClass> javaFiles = initialPsiClassCacheManager.queryAllClassesCache(projectId);
+
+        if (CollectionUtils.isEmpty(javaFiles)) {
+            javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
+            initialPsiClassCacheManager.init(projectId, javaFiles);
+        }
+        //创建子线程
         for (PsiClass psiClass : javaFiles) {
             // 判断类是否带有@Controller或@RestController注解
             // java.lang.Throwable: Read access is allowed from inside read-action (or EDT) only (see com.intellij.openapi.application.Application.runReadAction())

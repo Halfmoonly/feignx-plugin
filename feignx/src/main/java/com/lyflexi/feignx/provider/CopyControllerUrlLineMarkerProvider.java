@@ -5,6 +5,8 @@ import com.intellij.notification.NotificationGroupManager;
 
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.ide.CopyPasteManager;
+import com.intellij.openapi.project.DumbService;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
@@ -95,6 +97,10 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
                                        @NotNull Collection<? super LineMarkerInfo<?>> result) {
 
         for (PsiElement element : elements) {
+            Project project = element.getProject();
+            if (DumbService.isDumb(project)) {
+                continue; // 索引未完成，跳过
+            }
             if (!(element instanceof PsiMethod)) {
                 continue;
             }
