@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.datatransfer.StringSelection;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author: hmly
@@ -109,8 +110,14 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
 
             // 获取拼接后的 Feign URL
             HttpMappingInfo feignCache = BilateralCacheManager.getOrSetFeignCache(psiMethod);
+            if (Objects.isNull(feignCache)){
+                continue;
+            }
             String url = feignCache.getPath();
-            if (StringUtils.isBlank(url)) continue;
+
+            if (StringUtils.isBlank(url)) {
+                continue;
+            }
 
             // 构建图标点击逻辑
             GutterIconNavigationHandler<PsiElement> handler = (mouseEvent, elt) -> {

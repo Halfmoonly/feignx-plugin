@@ -111,6 +111,11 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
             }
 
             HttpMappingInfo controllerCache = BilateralCacheManager.getOrSetControllerCache(method);
+
+            if (Objects.isNull(controllerCache)) {
+                continue;
+            }
+
             String url = controllerCache.getPath();
             if (StringUtils.isBlank(url)) {
                 continue;

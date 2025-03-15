@@ -9,6 +9,7 @@ import com.lyflexi.feignx.enums.SpringBootMethodAnnotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.CONTROLLER;
@@ -32,10 +33,16 @@ public class AnnotationParserUtils {
     public static PsiAnnotation findRestfulAnnotation(PsiMethod method) {
         List<String> targetAnnotations = SpringBootMethodAnnotation.allQualifiedNames();
 
-        for (PsiAnnotation annotation : method.getModifierList().getAnnotations()) {
-            String qualifiedName = annotation.getQualifiedName();
-            if (qualifiedName != null && targetAnnotations.contains(qualifiedName)) {
-                return annotation;
+//        for (PsiAnnotation annotation : method.getModifierList().getAnnotations()) {
+//            String qualifiedName = annotation.getQualifiedName();
+//            if (qualifiedName != null && targetAnnotations.contains(qualifiedName)) {
+//                return annotation;
+//            }
+//        }
+        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
+        for (String targetAnnotation : targetAnnotations) {
+            if (method.hasAnnotation(targetAnnotation)){
+                return method.getAnnotation(targetAnnotation);
             }
         }
         return null;
@@ -201,4 +208,12 @@ public class AnnotationParserUtils {
         }
     }
 
+    /**
+     * 判断当前方法是否拥有Restful注解
+     * @param method
+     * @return
+     */
+    public static boolean containsRestfulAnnotation(PsiMethod method) {
+        return Objects.nonNull(findRestfulAnnotation(method));
+    }
 }

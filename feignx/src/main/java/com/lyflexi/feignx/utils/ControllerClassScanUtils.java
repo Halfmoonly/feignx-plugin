@@ -36,8 +36,6 @@ public class ControllerClassScanUtils {
 
     private static final String SPRINGBOOT_SERVER_PATH = "server.servlet.context-path";
     private static final String SPRINGMVC_PATH = "spring.mvc.servlet.path";
-    //加入线程池，提升并行扫描
-    private static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2);
 
     private ControllerClassScanUtils() {
     }
@@ -68,7 +66,8 @@ public class ControllerClassScanUtils {
 
         // 获取项目中的所有Controller源文件
         List<PsiClass> javaFiles = ProjectUtils.scanAllControllerClassesByPsiShortNamesCache(project, searchScope);
-
+        //创建线程池
+        ExecutorService executor = ThreadPoolUtils.createExecutor();
         for (PsiClass psiClass : javaFiles) {
             // 判断类是否带有@Controller或@RestController注解
             // java.lang.Throwable: Read access is allowed from inside read-action (or EDT) only (see com.intellij.openapi.application.Application.runReadAction())
@@ -310,6 +309,9 @@ public class ControllerClassScanUtils {
      */
     public static boolean match2C(HttpMappingInfo controllerInfo, PsiMethod feignMethod) {
         HttpMappingInfo feignCache = BilateralCacheManager.getOrSetFeignCache(feignMethod);
+        if (Objects.isNull(feignMethod)){
+            return false;
+        }
         String feignPath = feignCache.getPath();
         return StringUtils.equals(feignPath,controllerInfo.getPath());
     }

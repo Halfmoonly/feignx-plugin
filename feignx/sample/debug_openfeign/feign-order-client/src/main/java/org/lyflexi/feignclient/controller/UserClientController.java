@@ -21,7 +21,6 @@ public class UserClientController {
     private UserClient userClient;
 
     @GetMapping(value = "/consumer/feign/user/get/{id}")
-/
     public Result<User> getUserById(@PathVariable("id") Long id)
     {
         User user = userClient.getUserById(id);

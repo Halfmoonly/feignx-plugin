@@ -25,8 +25,6 @@ import java.util.concurrent.Future;
  * @Description: feign类扫描工具类
  */
 public class FeignClassScanUtils {
-    //加入线程池，提升并行扫描
-    private static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()/2);
 
     /**
      * 当前controller，扫描待跳转的所有目标Feign
@@ -59,6 +57,9 @@ public class FeignClassScanUtils {
      */
     private static boolean match2F(HttpMappingInfo feignInfo, PsiMethod controllerMethod) {
         HttpMappingInfo controllerCache = BilateralCacheManager.getOrSetControllerCache(controllerMethod);
+        if (Objects.isNull(controllerCache)){
+            return false;
+        }
         String path = controllerCache.getPath();
         return StringUtils.equals(path,feignInfo.getPath());
     }
@@ -86,7 +87,8 @@ public class FeignClassScanUtils {
         List<PsiClass> javaFiles = ProjectUtils.scanAllFeignClassesByPsiShortNamesCache(project,searchScope);
         List<HttpMappingInfo> feignInfos = new ArrayList<>();
         List<Future<List<HttpMappingInfo>>> futures = new ArrayList<>();
-
+        //创建线程池
+        ExecutorService executor = ThreadPoolUtils.createExecutor();
         for (PsiClass psiClass : javaFiles) {
             // 判断类是否带有@Controller或@RestController注解
             // java.lang.Throwable: Read access is allowed from inside read-action (or EDT) only (see com.intellij.openapi.application.Application.runReadAction())

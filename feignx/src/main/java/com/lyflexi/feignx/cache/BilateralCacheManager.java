@@ -5,6 +5,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
+import com.lyflexi.feignx.enums.SpringBootMethodAnnotation;
+import com.lyflexi.feignx.enums.SpringCloudClassAnnotation;
+import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import com.lyflexi.feignx.utils.ControllerClassScanUtils;
 import com.lyflexi.feignx.utils.FeignClassScanUtils;
 import com.lyflexi.feignx.utils.ProjectUtils;
@@ -170,6 +173,9 @@ public class BilateralCacheManager {
      * @return
      */
     public static HttpMappingInfo getOrSetFeignCache(PsiMethod feignMethod) {
+        if(!AnnotationParserUtils.containsRestfulAnnotation(feignMethod)){
+            return null;
+        }
         String basePath = feignMethod.getProject().getBasePath();
         Map<String, HttpMappingInfo> qualified2Info = projectFeignCacheMap.get(basePath);
         String qualifier = buildKey(feignMethod);
@@ -181,15 +187,18 @@ public class BilateralCacheManager {
     /**
      * 获取或者设置某个controller方法的缓存
      *
-     * @param feignMethod
+     * @param controllerMethod
      * @return
      */
-    public static HttpMappingInfo getOrSetControllerCache(PsiMethod feignMethod) {
-        String basePath = feignMethod.getProject().getBasePath();
+    public static HttpMappingInfo getOrSetControllerCache(PsiMethod controllerMethod) {
+        if(!AnnotationParserUtils.containsRestfulAnnotation(controllerMethod)){
+            return null;
+        }
+        String basePath = controllerMethod.getProject().getBasePath();
         Map<String, HttpMappingInfo> qualified2Info = projectControllerCacheMap.get(basePath);
-        String qualifier = buildKey(feignMethod);
+        String qualifier = buildKey(controllerMethod);
         if (Objects.isNull(qualified2Info.get(qualifier))) {
-            setControllerCache(feignMethod);
+            setControllerCache(controllerMethod);
         }
         return qualified2Info.get(qualifier);
     }
