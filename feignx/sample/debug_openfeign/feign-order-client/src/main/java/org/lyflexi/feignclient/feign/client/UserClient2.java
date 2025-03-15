@@ -116,7 +116,7 @@ public interface UserClient2 {
     User parallelScan4(@PathVariable("id") Long id);
 
     /**
-     * parallelScan5. v3.2.1
+     * parallelScan5. v5.2.1
      * @param id
      * @return
      */

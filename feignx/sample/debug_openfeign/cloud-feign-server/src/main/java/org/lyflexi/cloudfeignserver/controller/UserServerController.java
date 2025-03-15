@@ -188,7 +188,7 @@ public class UserServerController {
         return new User(id, "user");
     }
     /**
-     * parallelScan5. v3.2.1
+     * parallelScan5. v5.2.1
      * @param id
      * @return
      */
