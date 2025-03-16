@@ -10,7 +10,7 @@ import java.util.concurrent.*;
  * @Description: 加入线程池，提升HttpMappingInfo的初始化构建性能
  */
 public class ThreadPoolUtils {
-    //默认IOU密集型程序核心线程数为`2*N`
+    //默认IO密集型程序核心线程数为`2*N`
     private static final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors()*2; // 核心线程数
     private static final int MAX_POOL_SIZE = 2*CORE_POOL_SIZE; // 最大线程数
     private static final long KEEP_ALIVE_TIME = 60L; // 线程空闲时间
