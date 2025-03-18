@@ -237,7 +237,7 @@ CopyControllerUrlLineMarkerProvider：
 我们额外自定义了项目初始化PsiClass缓存管理器InitialPsiClassCacheManager，将原先的两次全盘allJavaFileClass扫描降低为1次，狠狠加速了原来手写的磁盘递归扫描
 
 ### todo
-插件冲突避免(正常使用请忽略此条)
+老版本的IDEA使用插件注意冲突避免(正常使用请忽略此条)
 
 请按照以下路径关闭git默认的内联作者提示
 
