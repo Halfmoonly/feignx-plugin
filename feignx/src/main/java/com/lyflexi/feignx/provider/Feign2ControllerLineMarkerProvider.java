@@ -48,11 +48,7 @@ public class Feign2ControllerLineMarkerProvider extends RelatedItemLineMarkerPro
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Controller");
-                    PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
-                    //在用户打注释/***/期间，psiMethod会有一瞬间不再拥有注解
-                    if (Objects.nonNull(targetAnnotation)) {
-                        result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
-                    }
+                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(psiMethod.getNameIdentifier())));
                 }
             }
         }

@@ -197,4 +197,9 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
+    @GetMapping(value = "/user/parallelScan6/{id}")
+    public User parallelScan6(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
 }
