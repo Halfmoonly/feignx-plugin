@@ -166,11 +166,18 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
+
     @GetMapping(value = "/user/parallelScan2/{id}")
     public User parallelScan2(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/user/parallelScan3/{id}")
     public User parallelScan3(@PathVariable("id") Long id)
     {
@@ -197,8 +204,13 @@ public class UserServerController {
     {
         return new User(id, "user");
     }
-    @GetMapping(value = "/user/parallelScan6/{id}")
-    public User parallelScan6(@PathVariable("id") Long id)
+    @GetMapping(value = "/user/parallelScan7/{id}")
+    public User parallelScan7(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+    @GetMapping(value = "/user/parallelScan811/{id}")
+    public User parallelScan8(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }

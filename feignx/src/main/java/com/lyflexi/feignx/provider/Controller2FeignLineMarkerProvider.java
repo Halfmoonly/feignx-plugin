@@ -39,7 +39,7 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
             //为了支持用户对当前controller接口更新，无论缓存是否存在，设置或者覆盖缓存
-            BilateralCacheManager.setOrCoverControllerCache(psiMethod);
+            BilateralCacheManager.getOrSetControllerCache(psiMethod);
             if (psiClass != null) {
                 List<PsiElement> resultList = FeignClassScanUtils.process(psiMethod);
                 if (!resultList.isEmpty()) {

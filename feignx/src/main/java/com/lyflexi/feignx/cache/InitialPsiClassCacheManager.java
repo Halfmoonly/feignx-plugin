@@ -4,7 +4,7 @@ import com.intellij.psi.PsiClass;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
 /**
  * @Author: hmly
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InitialPsiClassCacheManager {
     private static final InitialPsiClassCacheManager INSTANCE = new InitialPsiClassCacheManager();
     //projectId(basePath) -> List<PsiClass>
-    private static Map<String, List<PsiClass>> InitialPsiClassCacheMap = new ConcurrentHashMap<>();
+    private static Map<String, List<PsiClass>> InitialPsiClassCacheMap = new HashMap<>();
 
     private InitialPsiClassCacheManager() {
     }
