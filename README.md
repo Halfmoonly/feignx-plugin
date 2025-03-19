@@ -12,7 +12,8 @@
 ## 我们更名啦，由FeignX更名为Navigator4URL OpenFeign RestController
 已上架IntelliJ IDEA插件市场：https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
 - 2025/03/12 官方市场用户下载量突破5000
--
+- 2025/03/20 官方市场用户下载量突破6000
+- 
 
 求star⭐⭐
 ## 使用教程
@@ -238,6 +239,11 @@ CopyControllerUrlLineMarkerProvider：
 
 ### 🐞 V5.3.1 更新内容
 对应分支：main-fix-dead
+
+1. 修复了偶发的卡死现象
+
+### 🐞 V5.3.2 更新内容
+对应分支：main-fix-dead2
 
 1. 修复了偶发的卡死现象
 ---
