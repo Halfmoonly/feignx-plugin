@@ -246,11 +246,22 @@ CopyControllerUrlLineMarkerProvider：
 对应分支：main-fix-dead2
 
 1. 修复了偶发的卡死现象
+
+### 🐞🚀 V5.4.0 更新内容
+对应分支：hotfix/main-dead
+
+1. feat: 合并了来自开发者的一个特性PR：https://github.com/Halfmoonly/feignx-plugin/pull/14 ,支持Restful注解path中的变量或者静态常量的解析（FeignClient和ApiController），感谢@wdhcr
+
+![restful-path-constant.png](feignx/pics/restful-path-constant.png)
+
+2. fix: 重大bug修复，彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免。希望反馈的朋友们耐心等待此版本上架
 ---
 
-觉得好用，点个star⭐
+我们欢迎各位的宝贵意见(^^ゞ)
 
-最新版本，请即时关注IntelliJ IDEA插件市场更新Navigator4URL OpenFeign RestController
+**诚邀广大开发者大佬们的Pull Request，让我们一起完善Navigator4URL OpenFeign RestController(FeignX)插件**
+
+最新版本插件请及时关注IntelliJ IDEA插件市场更新Navigator4URL OpenFeign RestController
 
 https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
 
