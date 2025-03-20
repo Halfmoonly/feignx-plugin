@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 
 import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.CONTROLLER;
 import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.RESTCONTROLLER;
+
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 
 /**
@@ -27,6 +28,7 @@ public class AnnotationParserUtils {
 
     /**
      * 寻找Restful注解
+     *
      * @param method
      * @return
      */
@@ -41,7 +43,7 @@ public class AnnotationParserUtils {
 //        }
         //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
         for (String targetAnnotation : targetAnnotations) {
-            if (method.hasAnnotation(targetAnnotation)){
+            if (method.hasAnnotation(targetAnnotation)) {
                 return method.getAnnotation(targetAnnotation);
             }
         }
@@ -50,6 +52,7 @@ public class AnnotationParserUtils {
 
     /**
      * 判断当前类时controlller
+     *
      * @param psiClass
      * @return
      */
@@ -64,8 +67,9 @@ public class AnnotationParserUtils {
 //        }
 //        return false;
         //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
-        return psiClass.hasAnnotation(CONTROLLER.getQualifiedName())||psiClass.hasAnnotation(RESTCONTROLLER.getQualifiedName());
+        return psiClass.hasAnnotation(CONTROLLER.getQualifiedName()) || psiClass.hasAnnotation(RESTCONTROLLER.getQualifiedName());
     }
+
     /**
      * 判断当前元素是否为Controller下的方法
      *
@@ -86,6 +90,7 @@ public class AnnotationParserUtils {
 
     /**
      * 判断当前类是否是Feign类
+     *
      * @param psiClass
      * @return
      */
@@ -118,9 +123,10 @@ public class AnnotationParserUtils {
 
     /**
      * 元素是否为FeignClient下的方法
-     *
+     * <p>
      * 更保险的方式是
      * 当传进去的是 PsiMethod，需要手动判断所有的getParentOfType是否含有注解org.springframework.cloud.openfeign.FeignClient
+     *
      * @param element
      * @return
      */
@@ -184,6 +190,20 @@ public class AnnotationParserUtils {
                         return ((String) value).startsWith("/") ? (String) value : "/" + value;
                     }
                 }
+                else if (attributeValue instanceof PsiReferenceExpression) {
+                    // 处理引用常量的情况
+                    PsiElement resolvedElement = ((PsiReferenceExpression) attributeValue).resolve();
+                    if (resolvedElement instanceof PsiField) {
+                        PsiField field = (PsiField) resolvedElement;
+                        PsiExpression initializer = field.getInitializer();
+                        if (initializer instanceof PsiLiteralExpression) {
+                            Object value = ((PsiLiteralExpression) initializer).getValue();
+                            if (value instanceof String) {
+                                return ((String) value).startsWith("/") ? (String) value : "/" + value;
+                            }
+                        }
+                    }
+                }
             }
         }
         return "";
@@ -210,6 +230,7 @@ public class AnnotationParserUtils {
 
     /**
      * 判断当前方法是否拥有Restful注解
+     *
      * @param method
      * @return
      */
