@@ -1,6 +1,7 @@
 package org.lyflexi.cloudfeignserver.controller;
 
 import org.lyflexi.cloudfeignapi.User;
+import org.lyflexi.cloudfeignapi.UserApiConst;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -211,6 +212,12 @@ public class UserServerController {
     }
     @GetMapping(value = "/user/parallelScan811/{id}")
     public User parallelScan8(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+
+    @GetMapping(UserApiConst.USER_CLIENT_PARALLEL_SCAN9_ID)
+    public User parallelScan9(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }

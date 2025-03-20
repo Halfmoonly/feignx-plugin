@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @Author: hmly
@@ -190,24 +191,43 @@ public class FeignClassScanUtils {
                 PsiAnnotationMemberValue value = attribute.getValue();
                 if (value instanceof PsiLiteralExpression) {
                     String path = ((PsiLiteralExpression) value).getValue().toString();
-                    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-                    if (StringUtils.isBlank(path)) {
-                        return "";
+                    return handlePath(path);
+                }
+                else if (value instanceof PsiReferenceExpression) {
+                    // 处理引用常量的情况
+                    PsiElement resolvedElement = ((PsiReferenceExpression) value).resolve();
+                    if (resolvedElement instanceof PsiField) {
+                        PsiField field = (PsiField) resolvedElement;
+                        PsiExpression initializer = field.getInitializer();
+                        if (initializer instanceof PsiLiteralExpression) {
+                            Object path = ((PsiLiteralExpression) initializer).getValue();
+                            if (path instanceof String) {
+                                String pathStr = (String) path;
+                                return handlePath(pathStr);
+                            }
+                        }
                     }
-                    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-                    // 如果path不以/开头，添加/
-                    if (!path.startsWith("/")) {
-                        path = "/" + path;
-                    }
-                    // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
-                    // 如果path以/结尾，去除/
-                    if (path.endsWith("/")) {
-                        path = path.substring(0, path.length() - 1);
-                    }
-                    return path;
                 }
             }
         }
         return "";
+    }
+
+    private static @NotNull String handlePath(String pathStr) {
+        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
+        if (StringUtils.isBlank(pathStr)) {
+            return "";
+        }
+        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
+        // 如果path不以/开头，添加/
+        if (!pathStr.startsWith("/")) {
+            pathStr = "/" + pathStr;
+        }
+        // @geasscai https://github.com/Halfmoonly/feignx-plugin/pull/9
+        // 如果path以/结尾，去除/
+        if (pathStr.endsWith("/")) {
+            pathStr = pathStr.substring(0, pathStr.length() - 1);
+        }
+        return pathStr;
     }
 }
