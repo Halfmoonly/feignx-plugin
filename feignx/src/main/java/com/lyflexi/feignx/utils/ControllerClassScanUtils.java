@@ -38,8 +38,6 @@ public class ControllerClassScanUtils {
     private static final String SPRINGMVC_PATH = "spring.mvc.servlet.path";
     // 初始化PsiClass缓存管理器
     private static final InitialPsiClassCacheManager initialPsiClassCacheManager = InitialPsiClassCacheManager.getInstance();
-    //初始化线程池
-    private static final ExecutorService executor = ThreadPoolUtils.createExecutor();
     private ControllerClassScanUtils() {
     }
 
@@ -59,14 +57,8 @@ public class ControllerClassScanUtils {
             return Collections.emptyList();
         }
 
-        Map<String, HttpMappingInfo> controllerCaches = BilateralCacheManager.queryControllerCaches(project);
-
-        if (MapUtils.isNotEmpty(controllerCaches)) {
-            return new ArrayList<>(controllerCaches.values());
-        }
         //获取项目中的所有源文件
         List<HttpMappingInfo> httpMappingInfos = new ArrayList<>();
-        List<Future<List<HttpMappingInfo>>> futures = new ArrayList<>();
 
         // 获取项目ID
         String projectId = project.getBasePath();
@@ -77,37 +69,19 @@ public class ControllerClassScanUtils {
             javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
             initialPsiClassCacheManager.init(projectId, javaFiles);
         }
-        //创建子线程
-        for (PsiClass psiClass : javaFiles) {
-            // 判断类是否带有@Controller或@RestController注解
-            // java.lang.Throwable: Read access is allowed from inside read-action (or EDT) only (see com.intellij.openapi.application.Application.runReadAction())
-            //            futures.add(executor.submit(() -> controllersOfPsiClass(psiClass, project)));
-            // 问题本质上是：在非 ReadAction / 非主线程下访问 PSI Tree 或 PSI API，会被 IntelliJ 拦截报错。
-            // 解决方案如下：
-            futures.add(executor.submit(() ->
-                    ApplicationManager.getApplication().runReadAction((Computable<List<HttpMappingInfo>>) () ->
-                            controllersOfPsiClass(psiClass, project)
-                    )
-            ));
-        }
-        // 收集结果
-        for (Future<List<HttpMappingInfo>> future : futures) {
-            try {
-                httpMappingInfos.addAll(future.get());
-            } catch (InterruptedException | ExecutionException e) {
-                // 可加入日志记录
-                System.out.println("ControllerClassScanUtils#executor并行扫描期间异常..."+e.getMessage()+ "进入兜底扫描方案");
-                for (PsiClass psiClass : javaFiles) {
-                    // 判断类是否带有@Controller或@RestController注解
-                    httpMappingInfos.addAll(controllersOfPsiClass(psiClass, project));
-                }
-            }
-        }
+        //controller接口缓存查询
+        Map<String, HttpMappingInfo> controllerCaches = BilateralCacheManager.queryControllerCaches(project);
 
+        if (MapUtils.isNotEmpty(controllerCaches)) {
+            return new ArrayList<>(controllerCaches.values());
+        }
+        //创建全部的controller信息
+        for (PsiClass psiClass : javaFiles) {
+            httpMappingInfos.addAll(controllersOfPsiClass(psiClass, project));
+        }
         // 将结果添加到缓存中
         BilateralCacheManager.initControllerCaches(project, httpMappingInfos);
 
-        executor.shutdown();
         return httpMappingInfos;
     }
 

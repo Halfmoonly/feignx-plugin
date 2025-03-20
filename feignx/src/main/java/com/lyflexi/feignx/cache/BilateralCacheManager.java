@@ -147,7 +147,7 @@ public class BilateralCacheManager {
      *
      * @param feignMethod
      */
-    public static void setFeignCache(PsiMethod feignMethod) {
+    public static HttpMappingInfo setFeignCache(PsiMethod feignMethod) {
         Project project = feignMethod.getProject();
 
         String basePath = project.getBasePath();
@@ -164,6 +164,7 @@ public class BilateralCacheManager {
         if (Objects.nonNull(feignInfo = FeignClassScanUtils.feignOfPsiMethod(feignMethod.getContainingClass(),feignMethod))){
             qualifier2Info.put(qualifier, feignInfo);
         }
+        return feignInfo;
     }
 
     /**
@@ -218,7 +219,7 @@ public class BilateralCacheManager {
      *
      * @param controllerMethod
      */
-    public static void setControllerCache(PsiMethod controllerMethod) {
+    public static HttpMappingInfo setControllerCache(PsiMethod controllerMethod) {
         Project project = controllerMethod.getProject();
 
         String basePath = project.getBasePath();
@@ -235,6 +236,7 @@ public class BilateralCacheManager {
         if (Objects.nonNull(controllerInfo = ControllerClassScanUtils.controllerOfPsiMethod(controllerMethod.getContainingClass(),project,controllerMethod))){
             qualifier2Info.put(qualifier, controllerInfo);
         }
+        return controllerInfo;
     }
 
 
@@ -258,21 +260,17 @@ public class BilateralCacheManager {
      * 为了支持用户对当前feign接口更新，无论缓存是否存在，设置或者覆盖缓存
      * @param psiMethod
      *
-     * 可能导致死机
      */
-    @Deprecated
-    public static void setOrCoverFeignCache(PsiMethod psiMethod) {
-        setFeignCache(psiMethod);
+    public static HttpMappingInfo setOrCoverFeignCache(PsiMethod psiMethod) {
+        return setFeignCache(psiMethod);
     }
     /**
      * 为了支持用户对当前controller接口更新，无论缓存是否存在，设置或者覆盖缓存
      * @param psiMethod
      *
-     * 可能导致死机
      */
-    @Deprecated
-    public static void setOrCoverControllerCache(PsiMethod psiMethod) {
-        setControllerCache(psiMethod);
+    public static HttpMappingInfo setOrCoverControllerCache(PsiMethod psiMethod) {
+        return setControllerCache(psiMethod);
     }
 
 

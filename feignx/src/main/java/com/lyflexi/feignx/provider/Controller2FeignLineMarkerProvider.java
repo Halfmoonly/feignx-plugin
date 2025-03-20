@@ -38,9 +38,12 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
         if (element instanceof PsiMethod && AnnotationParserUtils.isElementWithinController(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
-            //为了支持用户对当前controller接口更新，无论缓存是否存在，设置或者覆盖缓存
-            BilateralCacheManager.getOrSetControllerCache(psiMethod);
             if (psiClass != null) {
+                // 先执行Feign的全盘初始化扫描
+                FeignClassScanUtils.scanFeignInterfaces(psiMethod.getProject());
+                // 为了支持用户对当前controller接口更新，无论缓存是否存在，设置或者覆盖缓存
+                BilateralCacheManager.setOrCoverControllerCache(psiMethod);
+                //计算匹配到的目标Feign集合
                 List<PsiElement> resultList = FeignClassScanUtils.process(psiMethod);
                 if (!resultList.isEmpty()) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
@@ -48,7 +51,11 @@ public class Controller2FeignLineMarkerProvider extends RelatedItemLineMarkerPro
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Feign");
-                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(psiMethod.getNameIdentifier())));
+                    PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
+                    //在用户打注释/***/期间，psiMethod会有一瞬间不再拥有注解
+                    if (Objects.nonNull(targetAnnotation)) {
+                        result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
+                    }
                 }
             }
         }

@@ -37,7 +37,8 @@
         <![CDATA[
         ### 更新内容
         <br>
-        1. 修复了偶发的卡死现象
+        1. feat: 合并了来自开发者的一个特性PR：https://github.com/Halfmoonly/feignx-plugin/pull/14，支持Restful注解path中的变量或者静态常量的解析（FeignClient和ApiController）
+        2. fix: 重大bug修复彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免
         ]]>
     </change-notes>
 
@@ -71,6 +72,8 @@
         <notificationGroup id="Navigator4URL OpenFeign RestController"
                            displayType="BALLOON"
                            key="notification.group.name"/>
+
+        <startupActivity implementation="com.lyflexi.feignx.listener.PluginStartupActivity"/>
 
     </extensions>
 

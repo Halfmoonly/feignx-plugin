@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/prefix")
 public class OrderServerController {
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/order/get/{id}")
     public Order getPaymentById(@PathVariable("id") Long id)
     {

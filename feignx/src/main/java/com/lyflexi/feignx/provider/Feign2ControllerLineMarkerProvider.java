@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @Description: 将导航Gutter绘制在注解旁,目前只能跳转到当前项目下的文件否则会报Element from alien project错误
+ * @Description: 将导航Gutter绘制在注解旁, 目前只能跳转到当前项目下的文件否则会报Element from alien project错误
  * @Author: lyflexi
  * @project: feignx-plugin
  * @Date: 2024/10/18 14:56
@@ -38,9 +38,12 @@ public class Feign2ControllerLineMarkerProvider extends RelatedItemLineMarkerPro
         if (element instanceof PsiMethod && AnnotationParserUtils.isElementWithinFeign(element)) {
             PsiMethod psiMethod = (PsiMethod) element;
             PsiClass psiClass = psiMethod.getContainingClass();
-            //为了支持用户对当前feign接口更新，无论缓存是否存在，设置或者覆盖缓存
-            BilateralCacheManager.getOrSetFeignCache(psiMethod);
             if (psiClass != null) {
+                // 先执行Controller的全盘初始化扫描
+                ControllerClassScanUtils.scanControllerPaths(psiMethod.getProject());
+                //为了支持用户对当前feign接口更新，无论缓存是否存在，设置或者覆盖缓存
+                BilateralCacheManager.setOrCoverFeignCache(psiMethod);
+                //计算匹配到的目标Controller集合
                 List<PsiElement> resultList = ControllerClassScanUtils.process(psiMethod);
                 if (!resultList.isEmpty()) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
@@ -48,7 +51,11 @@ public class Feign2ControllerLineMarkerProvider extends RelatedItemLineMarkerPro
                             .setAlignment(GutterIconRenderer.Alignment.CENTER)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Controller");
-                    result.add(builder.createLineMarkerInfo(Objects.requireNonNull(psiMethod.getNameIdentifier())));
+                    PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
+                    //在用户打注释/***/期间，psiMethod会有一瞬间不再拥有注解
+                    if (Objects.nonNull(targetAnnotation)) {
+                        result.add(builder.createLineMarkerInfo(Objects.requireNonNull(targetAnnotation)));
+                    }
                 }
             }
         }

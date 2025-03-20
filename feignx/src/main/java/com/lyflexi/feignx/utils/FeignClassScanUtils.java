@@ -30,8 +30,6 @@ import org.jetbrains.annotations.NotNull;
 public class FeignClassScanUtils {
     // 初始化PsiClass缓存管理器
     private static final InitialPsiClassCacheManager initialPsiClassCacheManager = InitialPsiClassCacheManager.getInstance();
-    //初始化线程池
-    private static final ExecutorService executor = ThreadPoolUtils.createExecutor();
     /**
      * 当前controller，扫描待跳转的所有目标Feign
      *
@@ -85,10 +83,7 @@ public class FeignClassScanUtils {
         if (DumbService.isDumb(project)) {
             return Collections.emptyList();
         }
-        Map<String, HttpMappingInfo> feignCaches = BilateralCacheManager.queryFeignCaches(project);
-        if (MapUtils.isNotEmpty(feignCaches)) {
-            return new ArrayList<>(feignCaches.values());
-        }
+
         // 获取项目ID
         String projectId = project.getBasePath();
 
@@ -98,40 +93,22 @@ public class FeignClassScanUtils {
             javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
             initialPsiClassCacheManager.init(projectId, javaFiles);
         }
+
+        //Feign接口缓存查询
+        Map<String, HttpMappingInfo> feignCaches = BilateralCacheManager.queryFeignCaches(project);
+
+        if (MapUtils.isNotEmpty(feignCaches)) {
+            return new ArrayList<>(feignCaches.values());
+        }
         //获取项目中的所有Feign源文件
         List<HttpMappingInfo> feignInfos = new ArrayList<>();
-        List<Future<List<HttpMappingInfo>>> futures = new ArrayList<>();
-        //创建子线程
+        //创建全部的Feign接口信息
         for (PsiClass psiClass : javaFiles) {
-            // 判断类是否带有@Controller或@RestController注解
-            // java.lang.Throwable: Read access is allowed from inside read-action (or EDT) only (see com.intellij.openapi.application.Application.runReadAction())
-            //            futures.add(executor.submit(() -> feignsOfPsiClass(psiClass)));
-            // 问题本质上是：在非 ReadAction / 非主线程下访问 PSI Tree 或 PSI API，会被 IntelliJ 拦截报错。
-            // 解决方案如下：
-            futures.add(executor.submit(() ->
-                    ApplicationManager.getApplication().runReadAction((Computable<List<HttpMappingInfo>>) () ->
-                            feignsOfPsiClass(psiClass)
-                    )
-            ));
+            feignInfos.addAll(feignsOfPsiClass(psiClass));
         }
-
-        // 收集结果
-        for (Future<List<HttpMappingInfo>> future : futures) {
-            try {
-                feignInfos.addAll(future.get());
-            } catch (InterruptedException | ExecutionException e) {
-                System.out.println("FeignClassScanUtils#executor并行扫描期间异常..."+e.getMessage()+ "进入兜底扫描方案");
-                for (PsiClass psiClass : javaFiles) {
-                    // 判断类是否带有@FeignClient注解
-                    feignInfos.addAll(feignsOfPsiClass(psiClass));
-                }
-            }
-        }
-
         // 将结果添加到缓存中
         BilateralCacheManager.initFeignCaches(project, feignInfos);
 
-        executor.shutdown();
         return feignInfos;
     }
 

@@ -1,7 +1,9 @@
 package com.lyflexi.feignx.cache;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -51,5 +53,18 @@ public class InitialPsiClassCacheManager {
         return InitialPsiClassCacheMap.get(projectId);
     }
 
-
+    /**
+     * 新增一个psiclass缓存
+     * @param project
+     * @param psiClass
+     */
+    public static void putPsiClassCache(Project project, PsiClass psiClass) {
+        String projectId = project.getBasePath();
+        List<PsiClass> psiClasses = InitialPsiClassCacheMap.get(projectId);
+        if (psiClasses == null) {
+            psiClasses = new ArrayList<>();
+        }
+        psiClasses.add(psiClass);
+        InitialPsiClassCacheMap.put(projectId, psiClasses);
+    }
 }

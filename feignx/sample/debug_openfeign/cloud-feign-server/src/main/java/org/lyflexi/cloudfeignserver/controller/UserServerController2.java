@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 2024/7/27 14:09
  */
 @RestController
-public class UserServerController {
+public class UserServerController2 {
 
     /**
      *
@@ -36,6 +36,19 @@ public class UserServerController {
      * 哈哈哈
      */
     public User update(@PathVariable("id") Long id)
+    {
+        return new User(id, "user");
+    }
+    /**
+     * hhh
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/user/updateeee/{id}")
+    /**
+     * 哈哈哈
+     */
+    public User updateeeee(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
@@ -218,17 +231,6 @@ public class UserServerController {
 
     @GetMapping(UserApiConst.USER_CLIENT_PARALLEL_SCAN9_ID)
     public User parallelScan9(@PathVariable("id") Long id)
-    {
-        return new User(id, "user");
-    }
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @GetMapping(value = "/user/parallelScan10/{id}")
-    public User parallelScan10(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
