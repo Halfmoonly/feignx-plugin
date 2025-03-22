@@ -44,34 +44,36 @@ FeignX is inspired by IDEA's star plugin MybatisX.
 
 5. Navigator4URL OpenFeign RestController supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
 
-eg. FeignClient -> ApiController
+eg. FeignClient 方法导航跳转至 ApiController，与URL全路径一键剪切板拷贝
 
 <div align="left">
   <img src="./feignx/pics/snipping-feignClient.png">
 </div>
 
-eg. ApiController -> FeignClient
+eg. ApiController  方法导航跳转至 FeignClient，与URL全路径一键剪切板拷贝
 
 <div align="left">
   <img src="./feignx/pics/snipping-apiController.png">
 </div>
 
-So, install the FeignX plugin as soon as possible!.
 ## 更新日志
 ### 🚀Feignx:v1.0.0
-cross-module：FeignClient-ApiController Mutually Navigation
-
-cross-module：ApiController-FeignClient Mutually Navigation
+- 跨模块实现FeignClient导航ApiController功能：FeignClient-ApiController Mutually Navigation
+- 跨模块实现ApiController导航FeignClient功能：ApiController-FeignClient Mutually Navigation
 
 ### 🚀Feignx:v2.1.0
-Adapted To Latest IDEA
+适配最新版本的IntelliJ IDEA
 
 ### 🐞Feignx:v3.0.0
-
-[fix] Major version fix , fix the bug that cannot dynamically detect new interfaces due to cache
+[fix] 重大bug修复，修复了由于缓存导致的目标接口动态监测失效的问题
 
 ### 🚀Feignx:v4.0.0
-adapted properties/yml/yaml of 1.server.servlet.context-path and 2.spring.mvc.servlet.path
+[feat] 重大功能更新，server端适配了springboot配置文件application.properties/application.yml/application.yaml的解析机制：
+
+支持以下配置的解析
+1. tomcat配置属性：server.servlet.context-path
+2. springmvc配置属性：spring.mvc.servlet.path
+
 ![DispatcherServlet.png](feignx/pics/DispatcherServlet.png)
 
 在 Spring Boot 出现之前，Dispatcher Servlet 是在 web.xml 文件中声明的，如下图
