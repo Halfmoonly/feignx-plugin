@@ -13,6 +13,7 @@
 已上架IntelliJ IDEA插件市场：https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
 - 2025/03/12 官方市场用户下载量突破5000
 - 2025/03/20 官方市场用户下载量突破6000
+- 2025/03/26 官方市场用户下载量突破7000
 - 
 
 求star⭐⭐
