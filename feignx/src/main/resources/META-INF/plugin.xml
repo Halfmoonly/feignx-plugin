@@ -14,7 +14,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-<b>Navigator4URL OpenFeign RestController（FeignX） is a Free SpringCloud OpenFeign And RestController Assistant. Author 刘岩.</b>
+<b>Navigator4URL OpenFeign RestController（FeignX） is a Free SpringCloud Feign Assistant And RestController Assistant. Author 刘岩.</b>
 <br>
 1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module. eg. feignClient -> ApiController. eg. ApiController -> feignClient.
 <br>
@@ -39,6 +39,7 @@
         <br>
         1. feat: 合并了来自开发者的一个特性PR：https://github.com/Halfmoonly/feignx-plugin/pull/14，支持Restful注解path中的变量或者静态常量的解析（FeignClient和ApiController）
         2. fix: 重大bug修复彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免
+        3. feat: 重绘优化了剪切板gutter的美观和谐性
         ]]>
     </change-notes>
 
