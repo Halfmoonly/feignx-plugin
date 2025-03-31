@@ -262,7 +262,10 @@ CopyControllerUrlLineMarkerProvider：
 ### 🚀 V5.4.1 更新内容
 对应分支：hotfix/main-ui
 
+
 重绘优化了剪切板gutter的美观和谐性
+
+![clipboard.svg](feignx/src/main/resources/icons/clipboard.svg)
 
 
 ---
