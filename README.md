@@ -258,6 +258,13 @@ CopyControllerUrlLineMarkerProvider：
 ![restful-path-constant.png](feignx/pics/restful-path-constant.png)
 
 2. fix: 重大bug修复，彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免。希望反馈的朋友们耐心等待此版本上架
+
+### 🚀 V5.4.1 更新内容
+对应分支：hotfix/main-ui
+
+重绘优化了剪切板gutter的美观和谐性
+
+
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)
