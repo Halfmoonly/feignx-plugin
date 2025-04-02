@@ -259,14 +259,13 @@ CopyControllerUrlLineMarkerProvider：
 
 2. fix: 重大bug修复，彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免。希望反馈的朋友们耐心等待此版本上架
 
-### 🚀 V5.4.1 更新内容
-对应分支：hotfix/main-ui
+### 🚀v5.5.0更新内容
+对应分支feat/main-tab-svg
 
+1. 我们上线了FeignClient和RestController类文件的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
+2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
 
-重绘优化了剪切板gutter的美观和谐性
-
-![clipboard.svg](feignx/src/main/resources/icons/clipboard.svg)
-
+![user-settings.png](feignx/pics/user-settings.png)
 
 ---
 
