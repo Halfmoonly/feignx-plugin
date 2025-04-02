@@ -35,14 +35,16 @@
 
     <change-notes>
         <![CDATA[
-        ### 更新内容
+        ### v5.5.0更新内容
         <br>
-        1. feat: 合并了来自开发者的一个特性PR：https://github.com/Halfmoonly/feignx-plugin/pull/14，支持Restful注解path中的变量或者静态常量的解析（FeignClient和ApiController）
-        2. fix: 重大bug修复彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免
-        3. feat: 重绘优化了剪切板gutter的美观和谐性
+        1. 我们上线了`FeignClient`和`RestController`类文件的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
+        2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
         ]]>
     </change-notes>
-
+    <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
+    <version>5.5.0</version>
+    <!--插件支持版本 2020.3+-->
+    <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
@@ -75,6 +77,12 @@
                            key="notification.group.name"/>
 
         <startupActivity implementation="com.lyflexi.feignx.listener.PluginStartupActivity"/>
+
+        <!-- feignclent类文件和controller类文件图标都改成一只鸟-->
+        <iconProvider id="com.lyflexi.feignx.ui.RestClassIconProvider"
+                      implementation="com.lyflexi.feignx.ui.RestClassIconProvider"/>
+        <!--用户配置页面-自定义是否开启文件icon替换-->
+        <applicationConfigurable implementation="com.lyflexi.feignx.ui.UserPluginConfigurable"/>
 
     </extensions>
 
