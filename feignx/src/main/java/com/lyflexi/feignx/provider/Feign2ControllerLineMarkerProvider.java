@@ -11,7 +11,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
-import com.lyflexi.feignx.constant.MyIcons;
+import com.lyflexi.feignx.constant.RestIcons;
 import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import com.lyflexi.feignx.utils.ControllerClassScanUtils;
 import org.jetbrains.annotations.NotNull;
@@ -47,8 +47,8 @@ public class Feign2ControllerLineMarkerProvider extends RelatedItemLineMarkerPro
                 List<PsiElement> resultList = ControllerClassScanUtils.process(psiMethod);
                 if (!resultList.isEmpty()) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder
-                            .create(MyIcons.STATEMENT_LINE_FEIGN_ICON)
-                            .setAlignment(GutterIconRenderer.Alignment.CENTER)
+                            .create(RestIcons.STATEMENT_LINE_FEIGN_ICON)
+                            .setAlignment(GutterIconRenderer.Alignment.LEFT)
                             .setTargets(resultList)
                             .setTooltipTitle("Navigation to target in Controller");
                     PsiAnnotation targetAnnotation = AnnotationParserUtils.findRestfulAnnotation(psiMethod);
