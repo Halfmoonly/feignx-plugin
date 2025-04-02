@@ -11,7 +11,7 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
-import com.lyflexi.feignx.constant.MyIcons;
+import com.lyflexi.feignx.constant.RestIcons;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import com.lyflexi.feignx.utils.ControllerClassScanUtils;
@@ -141,10 +141,10 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
             LineMarkerInfo<PsiElement> markerInfo = new LineMarkerInfo<>(
                     targetAnnotation,
                     targetAnnotation.getTextRange(),
-                    MyIcons.STATEMENT_LINE_CLIPBOARD_ICON,
+                    RestIcons.STATEMENT_LINE_CLIPBOARD_CONTROLLER_ICON,
                     psi -> "Click to copy Controller-URL: " + url,
                     handler,
-                    GutterIconRenderer.Alignment.CENTER,
+                    GutterIconRenderer.Alignment.LEFT,
                     () -> "Copy Controller URL"
             );
 
