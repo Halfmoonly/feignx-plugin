@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
  * @Description:
  */
 @Service(Service.Level.APP)
-@State(name = "FeignPluginSettings", storages = @Storage("feign-plugin-settings.xml"))
+@State(name = "FeignPluginSettings", storages = @Storage("Navigator4URL-OpenFeign-RestController-Settings.xml"))
 public final class UserFeignSettings implements PersistentStateComponent<UserFeignSettings.State> {
 
     private State state = new State();
