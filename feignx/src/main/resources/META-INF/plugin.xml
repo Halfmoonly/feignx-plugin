@@ -41,7 +41,10 @@
         2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
         ]]>
     </change-notes>
-
+    <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
+    <version>5.5.0</version>
+    <!--插件支持版本 2020.3+-->
+    <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
