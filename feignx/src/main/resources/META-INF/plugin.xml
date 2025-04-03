@@ -35,14 +35,18 @@
 
     <change-notes>
         <![CDATA[
-        ### v5.5.0更新内容
+        ### v5.5.1更新内容
         <br>
-        1. 我们上线了`FeignClient`和`RestController`类文件的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
+        1. 我们上线了`FeignClient`接口文件的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
+        <br>
         2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
+        <br>
+        3. 修复了异常：com.intellij.psi.PsiInvalidElementAccessException: Element: class com.intellij.psi.impl.source.PsiClassImpl #JAVA invalidated at: see attachment
+        <br>
         ]]>
     </change-notes>
     <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
-    <version>5.5.0</version>
+    <version>5.5.1</version>
     <!--插件支持版本 2020.3+-->
     <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
@@ -58,9 +62,9 @@
 
 
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.lyflexi.feignx.provider.Feign2ControllerLineMarkerProvider"/>
+                                        implementationClass="com.lyflexi.feignx.provider.F2CLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider"/>
+                                        implementationClass="com.lyflexi.feignx.provider.C2FLineMarkerProvider"/>
 
 
         <codeInsight.lineMarkerProvider language="JAVA"
@@ -76,13 +80,11 @@
                            displayType="BALLOON"
                            key="notification.group.name"/>
 
-        <startupActivity implementation="com.lyflexi.feignx.listener.PluginStartupActivity"/>
-
-        <!-- feignclent类文件和controller类文件图标都改成一只鸟-->
-        <iconProvider id="com.lyflexi.feignx.ui.RestClassIconProvider"
-                      implementation="com.lyflexi.feignx.ui.RestClassIconProvider"/>
+        <!-- feignclent类文件图标改成一只鸟-->
+        <iconProvider id="com.lyflexi.feignx.provider.FeignClassIconProvider"
+                      implementation="com.lyflexi.feignx.provider.FeignClassIconProvider"/>
         <!--用户配置页面-自定义是否开启文件icon替换-->
-        <applicationConfigurable implementation="com.lyflexi.feignx.ui.UserPluginConfigurable"/>
+        <applicationConfigurable implementation="com.lyflexi.feignx.user.UserPluginConfigurable"/>
 
     </extensions>
 

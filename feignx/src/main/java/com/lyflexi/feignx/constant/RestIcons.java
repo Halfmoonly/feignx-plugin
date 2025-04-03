@@ -12,8 +12,8 @@ import javax.swing.*;
  */
 public interface RestIcons {
     Icon STATEMENT_LINE_FEIGN_ICON = IconLoader.getIcon("/icons/feignAction.svg", RestIcons.class);
-    Icon STATEMENT_LINE_CONTROLLER_ICON = IconLoader.getIcon("/icons/controllerAction.svg", RestIcons.class);
+    Icon STATEMENT_LINE_CONTROLLER_ICON = IconLoader.getIcon("/icons/feignAction.svg", RestIcons.class);
     Icon STATEMENT_LINE_CLIPBOARD_FEIGN_ICON = IconLoader.getIcon("/icons/clipboard-feign.svg", RestIcons.class);
-    Icon STATEMENT_LINE_CLIPBOARD_CONTROLLER_ICON = IconLoader.getIcon("/icons/clipboard-controller.svg", RestIcons.class);
+    Icon STATEMENT_LINE_CLIPBOARD_CONTROLLER_ICON = IconLoader.getIcon("/icons/clipboard-feign.svg", RestIcons.class);
 }
 

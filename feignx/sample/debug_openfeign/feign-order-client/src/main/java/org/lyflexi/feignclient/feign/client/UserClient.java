@@ -25,10 +25,8 @@ public interface UserClient {
      * @return
      */
     @GetMapping(value = "/update2/{id}")
-    /**
-     *
-     */
     User update(@PathVariable("id") Long id);
+
 
     /**
      *
@@ -36,12 +34,14 @@ public interface UserClient {
      * @return
      */
     @GetMapping(value = "/del/{id}")
-    /**
-     *
-     */
     User del(@PathVariable("id") Long id);
 
-    @GetMapping(value = "/getfather/{id}")
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/getfather/{id}")
     User getfather(@PathVariable("id") Long id);
 }

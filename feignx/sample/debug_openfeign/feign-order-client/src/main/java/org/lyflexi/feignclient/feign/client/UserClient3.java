@@ -19,4 +19,7 @@ public interface UserClient3 {
 
     @GetMapping(UserApiConst.USER_CLIENT_PARALLEL_SCAN9_ID)
     User parallelScan8(@PathVariable("id") Long id);
+
+
+
 }

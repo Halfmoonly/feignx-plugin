@@ -87,11 +87,15 @@ public interface UserClient2 {
      * @param id
      * @return
      */
+
     @GetMapping(value = "/optimizedCache/{id}")
     User optimizedCache(@PathVariable("id") Long id);
 
+
+
     @GetMapping(value = "/optimizedCache2/{id}")
     User optimizedCache2(@PathVariable("id") Long id);
+
 
     /**
      *
@@ -100,13 +104,17 @@ public interface UserClient2 {
      */
     @GetMapping(value = "/optimizedCache3/{id}")
     User optimizedCache3(@PathVariable("id") Long id);
+
     @GetMapping(value = "/parallelScan/{id}")
     User parallelScan(@PathVariable("id") Long id);
 
+
     @GetMapping(value = "/parallelScan2/{id}")
     User parallelScan2(@PathVariable("id") Long id);
+
     @GetMapping(value = "/parallelScan3/{id}")
     User parallelScan3(@PathVariable("id") Long id);
+
     /**
      *
      * @param id
@@ -114,6 +122,7 @@ public interface UserClient2 {
      */
     @GetMapping(value = "/parallelScan4/{id}")
     User parallelScan4(@PathVariable("id") Long id);
+
 
     /**
      * parallelScan5. v5.2.1

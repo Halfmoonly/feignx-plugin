@@ -1,6 +1,7 @@
 package com.lyflexi.feignx.utils;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
@@ -11,6 +12,7 @@ import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.properties.ConfigReader;
 import com.lyflexi.feignx.properties.ServerParser;
+import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,7 +24,9 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
 import org.apache.commons.collections.CollectionUtils;
+
 import static com.lyflexi.feignx.enums.SpringBootMethodAnnotation.REQUEST_MAPPING;
 
 /**
@@ -38,24 +42,27 @@ public class ControllerClassScanUtils {
     private static final String SPRINGMVC_PATH = "spring.mvc.servlet.path";
     // 初始化PsiClass缓存管理器
     private static final InitialPsiClassCacheManager initialPsiClassCacheManager = InitialPsiClassCacheManager.getInstance();
+
     private ControllerClassScanUtils() {
     }
 
     /**
      * 全量扫描工程中的controllerinfos
+     *
      * @param project
      * @return
      */
     public static List<HttpMappingInfo> scanControllerPaths(Project project) {
+        // 检查是否在 Dumb 模式下，以避免在项目构建期间执行代码
+        if (DumbService.isDumb(project)) {
+            return Collections.emptyList();
+        }
+
         PsiManager psiManager = PsiManager.getInstance(project);
 
         GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
 
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
-        // 检查是否在 Dumb 模式下，以避免在项目构建期间执行代码
-        if (DumbService.isDumb(project)) {
-            return Collections.emptyList();
-        }
 
         //获取项目中的所有源文件
         List<HttpMappingInfo> httpMappingInfos = new ArrayList<>();
@@ -77,6 +84,18 @@ public class ControllerClassScanUtils {
         }
         //创建全部的controller信息
         for (PsiClass psiClass : javaFiles) {
+            // 校验 psiClass 的有效性，毕竟有可能psiClass是从缓存中获取的，但是被RestClassIconProvider修改了
+            // 增加有效性校验
+            if (null == psiClass) {
+                continue;
+            }
+            if (!psiClass.isValid()) {
+                psiClass = SmartPsiElementRecover.recoverClass(project, psiClass);
+            }
+            if (null == psiClass || !psiClass.isValid()) {
+                continue;
+            }
+            // 捕获因 PSI 元素无效导致的异常
             httpMappingInfos.addAll(controllersOfPsiClass(psiClass, project));
         }
         // 将结果添加到缓存中
@@ -113,6 +132,7 @@ public class ControllerClassScanUtils {
         }
         return rs;
     }
+
     /**
      * 创建出当前psiclass（controller）内的,指定的psiMethod对应的HttpMappingInfo
      *
@@ -120,7 +140,7 @@ public class ControllerClassScanUtils {
      * @param project
      * @return
      */
-    public static HttpMappingInfo controllerOfPsiMethod(PsiClass psiClass,Project project,PsiMethod psiMethod) {
+    public static HttpMappingInfo controllerOfPsiMethod(PsiClass psiClass, Project project, PsiMethod psiMethod) {
         HttpMappingInfo httpMappingInfo = null;
         if (AnnotationParserUtils.isControllerClass(psiClass)) {
             StringBuilder parentPath = new StringBuilder();
@@ -130,10 +150,10 @@ public class ControllerClassScanUtils {
             parentPath.append(serverPath).append(mvcPath).append(controllerPath);
             // 提取接口路径和Swagger注解信息
             httpMappingInfo = HttpMappingInfo.of(parentPath.toString(), psiMethod);
-                if (Objects.nonNull(httpMappingInfo)) {
-                    // 设置psi方法信息
-                    httpMappingInfo.setPsiMethod(psiMethod);
-                }
+            if (Objects.nonNull(httpMappingInfo)) {
+                // 设置psi方法信息
+                httpMappingInfo.setPsiMethod(psiMethod);
+            }
 
         }
         return httpMappingInfo;
@@ -209,6 +229,7 @@ public class ControllerClassScanUtils {
 
     /**
      * 当前feign，扫描待跳转的所有目标controller
+     *
      * @param psiMethod psi方法
      * @return {@link List}<{@link PsiElement}>
      */
@@ -242,7 +263,6 @@ public class ControllerClassScanUtils {
 //        }
 //        return false;
 //    }
-
 
 
     public static void exportToCSV(List<HttpMappingInfo> httpMappingInfos) {
@@ -293,10 +313,10 @@ public class ControllerClassScanUtils {
      */
     public static boolean match2C(HttpMappingInfo controllerInfo, PsiMethod feignMethod) {
         HttpMappingInfo feignCache = BilateralCacheManager.getOrSetFeignCache(feignMethod);
-        if (Objects.isNull(feignMethod)){
+        if (Objects.isNull(feignCache)) {
             return false;
         }
         String feignPath = feignCache.getPath();
-        return StringUtils.equals(feignPath,controllerInfo.getPath());
+        return StringUtils.equals(feignPath, controllerInfo.getPath());
     }
 }

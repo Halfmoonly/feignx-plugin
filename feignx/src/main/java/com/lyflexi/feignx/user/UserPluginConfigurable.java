@@ -1,4 +1,4 @@
-package com.lyflexi.feignx.ui;
+package com.lyflexi.feignx.user;
 
 import com.intellij.ide.projectView.ProjectView;
 import com.intellij.openapi.application.ApplicationManager;
@@ -7,15 +7,10 @@ import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.searches.AnnotatedElementsSearch;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Collection;
 
 /**
  * @Author: liuyanoutsee@outlook.com
@@ -27,7 +22,7 @@ import java.util.Collection;
 public class UserPluginConfigurable implements Configurable {
 
     private JCheckBox feignIconEnabledCheckBox;
-    private JCheckBox controllerIconEnabledCheckBox;
+//    private JCheckBox controllerIconEnabledCheckBox;
     private JPanel mainPanel;
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -41,22 +36,23 @@ public class UserPluginConfigurable implements Configurable {
     public JComponent createComponent() {
         mainPanel = new JPanel();
         feignIconEnabledCheckBox = new JCheckBox("Enable FeignClient Tab Icons", UserFeignSettings.getInstance().isIconEnabled());
-        controllerIconEnabledCheckBox = new JCheckBox("Enable Controller Tab Icons", UserControllerSettings.getInstance().isIconEnabled());
+//        controllerIconEnabledCheckBox = new JCheckBox("Enable Controller Tab Icons", UserControllerSettings.getInstance().isIconEnabled());
         mainPanel.add(feignIconEnabledCheckBox);
-        mainPanel.add(controllerIconEnabledCheckBox);
+//        mainPanel.add(controllerIconEnabledCheckBox);
         return mainPanel;
     }
 
     @Override
     public boolean isModified() {
-        return feignIconEnabledCheckBox.isSelected() != UserFeignSettings.getInstance().isIconEnabled() ||
-                controllerIconEnabledCheckBox.isSelected() != UserControllerSettings.getInstance().isIconEnabled();
+//        return feignIconEnabledCheckBox.isSelected() != UserFeignSettings.getInstance().isIconEnabled() ||
+//                controllerIconEnabledCheckBox.isSelected() != UserControllerSettings.getInstance().isIconEnabled();
+        return feignIconEnabledCheckBox.isSelected() != UserFeignSettings.getInstance().isIconEnabled();
     }
 
     @Override
     public void apply() {
         UserFeignSettings.getInstance().setIconEnabled(feignIconEnabledCheckBox.isSelected());
-        UserControllerSettings.getInstance().setIconEnabled(controllerIconEnabledCheckBox.isSelected());
+//        UserControllerSettings.getInstance().setIconEnabled(controllerIconEnabledCheckBox.isSelected());
         // 需要手动刷新图标吗？好像不需要，但有些IDEA版本需要，所以最好提示用户重启项目生效
         showRestartDialog();
     }
@@ -64,7 +60,7 @@ public class UserPluginConfigurable implements Configurable {
     @Override
     public void reset() {
         feignIconEnabledCheckBox.setSelected(UserFeignSettings.getInstance().isIconEnabled());
-        controllerIconEnabledCheckBox.setSelected(UserControllerSettings.getInstance().isIconEnabled());
+//        controllerIconEnabledCheckBox.setSelected(UserControllerSettings.getInstance().isIconEnabled());
     }
 
     /**

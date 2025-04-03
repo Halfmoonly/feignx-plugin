@@ -57,17 +57,18 @@ public class AnnotationParserUtils {
      * @return
      */
     public static boolean isControllerClass(PsiClass psiClass) {
-//        PsiAnnotation[] annotations = psiClass.getAnnotations();
-//        for (PsiAnnotation annotation : annotations) {
-//            String annotationName = annotation.getQualifiedName();
-//            if (annotationName != null && (annotationName.equals(CONTROLLER.getQualifiedName())
-//                    || annotationName.equals(RESTCONTROLLER.getQualifiedName()))) {
-//                return true;
-//            }
-//        }
-//        return false;
-        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
-        return psiClass.hasAnnotation(CONTROLLER.getQualifiedName()) || psiClass.hasAnnotation(RESTCONTROLLER.getQualifiedName());
+        if (psiClass == null || !psiClass.isValid()) {
+            return false;
+        }
+        PsiAnnotation[] annotations = psiClass.getAnnotations();
+        for (PsiAnnotation annotation : annotations) {
+            String annotationName = annotation.getQualifiedName();
+            if (annotationName != null && (annotationName.equals(CONTROLLER.getQualifiedName())
+                    || annotationName.equals(RESTCONTROLLER.getQualifiedName()))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -95,10 +96,11 @@ public class AnnotationParserUtils {
      * @return
      */
     public static boolean isFeignInterface(PsiClass psiClass) {
-//        PsiAnnotation annotation = psiClass.getAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
-//        return annotation != null;
-        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
-        return psiClass.hasAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
+        if (psiClass == null || !psiClass.isValid()) {
+            return false;
+        }
+        PsiAnnotation annotation = psiClass.getAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
+        return annotation != null;
     }
 
     /**

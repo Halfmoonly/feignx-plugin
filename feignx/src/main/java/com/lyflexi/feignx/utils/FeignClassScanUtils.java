@@ -1,6 +1,7 @@
 package com.lyflexi.feignx.utils;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
@@ -10,12 +11,14 @@ import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.enums.SpringCloudClassAnnotation;
+import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 public class FeignClassScanUtils {
     // 初始化PsiClass缓存管理器
     private static final InitialPsiClassCacheManager initialPsiClassCacheManager = InitialPsiClassCacheManager.getInstance();
+
     /**
      * 当前controller，扫描待跳转的所有目标Feign
      *
@@ -55,17 +59,18 @@ public class FeignClassScanUtils {
 
     /**
      * 用当前controller接口匹配目标feign接口
+     *
      * @param feignInfo
      * @param controllerMethod
      * @return
      */
     private static boolean match2F(HttpMappingInfo feignInfo, PsiMethod controllerMethod) {
         HttpMappingInfo controllerCache = BilateralCacheManager.getOrSetControllerCache(controllerMethod);
-        if (Objects.isNull(controllerCache)){
+        if (Objects.isNull(controllerCache)) {
             return false;
         }
         String path = controllerCache.getPath();
-        return StringUtils.equals(path,feignInfo.getPath());
+        return StringUtils.equals(path, feignInfo.getPath());
     }
 
 
@@ -76,13 +81,14 @@ public class FeignClassScanUtils {
      * @return {@link List}<{@link HttpMappingInfo}>
      */
     public static List<HttpMappingInfo> scanFeignInterfaces(Project project) {
-        PsiManager psiManager = PsiManager.getInstance(project);
-        GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
-        PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
         // 检查是否在 Dumb 模式下，以避免在项目构建期间执行代码
         if (DumbService.isDumb(project)) {
             return Collections.emptyList();
         }
+
+        PsiManager psiManager = PsiManager.getInstance(project);
+        GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
+        PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
 
         // 获取项目ID
         String projectId = project.getBasePath();
@@ -104,6 +110,18 @@ public class FeignClassScanUtils {
         List<HttpMappingInfo> feignInfos = new ArrayList<>();
         //创建全部的Feign接口信息
         for (PsiClass psiClass : javaFiles) {
+            // 校验 psiClass 的有效性，毕竟有可能psiClass是从缓存中获取的，但是被RestClassIconProvider修改了
+            // 增加有效性校验
+            if (null == psiClass) {
+                continue;
+            }
+            if (!psiClass.isValid()) {
+                psiClass = SmartPsiElementRecover.recoverClass(project, psiClass);
+            }
+            if (null == psiClass || !psiClass.isValid()) {
+                continue;
+            }
+            // 捕获因 PSI 元素无效导致的异常
             feignInfos.addAll(feignsOfPsiClass(psiClass));
         }
         // 将结果添加到缓存中
@@ -169,8 +187,7 @@ public class FeignClassScanUtils {
                 if (value instanceof PsiLiteralExpression) {
                     String path = ((PsiLiteralExpression) value).getValue().toString();
                     return handlePath(path);
-                }
-                else if (value instanceof PsiReferenceExpression) {
+                } else if (value instanceof PsiReferenceExpression) {
                     // 处理引用常量的情况
                     PsiElement resolvedElement = ((PsiReferenceExpression) value).resolve();
                     if (resolvedElement instanceof PsiField) {

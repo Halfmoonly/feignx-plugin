@@ -1,9 +1,11 @@
-package com.lyflexi.feignx.ui;
+package com.lyflexi.feignx.provider;
 
 import com.intellij.ide.IconProvider;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.lyflexi.feignx.constant.RestIcons;
+import com.lyflexi.feignx.user.UserFeignSettings;
 import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,9 +17,13 @@ import javax.swing.*;
  * @Date: 2025/4/2 20:34
  * @Project: feignx-plugin
  * @Version: 1.0.0
- * @Description:
+ * @Description: FeignClient文件图标
  */
-public class RestClassIconProvider extends IconProvider {
+public class FeignClassIconProvider extends IconProvider {
+    /**
+     * FeignClient文件图标
+     */
+    Icon STATEMENT_LINE_FEIGN_ICON = IconLoader.getIcon("/icons/feignAction.svg");
 
     @Override
     public @Nullable Icon getIcon(@NotNull PsiElement element, int flags) {
@@ -30,15 +36,15 @@ public class RestClassIconProvider extends IconProvider {
         //开启FeignClient文件图标
         if (UserFeignSettings.getInstance().isIconEnabled()) {
             if (AnnotationParserUtils.isFeignInterface(psiClass)) {
-                return RestIcons.STATEMENT_LINE_FEIGN_ICON;
+                return STATEMENT_LINE_FEIGN_ICON;
             }
         }
-        //开启RestController文件图标
-        if (UserControllerSettings.getInstance().isIconEnabled()) {
-            if (AnnotationParserUtils.isControllerClass(psiClass)) {
-                return RestIcons.STATEMENT_LINE_CONTROLLER_ICON;
-            }
-        }
+//        //开启RestController文件图标
+//        if (UserControllerSettings.getInstance().isIconEnabled()) {
+//            if (AnnotationParserUtils.isControllerClass(psiClass)) {
+//                return RestIcons.STATEMENT_LINE_CONTROLLER_ICON;
+//            }
+//        }
 
         return null;
     }

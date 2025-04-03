@@ -26,6 +26,11 @@ public class UserServerController3 {
         return new User(id, "user");
     }
 
+
+
+
+
+
     /**
      * hhh
      * @param id
@@ -39,6 +44,9 @@ public class UserServerController3 {
     {
         return new User(id, "user");
     }
+
+
+
     /**
      * hhh
      * @param id
@@ -53,11 +61,15 @@ public class UserServerController3 {
         return new User(id, "user");
     }
 
+
+
+
     @GetMapping(value = "/user/del/{id}")
     public User del(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
+
 
     /**
      *
@@ -73,6 +85,7 @@ public class UserServerController3 {
         return new User(id, "user");
     }
 
+
     /**
      *
      * @param id
@@ -87,6 +100,8 @@ public class UserServerController3 {
         return new User(id, "user");
     }
 
+
+
     /**
      *
      * @param id
@@ -97,6 +112,8 @@ public class UserServerController3 {
     {
         return new User(id, "user");
     }
+
+
 
     /**
      *
@@ -208,6 +225,7 @@ public class UserServerController3 {
     {
         return new User(id, "user");
     }
+
     /**
      * parallelScan5. v5.2.1
      * @param id
@@ -218,11 +236,13 @@ public class UserServerController3 {
     {
         return new User(id, "user");
     }
+
     @GetMapping(value = "/user/parallelScan7/{id}")
     public User parallelScan7(@PathVariable("id") Long id)
     {
         return new User(id, "user");
     }
+
     @GetMapping(value = "/user/parallelScan811/{id}")
     public User parallelScan8(@PathVariable("id") Long id)
     {
@@ -230,8 +250,7 @@ public class UserServerController3 {
     }
 
     @GetMapping(UserApiConst.USER_CLIENT_PARALLEL_SCAN9_ID)
-    public User parallelScan9(@PathVariable("id") Long id)
-    {
+    public User parallelScan9(@PathVariable("id") Long id) {
         return new User(id, "user");
     }
 }

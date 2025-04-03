@@ -33,4 +33,5 @@ public interface OrderClient {
      *
      */
     Order getOrderById2(@PathVariable("id") Long id);
+
 }

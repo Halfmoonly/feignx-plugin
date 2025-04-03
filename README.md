@@ -291,7 +291,7 @@ invalidated at: see attachment
     at com.lyflexi.feignx.utils.AnnotationParserUtils.isFeignInterface(AnnotationParserUtils.java:101)
     at com.lyflexi.feignx.utils.FeignClassScanUtils.feignsOfPsiClass(FeignClassScanUtils.java:123)
     at com.lyflexi.feignx.utils.FeignClassScanUtils.scanFeignInterfaces(FeignClassScanUtils.java:107)
-    at com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider.collectNavigationMarkers(Controller2FeignLineMarkerProvider.java:43)
+    at com.lyflexi.feignx.provider.C2FLineMarkerProvider.collectNavigationMarkers(Controller2FeignLineMarkerProvider.java:43)
 ...
 ```
 
