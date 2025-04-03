@@ -60,6 +60,7 @@ public interface UserClient4 {
 
     @GetMapping(value = "/optimizedCache3/{id}")
     User optimizedCache3(@PathVariable("id") Long id);
+
     @GetMapping(value = "/parallelScan/{id}")
     User parallelScan(@PathVariable("id") Long id);
 
@@ -93,15 +94,10 @@ public interface UserClient4 {
     @GetMapping(value = "/parallelScan110/{id}")
     User parallelScan10(@PathVariable("id") Long id);
 
-    /**
-     *
-     * @param id
-     * @return
-     */
     @GetMapping(value = "/parallelScan11/{id}")
-    /**
-     *
-     */
     User parallelScan11(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/parallelScan12/{id}")
+    User parallelScan12(@PathVariable("id") Long id);
 
 }
