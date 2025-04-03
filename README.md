@@ -267,6 +267,37 @@ CopyControllerUrlLineMarkerProvider：
 
 ![user-settings.png](feignx/pics/user-settings.png)
 
+### TODO v5.5.0版本会遇到如下异常，请暂时回退v5.4.1
+
+初步定位到是由于v5.5.0中上线的类文件的图标替换功能导致 PSI 元素失效，影响了原先正常的主流程解析逻辑
+
+1. 文件被修改（例如用户编辑代码）。
+2. PSI 元素的访问必须在 读操作（Read Action） 或 事件分发线程（EDT） 中进行。
+3. 如果在后台线程（非 EDT）直接访问 PSI 元素，可能导致元素失效。
+4. 未检查元素有效性等
+```
+com.intellij.psi.PsiInvalidElementAccessException: Element: class com.intellij.psi.impl.source.PsiClassImpl #JAVA 
+invalidated at: see attachment
+    at com.intellij.psi.impl.source.SubstrateRef$1.getNode(SubstrateRef.java:43)
+    at com.intellij.extapi.psi.StubBasedPsiElementBase.getNode(StubBasedPsiElementBase.java:133)
+    at com.intellij.psi.impl.source.PsiClassImpl.getNode(PsiClassImpl.java:102)
+    at com.intellij.psi.impl.source.PsiClassImpl.getNode(PsiClassImpl.java:36)
+    at com.intellij.extapi.psi.StubBasedPsiElementBase.getStubOrPsiChild(StubBasedPsiElementBase.java:36
+    at com.intellij.extapi.psi.StubBasedPsiElementBase.getRequiredStubOrPsiChild(StubBasedPsiElementBase.java:375)
+    at com.intellij.psi.impl.source.PsiClassImpl.getModifierList(PsiClassImpl.java:170)
+    at com.intellij.psi.PsiJvmConversionHelper.hasListAnnotation(PsiJvmConversionHelper.java:57)
+    at com.intellij.psi.PsiModifierListOwner.hasAnnotation(PsiModifierListOwner.java:45)
+    at com.intellij.psi.PsiJvmModifiersOwner.hasAnnotation(PsiJvmModifiersOwner.java:32)
+    at com.lyflexi.feignx.utils.AnnotationParserUtils.isFeignInterface(AnnotationParserUtils.java:101)
+    at com.lyflexi.feignx.utils.FeignClassScanUtils.feignsOfPsiClass(FeignClassScanUtils.java:123)
+    at com.lyflexi.feignx.utils.FeignClassScanUtils.scanFeignInterfaces(FeignClassScanUtils.java:107)
+    at com.lyflexi.feignx.provider.Controller2FeignLineMarkerProvider.collectNavigationMarkers(Controller2FeignLineMarkerProvider.java:43)
+...
+```
+
+有空再改吧，暂时回退v5.4.1版本可以正常使用，为了避免民愤😀，官网的v5.5.0版本已经下架
+
+
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)
