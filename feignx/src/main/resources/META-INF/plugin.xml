@@ -14,8 +14,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-中文说明：
-<b>FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩</b>
+<b>中文说明：FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩</b>
 <br>
 曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
@@ -27,15 +26,14 @@
 <br>
 2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet”。‘ Context-path ’和‘ spring.mvc.servlet.path ’
 <br>
-<br>
 3. 经过多轮优化，FeignClient Assistant解析足够准确，并且支持目标导航位置多选。
 <br>
 4. 经过多轮双边缓存优化，FeignClient Assistant具有足够的高性能。
 <br>
 5. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
 <br>
-英文说明：
-<b>FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant. Author 刘岩.</b>
+<br>
+<b>EN：FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant. Author 刘岩.</b>
 <br>
 used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
