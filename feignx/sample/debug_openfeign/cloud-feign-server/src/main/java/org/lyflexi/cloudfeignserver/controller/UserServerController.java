@@ -41,9 +41,11 @@ public class UserServerController {
     }
 
 
-
-
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/user/del/{id}")
     public User del(@PathVariable("id") Long id)
     {

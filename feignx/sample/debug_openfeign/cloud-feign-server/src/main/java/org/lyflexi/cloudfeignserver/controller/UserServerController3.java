@@ -249,8 +249,13 @@ public class UserServerController3 {
         return new User(id, "user");
     }
 
+
+
     @GetMapping(UserApiConst.USER_CLIENT_PARALLEL_SCAN9_ID)
     public User parallelScan9(@PathVariable("id") Long id) {
         return new User(id, "user");
     }
+
+
+
 }

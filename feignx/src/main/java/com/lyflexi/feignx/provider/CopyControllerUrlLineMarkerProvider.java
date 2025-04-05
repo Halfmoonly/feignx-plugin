@@ -40,6 +40,7 @@ import org.jetbrains.annotations.Nullable;
  * 1. 实现接口：LineMarkerProviderDescriptor
  * 2. 自定义构造LineMarkerInfo<PsiElement>：由于点击图标时执行复制操作不属于跳转导航操作NavigationGutterIconBuilder，而是需要手动构建 LineMarkerInfo
  *
+ *
  * */
 public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescriptor {
 
@@ -71,6 +72,12 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
             return null;
         }
 
+        //解析restfull注解，下面gutter挂在注解旁
+        PsiAnnotation restfulAnnotation = AnnotationParserUtils.findRestfulAnnotation(method);
+        if (Objects.isNull(restfulAnnotation)) {
+            return null;
+        }
+
         //初始化所有的controller缓存
         ControllerClassScanUtils.scanControllerPaths(method.getProject());
 
@@ -85,6 +92,7 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
             return null;
         }
 
+
         PsiMethod finalMethod = method;
         GutterIconNavigationHandler<PsiElement> handler = (mouseEvent, elt) -> {
             CopyPasteManager.getInstance().setContents(new StringSelection(url));
@@ -96,8 +104,8 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
 
         // 构建图标信息，挂在方法上
         LineMarkerInfo<PsiElement> marker = new LineMarkerInfo<>(
-                Objects.requireNonNull(method.getNameIdentifier()),
-                method.getNameIdentifier().getTextRange(),
+                restfulAnnotation,
+                restfulAnnotation.getTextRange(),
                 RestIcons.STATEMENT_LINE_CLIPBOARD_CONTROLLER_ICON,
                 psi -> "Click to copy Controller-URL: " + url,
                 handler,

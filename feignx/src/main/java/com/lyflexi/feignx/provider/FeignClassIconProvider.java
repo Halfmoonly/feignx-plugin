@@ -33,12 +33,21 @@ public class FeignClassIconProvider extends IconProvider {
 
 
         PsiClass psiClass = (PsiClass) element;
-        //开启FeignClient文件图标
-        if (UserFeignSettings.getInstance().isIconEnabled()) {
-            if (AnnotationParserUtils.isFeignInterface(psiClass)) {
-                return STATEMENT_LINE_FEIGN_ICON;
-            }
+        // 只对接口类做处理
+        if (!psiClass.isInterface()) {
+            return null;
         }
+
+        //开启FeignClient文件图标
+        if (!UserFeignSettings.getInstance().isIconEnabled()) {
+            return null;
+        }
+
+        if (AnnotationParserUtils.isFeignInterface(psiClass)) {
+            return STATEMENT_LINE_FEIGN_ICON;
+        }
+
+
 //        //开启RestController文件图标
 //        if (UserControllerSettings.getInstance().isIconEnabled()) {
 //            if (AnnotationParserUtils.isControllerClass(psiClass)) {

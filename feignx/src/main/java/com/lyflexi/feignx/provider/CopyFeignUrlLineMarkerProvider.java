@@ -76,6 +76,12 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
             return null;
         }
 
+        //解析restfull注解，下面gutter挂在注解旁
+        PsiAnnotation restfulAnnotation = AnnotationParserUtils.findRestfulAnnotation(method);
+        if (Objects.isNull(restfulAnnotation)) {
+            return null;
+        }
+
         //提前初始化feign接口缓存
         FeignClassScanUtils.scanFeignInterfaces(method.getProject());
 
@@ -101,8 +107,8 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
         };
         // 构建图标信息，挂在方法上
         LineMarkerInfo<PsiElement> marker = new LineMarkerInfo<>(
-                method.getNameIdentifier(),
-                method.getNameIdentifier().getTextRange(),
+                restfulAnnotation,
+                restfulAnnotation.getTextRange(),
                 RestIcons.STATEMENT_LINE_CLIPBOARD_FEIGN_ICON,
                 psi -> "Click to copy Feign-URL: " + url,
                 handler,

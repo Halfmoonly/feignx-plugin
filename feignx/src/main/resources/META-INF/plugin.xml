@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Navigator4URL OpenFeign RestController</name>
+    <name>FeignClient Assistant</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="liuyanoutsee@outlook.com" url="https://github.com/Halfmoonly">Halfmoonly</vendor>
@@ -14,39 +14,53 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-<b>Navigator4URL OpenFeign RestController（FeignX） is a Free SpringCloud Feign Assistant And RestController Assistant. Author 刘岩.</b>
+中文说明：
+<b>FeignClient Assistant（FeignX）是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩</b>
 <br>
-1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module. eg. feignClient -> ApiController. eg. ApiController -> feignClient.
+1. 受MybatisX和方法级导航槽‘ Bird ’的启发，您可以灵活地在FeignClient客户端和远程服务ApiController之间来回跳转。
 <br>
+如。feignClient -> ApiController。
 <br>
-2. By parsing yml/yaml/properties, Navigator4URL OpenFeign RestController supports `server.servlet.context-path` and `spring.mvc.servlet.path`
+如。ApiController -> feignClient。
 <br>
-<br>
-3. Navigator4URL OpenFeign RestController is sufficiently accurate with options, after many rounds of optimization.
-<br>
-<br>
-4. Navigator4URL OpenFeign RestController is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet”。‘ Context-path ’和‘ spring.mvc.servlet.path ’
 <br>
 <br>
-5. Navigator4URL OpenFeign RestController supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
+3. 经过多轮优化，FeignClient Assistant解析足够准确，并且支持目标导航位置多选。
+<br>
+4. 经过多轮双边缓存优化，FeignClient Assistant具有足够的高性能。
+<br>
+5. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
+<br>
+英文说明：
+<b>FeignClient Assistant（FeignX） is a Free SpringCloud Feign Navigation Assistant. Author 刘岩.</b>
+<br>
+1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module.
+<br>
+ eg. feignClient -> ApiController.
+<br>
+ eg. ApiController -> feignClient.
+<br>
+2. By parsing yml/yaml/properties, FeignClient Assistant supports `server.servlet.context-path` and `spring.mvc.servlet.path`
+<br>
+3. FeignClient Assistant is sufficiently accurate with options, after many rounds of optimization.
+<br>
+4. FeignClient Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+<br>
+5. FeignClient Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
 <br>
 ]]>
     </description>
 
     <change-notes>
         <![CDATA[
-        ### v5.5.1更新内容
+        ### v5.5.2更新内容
         <br>
-        1. 我们上线了`FeignClient`接口文件的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
-        <br>
-        2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
-        <br>
-        3. 修复了异常：com.intellij.psi.PsiInvalidElementAccessException: Element: class com.intellij.psi.impl.source.PsiClassImpl #JAVA invalidated at: see attachment
-        <br>
+        1. 修复了回车键可能导致的方法旁gutter失效的问题
         ]]>
     </change-notes>
     <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
-    <version>5.5.1</version>
+    <version>5.5.2</version>
     <!--插件支持版本 2020.3+-->
     <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
@@ -76,7 +90,7 @@
         <!--    <toolWindow id="FeignX" secondary="false" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"-->
         <!--                factoryClass="com.lyflexi.feignx.toolwindow.SearchToolWindowFactory"/>-->
 
-        <notificationGroup id="Navigator4URL OpenFeign RestController"
+        <notificationGroup id="FeignClient Assistant"
                            displayType="BALLOON"
                            key="notification.group.name"/>
 

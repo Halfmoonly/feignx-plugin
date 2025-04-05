@@ -16,6 +16,7 @@ import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.CONTROLLER;
 import static com.lyflexi.feignx.enums.SpringBootClassAnnotation.RESTCONTROLLER;
 
 import com.lyflexi.feignx.entity.HttpMappingInfo;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @Author: hmly
@@ -35,18 +36,30 @@ public class AnnotationParserUtils {
     public static PsiAnnotation findRestfulAnnotation(PsiMethod method) {
         List<String> targetAnnotations = SpringBootMethodAnnotation.allQualifiedNames();
 
-//        for (PsiAnnotation annotation : method.getModifierList().getAnnotations()) {
-//            String qualifiedName = annotation.getQualifiedName();
-//            if (qualifiedName != null && targetAnnotations.contains(qualifiedName)) {
-//                return annotation;
-//            }
-//        }
-        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
-        for (String targetAnnotation : targetAnnotations) {
-            if (method.hasAnnotation(targetAnnotation)) {
-                return method.getAnnotation(targetAnnotation);
+        //method.getModifierList()：获取方法的修饰符/注解部分
+        PsiModifierList modifierList = method.getModifierList();
+        if (Objects.isNull(modifierList)) {
+            return null;
+        }
+        PsiAnnotation[] annotations = modifierList.getAnnotations();
+        if (Objects.isNull(annotations)) {
+            return null;
+        }
+        for (PsiAnnotation annotation : annotations) {
+            String annoName = annotation.getQualifiedName();
+            if (StringUtils.isBlank(annoName)) {
+                continue;
+            }
+            if (targetAnnotations.contains(annoName)) {
+                return annotation;
             }
         }
+        //还想提升性能，可以用 psiClass.hasAnnotation() 方法，它速度更快，且内部做了缓存判断
+//        for (String targetAnnotation : targetAnnotations) {
+//            if (method.hasAnnotation(targetAnnotation)) {
+//                return method.getAnnotation(targetAnnotation);
+//            }
+//        }
         return null;
     }
 
