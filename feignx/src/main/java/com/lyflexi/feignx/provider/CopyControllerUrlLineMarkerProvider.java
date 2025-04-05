@@ -97,8 +97,8 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
         GutterIconNavigationHandler<PsiElement> handler = (mouseEvent, elt) -> {
             CopyPasteManager.getInstance().setContents(new StringSelection(url));
             NotificationGroupManager.getInstance()
-                    .getNotificationGroup("Navigator4URL OpenFeign RestController")
-                    .createNotification("URL copied to clipboard:\n" + url, NotificationType.INFORMATION)
+                    .getNotificationGroup("FeignClient Assistant")
+                    .createNotification("URL Copied To Clipboard:\n" + url, NotificationType.INFORMATION)
                     .notify(finalMethod.getProject());
         };
 
@@ -107,7 +107,7 @@ public class CopyControllerUrlLineMarkerProvider extends LineMarkerProviderDescr
                 restfulAnnotation,
                 restfulAnnotation.getTextRange(),
                 RestIcons.STATEMENT_LINE_CLIPBOARD_CONTROLLER_ICON,
-                psi -> "Click to copy Controller-URL: " + url,
+                psi -> "Click To Copy Controller-URL: " + url,
                 handler,
                 GutterIconRenderer.Alignment.RIGHT,
                 () -> "Copy Controller URL"

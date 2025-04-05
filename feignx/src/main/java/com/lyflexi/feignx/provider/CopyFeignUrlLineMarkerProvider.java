@@ -101,8 +101,8 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
         GutterIconNavigationHandler<PsiElement> handler = (mouseEvent, elt) -> {
             CopyPasteManager.getInstance().setContents(new StringSelection(url));
             NotificationGroupManager.getInstance()
-                    .getNotificationGroup("Navigator4URL OpenFeign RestController")
-                    .createNotification("URL copied to clipboard:\n" + url, NotificationType.INFORMATION)
+                    .getNotificationGroup("FeignClient Assistant")
+                    .createNotification("URL Copied To Clipboard:\n" + url, NotificationType.INFORMATION)
                     .notify(finalMethod.getProject());
         };
         // 构建图标信息，挂在方法上
@@ -110,7 +110,7 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
                 restfulAnnotation,
                 restfulAnnotation.getTextRange(),
                 RestIcons.STATEMENT_LINE_CLIPBOARD_FEIGN_ICON,
-                psi -> "Click to copy Feign-URL: " + url,
+                psi -> "Click To Copy Feign-URL: " + url,
                 handler,
                 GutterIconRenderer.Alignment.RIGHT,
                 () -> "Copy Feign URL"

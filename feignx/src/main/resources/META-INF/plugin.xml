@@ -15,7 +15,9 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
 中文说明：
-<b>FeignClient Assistant（FeignX）是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩</b>
+<b>FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩</b>
+<br>
+曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
 1. 受MybatisX和方法级导航槽‘ Bird ’的启发，您可以灵活地在FeignClient客户端和远程服务ApiController之间来回跳转。
 <br>
@@ -33,7 +35,9 @@
 5. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
 <br>
 英文说明：
-<b>FeignClient Assistant（FeignX） is a Free SpringCloud Feign Navigation Assistant. Author 刘岩.</b>
+<b>FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant. Author 刘岩.</b>
+<br>
+used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
 1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module.
 <br>
