@@ -28,7 +28,7 @@ public class UserPluginConfigurable implements Configurable {
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
-        return "Navigator4URL OpenFeign RestController Settings";
+        return "FeignClient Assistant";
     }
 
     @Nullable

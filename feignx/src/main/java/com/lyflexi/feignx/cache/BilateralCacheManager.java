@@ -58,8 +58,9 @@ public class BilateralCacheManager {
      * @param project
      */
     public static void clear(Project project) {
-        BilateralCacheManager.initControllerCaches(project, null);
-        BilateralCacheManager.initFeignCaches(project, null);
+        String projectId = project.getBasePath();
+        projectControllerCacheMap.remove(projectId);
+        projectFeignCacheMap.remove(projectId);
     }
 
     /**

@@ -12,10 +12,10 @@
 // * @Date: 2025/4/2 21:17
 // * @Project: feignx-plugin
 // * @Version: 1.0.0
-// * @Description: 用户配置存储在本地的Navigator4URL-OpenFeign-RestController-Settings.xml
+// * @Description: 用户配置存储在本地的FeignClient-Assistant-Settings.xml
 // */
 //@Service(Service.Level.APP)
-//@State(name = "ControllerPluginSettings", storages = @Storage("Navigator4URL-OpenFeign-RestController-Settings.xml"))
+//@State(name = "ControllerPluginSettings", storages = @Storage("FeignClient-Assistant-Settings.xml"))
 //public final class UserControllerSettings implements PersistentStateComponent<UserControllerSettings.State> {
 //
 //    private State state = new State();

@@ -67,4 +67,12 @@ public class InitialPsiClassCacheManager {
         psiClasses.add(psiClass);
         InitialPsiClassCacheMap.put(projectId, psiClasses);
     }
+    /**
+     * 清理psiclass缓存
+     * @param project
+     */
+    public void clear(Project project) {
+        String projectId = project.getBasePath();
+        InitialPsiClassCacheMap.remove(projectId);
+    }
 }
