@@ -2,6 +2,9 @@ package com.lyflexi.feignx.cache;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.SmartPointerManager;
+import com.intellij.psi.SmartPsiElementPointer;
+import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -15,7 +18,7 @@ import java.util.stream.Collectors;
  * @Description: 项目中的所有Java源文件，因为要做两次全盘扫描
  * eg. 一次是扫描全盘的Controller类，
  * eg. 一次是扫描全盘的Feign接口类
- *
+ * <p>
  * 缓存起来，只做一次全盘扫描即可
  */
 public class InitialPsiClassCacheManager {
@@ -28,6 +31,7 @@ public class InitialPsiClassCacheManager {
 
     /**
      * 单例模式
+     *
      * @return
      */
     public static InitialPsiClassCacheManager getInstance() {
@@ -35,7 +39,6 @@ public class InitialPsiClassCacheManager {
     }
 
     /**
-     *
      * @param projectId
      * @param psiClasses
      */
@@ -45,6 +48,7 @@ public class InitialPsiClassCacheManager {
 
     /**
      * 获取全量缓存PsiClass
+     *
      * @param projectId
      * @return
      */
@@ -54,6 +58,7 @@ public class InitialPsiClassCacheManager {
 
     /**
      * 新增一个psiclass缓存
+     *
      * @param project
      * @param psiClass
      */
@@ -69,6 +74,7 @@ public class InitialPsiClassCacheManager {
 
     /**
      * 通过PsiListener覆盖一个psiclass缓存，先删除再新增
+     *
      * @param project
      * @param psiClass
      */
@@ -78,11 +84,27 @@ public class InitialPsiClassCacheManager {
         if (psiClasses == null) {
             return;
         }
+        // 增加有效性校验
+        if (null == psiClass) {
+            return;
+        }
+        // 创建 SmartPsiElementPointer
+        SmartPsiElementPointer<PsiClass> classPointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiClass);
+
+        // 验证 psiClass 是否有效
+        if (!psiClass.isValid()) {
+            // 尝试恢复
+            psiClass = classPointer.getElement();
+        }
+        // 恢复失败则返回null
+        if (null == psiClass || !psiClass.isValid()) {
+            return;
+        }
         Iterator<PsiClass> iterator = psiClasses.iterator();
         //覆盖逻辑
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             PsiClass next = iterator.next();
-            if (StringUtils.equals(psiClass.getQualifiedName(),next.getQualifiedName())){
+            if (StringUtils.equals(psiClass.getQualifiedName(), next.getQualifiedName())) {
                 iterator.remove();
                 psiClasses.add(psiClass);
                 break;
@@ -94,6 +116,7 @@ public class InitialPsiClassCacheManager {
 
     /**
      * 通过PsiListener新增一个psiclass缓存
+     *
      * @param project
      * @param psiClass
      */
@@ -103,9 +126,21 @@ public class InitialPsiClassCacheManager {
         if (psiClasses == null) {
             return;
         }
+        // 创建 SmartPsiElementPointer
+        SmartPsiElementPointer<PsiClass> classPointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiClass);
+
+        // 验证 psiClass 是否有效
+        if (!psiClass.isValid()) {
+            // 尝试恢复
+            psiClass = classPointer.getElement();
+        }
+        // 恢复失败则返回
+        if (null == psiClass || !psiClass.isValid()) {
+            return;
+        }
         //新增逻辑
         List<String> alreadyClass = psiClasses.stream().map(PsiClass::getQualifiedName).collect(Collectors.toList());
-        if (!alreadyClass.contains(psiClass.getQualifiedName())){
+        if (!alreadyClass.contains(psiClass.getQualifiedName())) {
             psiClasses.add(psiClass);
         }
         //覆盖全局psiclass缓存
@@ -114,6 +149,7 @@ public class InitialPsiClassCacheManager {
 
     /**
      * 清理psiclass缓存
+     *
      * @param project
      */
     public void clear(Project project) {

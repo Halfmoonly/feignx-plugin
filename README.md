@@ -315,6 +315,10 @@ invalidated at: see attachment
 
 1. 修复了git pull操作变更了psiclass导致的gutter跳转失效的问题
 
+### 🐞 FeignClient Assistant v5.5.5更新内容
+修复分支：main
+
+1. 修复了异常：invalidated at: see attachment
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)
