@@ -24,12 +24,12 @@ import com.lyflexi.feignx.utils.AnnotationParserUtils;
  */
 public class SmartPsiElementRecover {
     /**
-     * 恢复失效的类
+     * 恢复失效的psiclass类, 同时补充InitialPsiClassCacheManager缓存
      * @param project
      * @param psiClass
      * @return
      */
-    public static PsiClass recoverClass(Project project, PsiClass psiClass) {
+    public static PsiClass recoverClassWithCache(Project project, PsiClass psiClass) {
         if (psiClass == null) {
             return null;
         }
@@ -50,12 +50,12 @@ public class SmartPsiElementRecover {
         return psiClass;
     }
     /**
-     * 恢复失效的方法
+     * 恢复失效的psimethod方法, 同时补充BilateralCacheManager
      * @param project
      * @param method
      * @return
      */
-    public static PsiMethod recoverMethod(Project project, PsiMethod method) {
+    public static PsiMethod recoverMethodWithCache(Project project, PsiMethod method) {
         if (method == null) {
             return null;
         }
@@ -80,5 +80,29 @@ public class SmartPsiElementRecover {
             BilateralCacheManager.setOrCoverControllerCache(method);
         }
         return method;
+    }
+    /**
+     * 恢复失效的psiclass类, 不带缓存版
+     * @param project
+     * @param psiClass
+     * @return
+     */
+    public static PsiClass genericRecoverClass(Project project, PsiClass psiClass) {
+        if (psiClass == null) {
+            return null;
+        }
+        // 创建 SmartPsiElementPointer
+        SmartPsiElementPointer<PsiClass> classPointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiClass);
+
+        // 验证 psiClass 是否有效
+        if (!psiClass.isValid()) {
+            // 尝试恢复
+            psiClass = classPointer.getElement();
+        }
+        // 恢复失败则返回null
+        if (null==psiClass||!psiClass.isValid()) {
+            return null;
+        }
+        return psiClass;
     }
 }

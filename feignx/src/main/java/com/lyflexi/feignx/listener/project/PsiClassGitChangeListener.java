@@ -82,7 +82,7 @@ public class PsiClassGitChangeListener implements PsiTreeChangeListener {
         PsiElement child = event.getChild();
         if (child instanceof PsiClass) {
             PsiClass psiClass = (PsiClass) child;
-            // 监听到新增类了，添加到缓存中或触发重新扫描
+            // 监听到变动的类了，先删除类缓存再新增类缓存
             System.out.println("监听到psi引擎变动的psiclass类: {}" + psiClass.getQualifiedName());
             // 这里调用的 ProjectUtils 中缓存添加逻辑
             InitialPsiClassCacheManager.coverByPsiListener(project, psiClass);

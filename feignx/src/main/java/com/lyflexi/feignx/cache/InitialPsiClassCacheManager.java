@@ -88,15 +88,12 @@ public class InitialPsiClassCacheManager {
         if (null == psiClass) {
             return;
         }
-        // 创建 SmartPsiElementPointer
-        SmartPsiElementPointer<PsiClass> classPointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiClass);
-
         // 验证 psiClass 是否有效
         if (!psiClass.isValid()) {
             // 尝试恢复
-            psiClass = classPointer.getElement();
+            psiClass = SmartPsiElementRecover.genericRecoverClass(project,psiClass);
         }
-        // 恢复失败则返回null
+        // 恢复失败则返回
         if (null == psiClass || !psiClass.isValid()) {
             return;
         }
@@ -126,13 +123,10 @@ public class InitialPsiClassCacheManager {
         if (psiClasses == null) {
             return;
         }
-        // 创建 SmartPsiElementPointer
-        SmartPsiElementPointer<PsiClass> classPointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiClass);
-
         // 验证 psiClass 是否有效
         if (!psiClass.isValid()) {
             // 尝试恢复
-            psiClass = classPointer.getElement();
+            psiClass = SmartPsiElementRecover.genericRecoverClass(project,psiClass);
         }
         // 恢复失败则返回
         if (null == psiClass || !psiClass.isValid()) {

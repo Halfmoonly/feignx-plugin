@@ -3,7 +3,6 @@ package com.lyflexi.feignx.provider;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
-import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
@@ -53,7 +52,7 @@ public class F2CLineMarkerProvider extends RelatedItemLineMarkerProvider {
             return;
         }
         if (!psiClass.isValid()) {
-            psiClass = SmartPsiElementRecover.recoverClass(project, psiClass);
+            psiClass = SmartPsiElementRecover.recoverClassWithCache(project, psiClass);
         }
         if (null == psiClass || !psiClass.isValid()) {
             return;

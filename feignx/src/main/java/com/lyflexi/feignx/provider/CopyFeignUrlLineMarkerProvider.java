@@ -12,7 +12,6 @@ import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.constant.RestIcons;
@@ -25,8 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.datatransfer.StringSelection;
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -65,7 +62,7 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
             return null;
         }
         if (!method.isValid()) {
-            method = SmartPsiElementRecover.recoverMethod(project, method);
+            method = SmartPsiElementRecover.recoverMethodWithCache(project, method);
         }
         if (null == method || !method.isValid()) {
             return null;

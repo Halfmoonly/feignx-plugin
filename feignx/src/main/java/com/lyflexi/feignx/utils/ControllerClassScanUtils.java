@@ -1,10 +1,7 @@
 package com.lyflexi.feignx.utils;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
@@ -21,9 +18,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -90,7 +84,7 @@ public class ControllerClassScanUtils {
                 continue;
             }
             if (!psiClass.isValid()) {
-                psiClass = SmartPsiElementRecover.recoverClass(project, psiClass);
+                psiClass = SmartPsiElementRecover.recoverClassWithCache(project, psiClass);
             }
             if (null == psiClass || !psiClass.isValid()) {
                 continue;
