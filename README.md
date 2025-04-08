@@ -310,6 +310,11 @@ invalidated at: see attachment
 
 1. 修复了二次打开项目的时候,有gutter,但无法跳转的问题
 
+### 🐞 FeignClient Assistant v5.5.4更新内容
+修复分支：hotfix/main-fix-gitpull
+
+1. 修复了git pull操作变更了psiclass导致的gutter跳转失效的问题
+
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)
