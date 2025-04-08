@@ -1,4 +1,4 @@
-package com.lyflexi.feignx.listener;
+package com.lyflexi.feignx.listener.app;
 import com.intellij.openapi.project.Project;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;

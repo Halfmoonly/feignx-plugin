@@ -2,11 +2,10 @@ package com.lyflexi.feignx.cache;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: hmly
@@ -67,6 +66,52 @@ public class InitialPsiClassCacheManager {
         psiClasses.add(psiClass);
         InitialPsiClassCacheMap.put(projectId, psiClasses);
     }
+
+    /**
+     * 通过PsiListener覆盖一个psiclass缓存，先删除再新增
+     * @param project
+     * @param psiClass
+     */
+    public static void coverByPsiListener(Project project, PsiClass psiClass) {
+        String projectId = project.getBasePath();
+        List<PsiClass> psiClasses = InitialPsiClassCacheMap.get(projectId);
+        if (psiClasses == null) {
+            return;
+        }
+        Iterator<PsiClass> iterator = psiClasses.iterator();
+        //覆盖逻辑
+        while (iterator.hasNext()){
+            PsiClass next = iterator.next();
+            if (StringUtils.equals(psiClass.getQualifiedName(),next.getQualifiedName())){
+                iterator.remove();
+                psiClasses.add(psiClass);
+                break;
+            }
+        }
+        //覆盖全局psiclass缓存
+        InitialPsiClassCacheMap.put(projectId, psiClasses);
+    }
+
+    /**
+     * 通过PsiListener新增一个psiclass缓存
+     * @param project
+     * @param psiClass
+     */
+    public static void addByPsiListener(Project project, PsiClass psiClass) {
+        String projectId = project.getBasePath();
+        List<PsiClass> psiClasses = InitialPsiClassCacheMap.get(projectId);
+        if (psiClasses == null) {
+            return;
+        }
+        //新增逻辑
+        List<String> alreadyClass = psiClasses.stream().map(PsiClass::getQualifiedName).collect(Collectors.toList());
+        if (!alreadyClass.contains(psiClass.getQualifiedName())){
+            psiClasses.add(psiClass);
+        }
+        //覆盖全局psiclass缓存
+        InitialPsiClassCacheMap.put(projectId, psiClasses);
+    }
+
     /**
      * 清理psiclass缓存
      * @param project

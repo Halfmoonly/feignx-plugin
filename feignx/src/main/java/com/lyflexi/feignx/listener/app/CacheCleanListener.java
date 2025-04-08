@@ -1,7 +1,6 @@
-package com.lyflexi.feignx.listener;
+package com.lyflexi.feignx.listener.app;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.project.ProjectManagerListener;
 import org.jetbrains.annotations.NotNull;
 
