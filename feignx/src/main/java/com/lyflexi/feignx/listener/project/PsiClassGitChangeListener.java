@@ -6,6 +6,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiTreeChangeEvent;
 import com.intellij.psi.PsiTreeChangeListener;
 import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
+import com.lyflexi.feignx.listener.project.handler.PsiClassAddHandler;
+import com.lyflexi.feignx.listener.project.handler.PsiClassChangeHandler;
+import com.lyflexi.feignx.listener.project.handler.PsiClassModifyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -85,7 +88,8 @@ public class PsiClassGitChangeListener implements PsiTreeChangeListener {
             // 监听到变动的类了，先删除类缓存再新增类缓存
             System.out.println("监听到psi引擎变动的psiclass类: {}" + psiClass.getQualifiedName());
             // 这里调用的 ProjectUtils 中缓存添加逻辑
-            InitialPsiClassCacheManager.coverByPsiListener(project, psiClass);
+            PsiClassChangeHandler modifyHandler = new PsiClassModifyHandler();
+            modifyHandler.handle(project, psiClass);
         }
     }
 
@@ -100,7 +104,8 @@ public class PsiClassGitChangeListener implements PsiTreeChangeListener {
             // 监听到新增类了，添加到缓存中或触发重新扫描
             System.out.println("监听到psi引擎变动的psiclass类: {}" + psiClass.getQualifiedName());
             // 这里调用的 ProjectUtils 中缓存添加逻辑
-            InitialPsiClassCacheManager.addByPsiListener(project, psiClass);
+            PsiClassChangeHandler addHandler = new PsiClassAddHandler();
+            addHandler.handle(project, psiClass);
         }
     }
 }

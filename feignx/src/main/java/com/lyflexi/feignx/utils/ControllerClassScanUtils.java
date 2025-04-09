@@ -64,11 +64,11 @@ public class ControllerClassScanUtils {
         // 获取项目ID
         String projectId = project.getBasePath();
 
-        List<PsiClass> javaFiles = initialPsiClassCacheManager.queryAllClassesCache(projectId);
+        List<PsiClass> javaFiles = initialPsiClassCacheManager.queryCurProjectPsiClassesCache(projectId);
 
         if (CollectionUtils.isEmpty(javaFiles)) {
             javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
-            initialPsiClassCacheManager.init(projectId, javaFiles);
+            initialPsiClassCacheManager.initCurProjectPsiClassCache(projectId, javaFiles);
         }
         //controller接口缓存查询
         Map<String, HttpMappingInfo> controllerCaches = BilateralCacheManager.queryControllerCaches(project);

@@ -87,11 +87,11 @@ public class FeignClassScanUtils {
         // 获取项目ID
         String projectId = project.getBasePath();
 
-        List<PsiClass> javaFiles = initialPsiClassCacheManager.queryAllClassesCache(projectId);
+        List<PsiClass> javaFiles = initialPsiClassCacheManager.queryCurProjectPsiClassesCache(projectId);
 
         if (CollectionUtils.isEmpty(javaFiles)) {
             javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
-            initialPsiClassCacheManager.init(projectId, javaFiles);
+            initialPsiClassCacheManager.initCurProjectPsiClassCache(projectId, javaFiles);
         }
 
         //Feign接口缓存查询
