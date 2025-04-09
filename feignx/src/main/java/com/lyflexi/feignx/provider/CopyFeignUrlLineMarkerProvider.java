@@ -57,13 +57,8 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
         }
 
         PsiMethod method = (PsiMethod) element;
+
         // 增加有效性校验
-        if (null == method) {
-            return null;
-        }
-        if (!method.isValid()) {
-            method = SmartPsiElementRecover.recoverMethodWithCache(project, method);
-        }
         if (null == method || !method.isValid()) {
             return null;
         }

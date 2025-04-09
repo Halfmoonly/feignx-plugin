@@ -325,6 +325,12 @@ invalidated at: see attachment
 
 1. 修复了异常：java.lang.Throwable: Smart pointers must not be created during PSI changes
 
+### 🐞 FeignClient Assistant v5.5.7更新内容
+修复分支：main
+
+1. 修复了异常：PsiInvalidElementAccessException
+
+
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)

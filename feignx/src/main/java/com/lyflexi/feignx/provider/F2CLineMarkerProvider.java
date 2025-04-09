@@ -47,13 +47,8 @@ public class F2CLineMarkerProvider extends RelatedItemLineMarkerProvider {
         }
         PsiMethod method = (PsiMethod) element;
         PsiClass psiClass = method.getContainingClass();
+
         // 增加有效性校验
-        if (null == psiClass) {
-            return;
-        }
-        if (!psiClass.isValid()) {
-            psiClass = SmartPsiElementRecover.recoverClassWithCache(project, psiClass);
-        }
         if (null == psiClass || !psiClass.isValid()) {
             return;
         }

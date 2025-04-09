@@ -105,17 +105,9 @@ public class FeignClassScanUtils {
         //创建全部的Feign接口信息
         for (PsiClass psiClass : javaFiles) {
             // 校验 psiClass 的有效性，毕竟有可能psiClass是从缓存中获取的，但是被RestClassIconProvider修改了
-            // 增加有效性校验
-            if (null == psiClass) {
-                continue;
-            }
-            if (!psiClass.isValid()) {
-                psiClass = SmartPsiElementRecover.recoverClassWithCache(project, psiClass);
-            }
             if (null == psiClass || !psiClass.isValid()) {
                 continue;
             }
-            // 捕获因 PSI 元素无效导致的异常
             feignInfos.addAll(feignsOfPsiClass(psiClass));
         }
         // 将结果添加到缓存中

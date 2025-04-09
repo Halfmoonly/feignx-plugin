@@ -22,6 +22,7 @@ import com.lyflexi.feignx.utils.AnnotationParserUtils;
  *
  * 重新解析文档后，仍能匹配到原始元素
  */
+@Deprecated
 public class SmartPsiElementRecover {
     /**
      * 恢复失效的psiclass类, 同时补充InitialPsiClassCacheManager缓存
