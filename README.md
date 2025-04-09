@@ -1,5 +1,6 @@
 <div align="center">
-  <img src="./feignx/src/main/resources/META-INF/pluginIcon.svg" height="64">
+  <img src="./feignx/src/main/resources/icons/feignAction.svg" height="64">
+  <img src="./feignx/src/main/resources/icons/clipboard.svg" height="64">
   <h2>FeignClient Assistant</h2>
 </div>
 
@@ -30,26 +31,19 @@ IntelliJ IDEA内Settings->plugins->Marketplace->搜索FeignClient Assistant下�
 </div>
 
 
-<p>FeignClient Assistant(FeignX) is a Free SpringCloud Assistant. Author 刘岩</p>
+中文说明：
 
-FeignX is inspired by IDEA's star plugin MybatisX.
+FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩
 
-1. You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module,through method-level navigation gutter `bird`.
+1. 受MybatisX和方法级导航槽‘ Bird ’的启发，FeignClient Assistant使您可以灵活地在FeignClient客户端和远程服务ApiController之间来回跳转。
+2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet”。‘ Context-path ’和‘ spring.mvc.servlet.path ’
+3. 经过多轮优化，FeignClient Assistant解析足够准确，并且支持目标导航多选项。
+4. 经过多轮双边缓存优化，FeignClient Assistant具有足够的高性能。
+5. FeignClient Assistant支持URL全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
 
-2. FeignClient Assistant supports configuration file parsing，such as yml/yaml/properties of
+附图演示：
 
-   - server.servlet.context-path 
-
-   - spring.mvc.servlet.path
-   
-3. FeignClient Assistant is sufficiently accurate with options, after many rounds of optimization.
-
-4. FeignClient Assistant is sufficiently high-performance with Bilateral cache, after many rounds of optimization.
-
-5. FeignClient Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
-
-eg. FeignClient 方法导航跳转至 ApiController，与URL全路径一键剪切板拷贝
-
+eg. FeignClent  方法导航跳转至 FeignClient，与URL全路径一键剪切板拷贝
 <div align="left">
   <img src="./feignx/pics/snipping-feignClient.png">
 </div>
@@ -121,15 +115,12 @@ public interface UserClient {
 yml/yaml配置同上。
 
 ### 🚀FeignClient Assistant:v4.1.1
-此版本feignx重绘了gutter
-![feignxAction.svg](feignx/src/main/resources/icons/feignxAction.svg)
 
-同时适配了最新版IDEA的Light主题，欢迎在IDEA内在线更新至4.1.1版本（三天后上线），或者提前安装离线版体验！
+适配了最新版IDEA的Light主题，欢迎在IDEA内在线更新至4.1.1版本（三天后上线），或者提前安装离线版体验！
 https://github.com/lyflexi/feignx-plugin/releases/tag/v4.1.1
 
 修复了issues:https://github.com/Halfmoonly/feignx-plugin/issues/3
 
-![light-theme.png](feignx/pics/light-theme.png)
 
 感谢官方工作人员的指引：Natalia Melnikova (JetBrains Marketplace) marketplace@jetbrains.com
 
@@ -190,14 +181,6 @@ reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
 1. 我们又更名啦[笑哭]，由FeignX更名为FeignClient Assistant
 2. 为了方便Vim党，我们支持了url完整路径复制至剪切板（Feign接口和Controller接口均支持）
 3. 欢迎Star：https://github.com/Halfmoonly/feignx-plugin
-
-CopyFeignUrlLineMarkerProvider：
-
-![CopyFeignUrlLineMarkerProvider.png](feignx/pics/CopyFeignUrlLineMarkerProvider.png)
-
-CopyControllerUrlLineMarkerProvider：
-
-![CopyControllerUrlLineMarkerProvider.png](feignx/pics/CopyControllerUrlLineMarkerProvider.png)
 
 朋友们记得先将zip解压出jar包，再离线安装jar包哟~~：https://github.com/user-attachments/files/19149196/Navigator4URL.OpenFeign.RestController-5.1.0.zip
 
@@ -265,7 +248,7 @@ CopyControllerUrlLineMarkerProvider：
 ### 🚀 FeignClient Assistant v5.5.0更新内容
 对应分支feat/main-tab-svg
 
-1. 我们上线了FeignClient和RestController类文件的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
+1. 我们上线了FeignClient类文件和Tab页签的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
 2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
 
 ![user-settings.png](feignx/pics/user-settings.png)
@@ -330,6 +313,10 @@ invalidated at: see attachment
 
 1. 修复了异常：PsiInvalidElementAccessException
 
+### 🐞 FeignClient Assistant v5.5.8更新内容
+修复分支：main
+
+1. 重新设计了UI，修复了图标在Tab页签中无法居左显示的问题。
 
 ---
 
