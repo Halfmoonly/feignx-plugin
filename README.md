@@ -319,6 +319,12 @@ invalidated at: see attachment
 修复分支：main
 
 1. 修复了异常：invalidated at: see attachment
+
+### 🐞 FeignClient Assistant v5.5.6更新内容
+修复分支：main
+
+1. 修复了异常：java.lang.Throwable: Smart pointers must not be created during PSI changes
+
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)
