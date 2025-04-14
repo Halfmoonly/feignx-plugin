@@ -318,6 +318,12 @@ invalidated at: see attachment
 
 1. 重新设计了UI，修复了图标在Tab页签中无法居左显示的问题。
 
+### 🚀 FeignClient Assistant v5.6.0更新内容
+更新分支：main
+
+1. 过滤了不必要的psi监听事件消费，提升了psiclass的监听处理性能
+
+
 ---
 
 我们欢迎各位的宝贵意见(^^ゞ)

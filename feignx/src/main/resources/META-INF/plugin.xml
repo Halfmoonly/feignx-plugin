@@ -20,7 +20,7 @@
 <br>
 曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
-1. 受MybatisX和方法级导航槽‘ Bird ’的启发，您可以灵活地在FeignClient客户端和远程服务ApiController之间来回跳转。
+1. 受MybatisX和方法级导航槽‘ Bird ’的启发，您可以灵活并且跨模块的在FeignClient客户端和远程服务ApiController之间来回跳转。
 <br>
 如。feignClient -> ApiController。
 <br>
@@ -58,13 +58,13 @@ used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 
     <change-notes>
         <![CDATA[
-        ### v5.5.9更新内容
+        ### v5.6.0更新内容
         <br>
-        1. 开放了GitHub源码，与Issues、PR通道，欢迎共建
+        1. 过滤了不必要的psi监听事件消费，提升了psiclass的监听处理性能
         ]]>
     </change-notes>
     <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
-    <version>5.5.9</version>
+    <version>5.6.0</version>
     <!--插件支持版本 2020.3+-->
     <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
