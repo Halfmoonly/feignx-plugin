@@ -5,22 +5,33 @@
 </div>
 
 ## 贡献者名单
-
+Respect!
 <a href="https://github.com/Halfmoonly/feignx-plugin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Halfmoonly/feignx-plugin" />
 </a>
 
-## 我们更名啦，FeignClient Assistant
+我们欢迎各位的宝贵意见(^^ゞ)
+
+**诚邀广大开发者大佬们的Pull Request，让我们一起完善FeignClient Assistant(FeignX)插件**
+
+最新版本插件请及时关注IntelliJ IDEA插件市场更新FeignClient Assistant
+
+感谢朋友们的star⭐⭐
+
+## 里程碑🎴
+
+我们更名啦：FeignClient Assistant
 
 曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
 
-已上架IntelliJ IDEA插件市场：https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
+已上架IntelliJ IDEA插件市场：https://plugins.jetbrains.com/plugin/25604-feignclient-assistant
 - 2025/03/12 官方市场用户下载量突破5000
 - 2025/03/20 官方市场用户下载量突破6000
 - 2025/03/26 官方市场用户下载量突破7000
+- 2025/07/17 官方市场用户下载量突破1W！新的里程碑
 - 
 
-求star⭐⭐
+
 ## 使用教程
 IntelliJ IDEA内Settings->plugins->Marketplace->搜索FeignClient Assistant下载安装
 
@@ -324,13 +335,7 @@ invalidated at: see attachment
 1. 过滤了不必要的psi监听事件消费，提升了psiclass的监听处理性能
 
 
----
 
-我们欢迎各位的宝贵意见(^^ゞ)
-
-**诚邀广大开发者大佬们的Pull Request，让我们一起完善FeignClient Assistant(FeignX)插件**
-
-最新版本插件请及时关注IntelliJ IDEA插件市场更新FeignClient Assistant
 
 https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
 
