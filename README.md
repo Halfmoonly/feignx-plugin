@@ -55,12 +55,12 @@ FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoo
 
 附图演示：
 
-eg. FeignClent 接口方法导航跳转至 目标ApiController接口，与URL全路径一键剪切板拷贝
+eg. FeignClent接口方法 跨模块导航跳转至 目标ApiController接口，与URL全路径一键剪切板拷贝
 <div align="left">
   <img src="./feignx/pics/snipping-feignClient.png">
 </div>
 
-eg. ApiController 接口方法导航跳转至 目标FeignClient接口，与URL全路径一键剪切板拷贝
+eg. ApiController接口方法 跨模块导航跳转至 目标FeignClient接口，与URL全路径一键剪切板拷贝
 
 <div align="left">
   <img src="./feignx/pics/snipping-apiController.png">
