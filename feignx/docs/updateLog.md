@@ -15,7 +15,7 @@
 1. tomcat配置属性：server.servlet.context-path
 2. springmvc配置属性：spring.mvc.servlet.path
 
-![DispatcherServlet.png](feignx/docs/DispatcherServlet.png)
+![DispatcherServlet.png](../pics/DispatcherServlet.png)
 
 在 Spring Boot 出现之前，Dispatcher Servlet 是在 web.xml 文件中声明的，如下图
 ```xml
@@ -155,7 +155,7 @@ reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
 
 重构的双边缓存架构：
 
-![Bilateral-cache.png](feignx/docs/Bilateral-cache.png)
+![Bilateral-cache.png](../pics/Bilateral-cache.png)
 
 有匪君子，如切如磋，如琢如磨--2025/03/15 凌晨两点
 
@@ -184,7 +184,7 @@ reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
 
 1. feat: 合并了来自开发者的一个特性PR：https://github.com/Halfmoonly/feignx-plugin/pull/14 ,支持Restful注解path中的变量或者静态常量的解析（FeignClient和ApiController），感谢@wdhcr
 
-![restful-path-constant.png](feignx/pics/restful-path-constant.png)
+![restful-path-constant.png](../pics/restful-path-constant.png)
 
 2. fix: 重大bug修复，彻底修复了打开多个IDEA项目时候偶发的卡死现象，我们定位到是线程池的问题并做出了修复与避免。希望反馈的朋友们耐心等待此版本上架
 
@@ -194,7 +194,7 @@ reslove issue #6：https://github.com/Halfmoonly/feignx-plugin/issues/6
 1. 我们上线了FeignClient类文件和Tab页签的图标替换功能，默认开启，用户可以在IDEA设置面板中关闭，修改配置后记得重启IDEA。
 2. 你将体验到全新的UI设计风格，包括URL路径一键复制，希望大家喜欢(❤ ω ❤)
 
-![user-settings.png](feignx/pics/user-settings.png)
+![user-settings.png](../pics/user-settings.png)
 
 ### 🐞 FeignClient Assistant v5.5.1版本修复如下异常
 
