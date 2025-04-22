@@ -272,6 +272,6 @@ invalidated at: see attachment
 1. 当切换git分支的场景下，修复了当前项目psichange事件监听消费处，索引还未更新完成导致的Dumb异常
 
 
-https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
+https://plugins.jetbrains.com/plugin/25604-feignclient-assistant
 
 IDEA内插件市场一键安装最方便哟~~
