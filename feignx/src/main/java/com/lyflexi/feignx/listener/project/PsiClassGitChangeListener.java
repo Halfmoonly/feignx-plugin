@@ -84,9 +84,9 @@ public class PsiClassGitChangeListener implements PsiTreeChangeListener {
      * @param event
      */
     private void handleModifyEvent(@NotNull PsiTreeChangeEvent event) {
-        // 索引未完成，自旋
+        // 索引未完成，!禁止自旋调用，否则项目启动时候会OOM
         if (DumbService.isDumb(project)) {
-            handleModifyEvent(event);
+            return;
         }
         PsiElement child = event.getChild();
         if (!(child instanceof PsiClass)) {
@@ -108,9 +108,9 @@ public class PsiClassGitChangeListener implements PsiTreeChangeListener {
      * @param event
      */
     private void handleAddEvent(@NotNull PsiTreeChangeEvent event) {
-        // 索引未完成，自旋
+        // 索引未完成，!禁止自旋调用，否则项目启动时候会OOM
         if (DumbService.isDumb(project)) {
-            handleAddEvent(event);
+            return;
         }
         PsiElement child = event.getChild();
         if (!(child instanceof PsiClass)) {
