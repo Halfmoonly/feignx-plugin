@@ -266,7 +266,10 @@ invalidated at: see attachment
 
 1. 过滤了不必要的psi监听事件消费，提升了psiclass的监听处理性能
 
+### 🐞 FeignClient Assistant v5.6.1更新内容
+修复分支：hotfix/main-fix-psichange-dumb
 
+1. 当切换git分支的场景下，修复了当前项目psichange事件监听消费处，索引还未更新完成导致的Dumb异常
 
 
 https://plugins.jetbrains.com/plugin/25604-navigator4url-openfeign-restcontroller
