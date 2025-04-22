@@ -48,7 +48,7 @@ IntelliJ IDEA内Settings->plugins->Marketplace->搜索FeignClient Assistant下�
 FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩
 
 1. 受MybatisX和方法级导航槽‘ Bird ’的启发，FeignClient Assistant使您可以灵活地在FeignClient客户端和远程服务ApiController之间来回跳转。
-2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet”。‘ Context-path ’和‘ spring.mvc.servlet.path ’
+2. 通过解析yml/yaml/属性，FeignClient Assistant支持`server.servlet.context-path`和`spring.mvc.servlet.path`
 3. 经过多轮优化，FeignClient Assistant解析足够准确，并且支持目标导航多选项。
 4. 经过多轮双边缓存优化，FeignClient Assistant具有足够的高性能。
 5. FeignClient Assistant支持URL全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
