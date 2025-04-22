@@ -58,13 +58,13 @@ used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 
     <change-notes>
         <![CDATA[
-        ### v5.6.0更新内容
+        ### v5.6.1更新内容
         <br>
-        1. 过滤了不必要的psi监听事件消费，提升了psiclass的监听处理性能
+        1. 当切换git分支的场景下，修复了当前项目psichange事件监听消费处，索引还未更新完成导致的Dumb异常
         ]]>
     </change-notes>
     <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
-    <version>5.6.0</version>
+    <version>5.6.1</version>
     <!--插件支持版本 2020.3+-->
     <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
