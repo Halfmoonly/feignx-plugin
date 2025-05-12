@@ -271,6 +271,10 @@ invalidated at: see attachment
 
 1. 当切换git分支的场景下，修复了当前项目psichange事件监听消费处，索引还未更新完成导致的Dumb异常
 
+### 🚀 FeignClient Assistant v5.6.2更新内容
+优化分支：main
+
+1. 优化了UI
 
 https://plugins.jetbrains.com/plugin/25604-feignclient-assistant
 
