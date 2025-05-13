@@ -26,7 +26,7 @@
 <br>
 如。ApiController -> feignClient。
 <br>
-2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet”。‘ Context-path ’和‘ spring.mvc.servlet.path ’
+2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet.context-path'和'spring.mvc.servlet.path’
 <br>
 3. 经过多轮优化，FeignClient Assistant解析足够准确，并且支持目标导航位置多选。
 <br>
