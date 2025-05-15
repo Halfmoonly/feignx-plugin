@@ -16,7 +16,9 @@
     <description><![CDATA[
 <a href="https://github.com/Halfmoonly/feignx-plugin">GitHub 欢迎Star</a> | <a href="https://github.com/Halfmoonly/feignx-plugin/issues">Issues 欢迎提问</a> | <a href="https://github.com/Halfmoonly/feignx-plugin/pulls">PR 欢迎贡献</a>
 <br>
-<b>中文说明：FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。作者：刘岩</b>
+插件作者：刘岩 我的主页：<a href="https://github.com/Halfmoonly">https://github.com/Halfmoonly</a>
+<br>
+<b>中文说明：FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。</b>
 <br>
 曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
@@ -26,16 +28,18 @@
 <br>
 如。ApiController -> feignClient。
 <br>
-2. 通过解析yml/yaml/属性，FeignClient Assistant支持“server.servlet.context-path'和'spring.mvc.servlet.path’
+2. FeignClient Assistant支持yml/yaml/属性解析，如'server.servlet.context-path'和'spring.mvc.servlet.path’
 <br>
-3. 经过多轮优化，FeignClient Assistant解析足够准确，并且支持目标导航位置多选。
+3. FeignClient Assistant精确定位目标接口，在多目标接口场景下，FeignClient Assistant给用户提供多选项
 <br>
-4. 经过多轮双边缓存优化，FeignClient Assistant具有足够的高性能。
+4. FeignClient Assistant基于双边缓存与PSI缓存优化，具有足够好的性能
 <br>
-5. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
+5. FeignClient Assistant支持实时动态解析目标接口，无需手动刷新缓存
+<br>
+6. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
 <br>
 <br>
-<b>EN：FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant. Author 刘岩.</b>
+<b>EN：FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant.</b>
 <br>
 used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
@@ -49,9 +53,11 @@ used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
 3. FeignClient Assistant is sufficiently accurate with options, after many rounds of optimization.
 <br>
-4. FeignClient Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+4. FeignClient Assistant supports real-time dynamic parsing of the target interface without the need for manual cache refreshing
 <br>
-5. FeignClient Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
+5. FeignClient Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+<br>
+6. FeignClient Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
 <br>
 ]]>
     </description>
