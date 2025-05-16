@@ -276,6 +276,12 @@ invalidated at: see attachment
 
 1. 优化了UI
 
+### 🚀 FeignClient Assistant v5.6.3.1更新内容
+优化分支：feat/main-ui2
+
+1. 优化了ApiController控制器侧的UI
+
+
 https://plugins.jetbrains.com/plugin/25604-feignclient-assistant
 
 IDEA内插件市场一键安装最方便哟~~

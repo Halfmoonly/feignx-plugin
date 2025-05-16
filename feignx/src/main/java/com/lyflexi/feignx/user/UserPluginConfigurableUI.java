@@ -19,10 +19,10 @@ import javax.swing.*;
  * @Version: 1.0.0
  * @Description: 这是个idea设置页面。自定义控制controller文件图标和FeignClient文件图标的开启
  */
-public class UserPluginConfigurable implements Configurable {
+public class UserPluginConfigurableUI implements Configurable {
 
     private JCheckBox feignIconEnabledCheckBox;
-//    private JCheckBox controllerIconEnabledCheckBox;
+    private JCheckBox controllerIconEnabledCheckBox;
     private JPanel mainPanel;
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -36,23 +36,23 @@ public class UserPluginConfigurable implements Configurable {
     public JComponent createComponent() {
         mainPanel = new JPanel();
         feignIconEnabledCheckBox = new JCheckBox("Enable FeignClient Tab Icons", UserFeignSettings.getInstance().isIconEnabled());
-//        controllerIconEnabledCheckBox = new JCheckBox("Enable Controller Tab Icons", UserControllerSettings.getInstance().isIconEnabled());
+        controllerIconEnabledCheckBox = new JCheckBox("Enable ApiController Tab Icons", UserRestControllerSettings.getInstance().isIconEnabled());
         mainPanel.add(feignIconEnabledCheckBox);
-//        mainPanel.add(controllerIconEnabledCheckBox);
+        mainPanel.add(controllerIconEnabledCheckBox);
         return mainPanel;
     }
 
     @Override
     public boolean isModified() {
-//        return feignIconEnabledCheckBox.isSelected() != UserFeignSettings.getInstance().isIconEnabled() ||
-//                controllerIconEnabledCheckBox.isSelected() != UserControllerSettings.getInstance().isIconEnabled();
-        return feignIconEnabledCheckBox.isSelected() != UserFeignSettings.getInstance().isIconEnabled();
+        boolean b1 = feignIconEnabledCheckBox.isSelected() != UserFeignSettings.getInstance().isIconEnabled();
+        boolean b2 = controllerIconEnabledCheckBox.isSelected() != UserRestControllerSettings.getInstance().isIconEnabled();
+        return b1 || b2;
     }
 
     @Override
     public void apply() {
         UserFeignSettings.getInstance().setIconEnabled(feignIconEnabledCheckBox.isSelected());
-//        UserControllerSettings.getInstance().setIconEnabled(controllerIconEnabledCheckBox.isSelected());
+        UserRestControllerSettings.getInstance().setIconEnabled(controllerIconEnabledCheckBox.isSelected());
         // 需要手动刷新图标吗？好像不需要，但有些IDEA版本需要，所以最好提示用户重启项目生效
         showRestartDialog();
     }
@@ -60,7 +60,7 @@ public class UserPluginConfigurable implements Configurable {
     @Override
     public void reset() {
         feignIconEnabledCheckBox.setSelected(UserFeignSettings.getInstance().isIconEnabled());
-//        controllerIconEnabledCheckBox.setSelected(UserControllerSettings.getInstance().isIconEnabled());
+        controllerIconEnabledCheckBox.setSelected(UserRestControllerSettings.getInstance().isIconEnabled());
     }
 
     /**
