@@ -4,8 +4,10 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiPackage;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiShortNamesCache;
@@ -230,6 +232,25 @@ public class ProjectUtils {
 
         return feignClasss;
     }
+
+    /**
+     * @description: 检查元素是否来自项目源码，用于后期排除三方依赖的扫描
+     * @author: hmly
+     * @date: 2025/5/18 13:50
+     * @param: [element]
+     * @return: java.lang.Boolean
+     **/
+    public static Boolean isBizElement(PsiElement element) {
+
+        VirtualFile virtualFile = element.getContainingFile().getVirtualFile();
+        if (virtualFile == null || virtualFile.getPath().contains(".jar!")) {
+            return false;
+        }
+        return true;
+    }
+
+
+
 
 
 }

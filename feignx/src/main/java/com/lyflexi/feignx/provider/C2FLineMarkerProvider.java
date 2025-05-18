@@ -15,6 +15,7 @@ import com.lyflexi.feignx.constant.RestIcons;
 import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import com.lyflexi.feignx.utils.FeignClassScanUtils;
+import com.lyflexi.feignx.utils.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -38,6 +39,13 @@ public class C2FLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
+        if (null==element) {
+            return;
+        }
+        //排除三方依赖扫描
+        if (!ProjectUtils.isBizElement(element)){
+            return;
+        }
         Project project = element.getProject();
         if (DumbService.isDumb(project)) {
             return; // 索引未完成，跳过

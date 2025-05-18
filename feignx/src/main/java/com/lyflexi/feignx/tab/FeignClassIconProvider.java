@@ -6,6 +6,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.lyflexi.feignx.user.UserFeignSettings;
 import com.lyflexi.feignx.utils.AnnotationParserUtils;
+import com.lyflexi.feignx.utils.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +27,13 @@ public class FeignClassIconProvider extends IconProvider {
 
     @Override
     public @Nullable Icon getIcon(@NotNull PsiElement element, int flags) {
+        if (null==element) {
+            return null;
+        }
+        //排除三方依赖扫描
+        if (!ProjectUtils.isBizElement(element)){
+            return null;
+        }
         if (!(element instanceof PsiClass)) {
             return null;
         }

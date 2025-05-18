@@ -19,6 +19,7 @@ import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import com.lyflexi.feignx.utils.AnnotationParserUtils;
 import com.lyflexi.feignx.utils.FeignClassScanUtils;
+import com.lyflexi.feignx.utils.ProjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +46,11 @@ public class CopyFeignUrlLineMarkerProvider extends LineMarkerProviderDescriptor
 
     @Override
     public LineMarkerInfo<?> getLineMarkerInfo(@NotNull PsiElement element) {
-        if (null == element) {
+        if (null==element) {
+            return null;
+        }
+        //排除三方依赖扫描
+        if (!ProjectUtils.isBizElement(element)){
             return null;
         }
         Project project = element.getProject();
