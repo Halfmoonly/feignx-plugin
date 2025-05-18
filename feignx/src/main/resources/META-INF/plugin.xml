@@ -104,11 +104,11 @@ used name：[FeignX]/[Navigator4URL OpenFeign RestController]
                            key="notification.group.name"/>
 
         <!-- feignclent类文件图标修改-->
-        <iconProvider id="com.lyflexi.feignx.tab.FeignClassIconProvider"
-                      implementation="com.lyflexi.feignx.tab.FeignClassIconProvider"/>
+        <iconProvider id="com.lyflexi.feignx.provider.tabIcon.FeignClassIconProvider"
+                      implementation="com.lyflexi.feignx.provider.tabIcon.FeignClassIconProvider"/>
         <!-- apicontroller类文件图标修改-->
-        <iconProvider id="com.lyflexi.feignx.tab.RestControllerIconProvider"
-                      implementation="com.lyflexi.feignx.tab.RestControllerIconProvider"/>
+        <iconProvider id="com.lyflexi.feignx.provider.tabIcon.RestControllerIconProvider"
+                      implementation="com.lyflexi.feignx.provider.tabIcon.RestControllerIconProvider"/>
         <!--用户配置页面-自定义是否开启文件icon替换-->
         <applicationConfigurable implementation="com.lyflexi.feignx.user.UserPluginConfigurableUI"/>
         <!-- 注册ProjectManagerListener的实现 -->

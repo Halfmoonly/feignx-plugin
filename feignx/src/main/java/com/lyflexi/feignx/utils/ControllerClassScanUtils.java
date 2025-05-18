@@ -3,7 +3,6 @@ package com.lyflexi.feignx.utils;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
@@ -64,7 +63,7 @@ public class ControllerClassScanUtils {
         List<PsiClass> javaFiles = initialPsiClassCacheManager.queryCurProjectPsiClassesCache(projectId);
 
         if (CollectionUtils.isEmpty(javaFiles)) {
-            javaFiles = ProjectUtils.scanNonLibClasses(rootPackage, project);
+            javaFiles = ProjectUtils.scanProjectCls(rootPackage, project);
             initialPsiClassCacheManager.initCurProjectPsiClassCache(projectId, javaFiles);
         }
         //controller接口缓存查询

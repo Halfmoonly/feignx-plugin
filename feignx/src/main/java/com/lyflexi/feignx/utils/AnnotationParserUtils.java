@@ -73,11 +73,16 @@ public class AnnotationParserUtils {
         if (psiClass == null || !psiClass.isValid()) {
             return false;
         }
+        // 获取类的所有修饰符和注解
+        PsiModifierList modifierList = psiClass.getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
 
-        PsiAnnotation annotation0 = psiClass.getAnnotation(SpringBootClassAnnotation.CONTROLLER.getQualifiedName());
-        PsiAnnotation annotation1 = psiClass.getAnnotation(SpringBootClassAnnotation.RESTCONTROLLER.getQualifiedName());
+        // 使用hasAnnotation方法替代getAnnotation
+        return modifierList.hasAnnotation(SpringBootClassAnnotation.CONTROLLER.getQualifiedName()) ||
+                modifierList.hasAnnotation(SpringBootClassAnnotation.RESTCONTROLLER.getQualifiedName());
 
-        return Objects.nonNull(annotation0) || Objects.nonNull(annotation1);
 //        PsiAnnotation[] annotations = psiClass.getAnnotations();
 //        for (PsiAnnotation annotation : annotations) {
 //            String annotationName = annotation.getQualifiedName();
@@ -117,8 +122,15 @@ public class AnnotationParserUtils {
         if (psiClass == null || !psiClass.isValid()) {
             return false;
         }
-        PsiAnnotation annotation = psiClass.getAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
-        return annotation != null;
+        // 获取类的所有修饰符和注解
+        PsiModifierList modifierList = psiClass.getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
+
+        // 使用hasAnnotation方法替代getAnnotation
+        return modifierList.hasAnnotation(SpringCloudClassAnnotation.FEIGNCLIENT.getQualifiedName());
+
     }
 
     /**

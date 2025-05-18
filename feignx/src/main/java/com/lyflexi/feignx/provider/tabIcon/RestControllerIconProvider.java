@@ -1,4 +1,4 @@
-package com.lyflexi.feignx.tab;
+package com.lyflexi.feignx.provider.tabIcon;
 
 import com.intellij.ide.IconProvider;
 import com.intellij.openapi.util.IconLoader;

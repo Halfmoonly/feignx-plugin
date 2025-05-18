@@ -1,9 +1,9 @@
 package com.lyflexi.feignx.utils;
 
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
@@ -17,7 +17,7 @@ import com.lyflexi.feignx.enums.SpringBootClassAnnotation;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import com.intellij.openapi.module.Module;
+
 /**
  * @Author: hmly
  * @Date: 2025/3/14 19:42
@@ -45,32 +45,12 @@ public class ProjectUtils {
      * @param project
      * @return
      */
-    public static List<PsiClass> scanNonLibClasses(PsiPackage rootPackage, Project project) {
+    public static List<PsiClass> scanProjectCls(PsiPackage rootPackage, Project project) {
         List<PsiClass> javaFiles = new ArrayList<>();
-        GlobalSearchScope userFilesScope = createUserFilesScope(project);
-        processPackage(rootPackage, userFilesScope, javaFiles);
+        //只扫描项目中的业务文件，不包含资源文件、配置文件、静态文件等
+        GlobalSearchScope projectScope = GlobalSearchScope.projectScope(project);
+        processPackage(rootPackage, projectScope, javaFiles);
         return javaFiles;
-    }
-
-    /**
-     * @description: 排除三方依赖中的文件
-     * @author: hmly
-     * @date: 2025/5/18 11:23
-     * @param: [project]
-     * @return: com.intellij.psi.search.GlobalSearchScope
-     **/
-    private static GlobalSearchScope createUserFilesScope(Project project) {
-
-        Module[] modules = ModuleManager.getInstance(project).getModules();
-        if (modules.length == 0) {
-            return GlobalSearchScope.EMPTY_SCOPE;
-        }
-
-        GlobalSearchScope userFilesScope = GlobalSearchScope.moduleScope(modules[0]);
-        for (int i = 1; i < modules.length; i++) {
-            userFilesScope = userFilesScope.union(GlobalSearchScope.moduleScope(modules[i]));
-        }
-        return userFilesScope;
     }
 
     /**
@@ -234,19 +214,36 @@ public class ProjectUtils {
     }
 
     /**
-     * @description: 检查元素是否来自项目源码，用于后期排除三方依赖的扫描
+     * @description: 检查元素是纯粹的业务文件，而非项目源码，用于过滤所有的Provider监听
      * @author: hmly
      * @date: 2025/5/18 13:50
      * @param: [element]
      * @return: java.lang.Boolean
      **/
     public static Boolean isBizElement(PsiElement element) {
-
-        VirtualFile virtualFile = element.getContainingFile().getVirtualFile();
-        if (virtualFile == null || virtualFile.getPath().contains(".jar!")) {
+        if (element == null || element.getContainingFile() == null) {
             return false;
         }
-        return true;
+
+        VirtualFile virtualFile = element.getContainingFile().getVirtualFile();
+        if (virtualFile == null) {
+            return false;
+        }
+
+        //业务项目实例
+        Project project = element.getProject();
+
+        //每个Project实例只会有一个对应的ProjectFileIndex实例
+        ProjectFileIndex projectFileIndex = ProjectFileIndex.getInstance(project);
+
+        // 使用ProjectFileIndex来判断文件是否属于项目源码
+        // isInLibrary()可以检测所有的外部库文件，不管它们存储在哪里
+        if (projectFileIndex.isInLibrary(virtualFile)) {
+            return false;
+        }
+
+        // 确保文件在项目源码范围内
+        return projectFileIndex.isInSourceContent(virtualFile);
     }
 
 
