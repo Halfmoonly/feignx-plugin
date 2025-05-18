@@ -1,5 +1,6 @@
 package com.lyflexi.feignx.utils;
 
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
@@ -14,7 +15,7 @@ import com.lyflexi.feignx.enums.SpringBootClassAnnotation;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+import com.intellij.openapi.module.Module;
 /**
  * @Author: hmly
  * @Date: 2025/3/14 19:42
@@ -39,13 +40,35 @@ public class ProjectUtils {
      * 获取工程中所有的class
      *
      * @param rootPackage
-     * @param searchScope
+     * @param project
      * @return
      */
-    public static List<PsiClass> scanAllClasses(PsiPackage rootPackage, GlobalSearchScope searchScope) {
+    public static List<PsiClass> scanNonLibClasses(PsiPackage rootPackage, Project project) {
         List<PsiClass> javaFiles = new ArrayList<>();
-        processPackage(rootPackage, searchScope, javaFiles);
+        GlobalSearchScope userFilesScope = createUserFilesScope(project);
+        processPackage(rootPackage, userFilesScope, javaFiles);
         return javaFiles;
+    }
+
+    /**
+     * @description: 排除三方依赖中的文件
+     * @author: hmly
+     * @date: 2025/5/18 11:23
+     * @param: [project]
+     * @return: com.intellij.psi.search.GlobalSearchScope
+     **/
+    private static GlobalSearchScope createUserFilesScope(Project project) {
+
+        Module[] modules = ModuleManager.getInstance(project).getModules();
+        if (modules.length == 0) {
+            return GlobalSearchScope.EMPTY_SCOPE;
+        }
+
+        GlobalSearchScope userFilesScope = GlobalSearchScope.moduleScope(modules[0]);
+        for (int i = 1; i < modules.length; i++) {
+            userFilesScope = userFilesScope.union(GlobalSearchScope.moduleScope(modules[i]));
+        }
+        return userFilesScope;
     }
 
     /**

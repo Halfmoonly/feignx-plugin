@@ -8,7 +8,6 @@ import com.lyflexi.feignx.cache.BilateralCacheManager;
 import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.enums.SpringCloudClassAnnotation;
-import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -81,7 +80,7 @@ public class FeignClassScanUtils {
         }
 
         PsiManager psiManager = PsiManager.getInstance(project);
-        GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
+
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
 
         // 获取项目ID
@@ -90,7 +89,7 @@ public class FeignClassScanUtils {
         List<PsiClass> javaFiles = initialPsiClassCacheManager.queryCurProjectPsiClassesCache(projectId);
 
         if (CollectionUtils.isEmpty(javaFiles)) {
-            javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
+            javaFiles = ProjectUtils.scanNonLibClasses(rootPackage, project);
             initialPsiClassCacheManager.initCurProjectPsiClassCache(projectId, javaFiles);
         }
 

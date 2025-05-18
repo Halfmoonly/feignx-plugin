@@ -9,7 +9,6 @@ import com.lyflexi.feignx.cache.InitialPsiClassCacheManager;
 import com.lyflexi.feignx.entity.HttpMappingInfo;
 import com.lyflexi.feignx.properties.ConfigReader;
 import com.lyflexi.feignx.properties.ServerParser;
-import com.lyflexi.feignx.recover.SmartPsiElementRecover;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -54,8 +53,6 @@ public class ControllerClassScanUtils {
 
         PsiManager psiManager = PsiManager.getInstance(project);
 
-        GlobalSearchScope searchScope = GlobalSearchScope.projectScope(project);
-
         PsiPackage rootPackage = JavaPsiFacade.getInstance(psiManager.getProject()).findPackage("");
 
         //获取项目中的所有源文件
@@ -67,7 +64,7 @@ public class ControllerClassScanUtils {
         List<PsiClass> javaFiles = initialPsiClassCacheManager.queryCurProjectPsiClassesCache(projectId);
 
         if (CollectionUtils.isEmpty(javaFiles)) {
-            javaFiles = ProjectUtils.scanAllClasses(rootPackage, searchScope);
+            javaFiles = ProjectUtils.scanNonLibClasses(rootPackage, project);
             initialPsiClassCacheManager.initCurProjectPsiClassCache(projectId, javaFiles);
         }
         //controller接口缓存查询
