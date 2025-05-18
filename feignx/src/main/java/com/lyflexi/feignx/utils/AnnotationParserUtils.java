@@ -64,7 +64,7 @@ public class AnnotationParserUtils {
     }
 
     /**
-     * 判断当前类时controlller
+     * 判断当前类是controlller
      *
      * @param psiClass
      * @return
@@ -73,15 +73,20 @@ public class AnnotationParserUtils {
         if (psiClass == null || !psiClass.isValid()) {
             return false;
         }
-        PsiAnnotation[] annotations = psiClass.getAnnotations();
-        for (PsiAnnotation annotation : annotations) {
-            String annotationName = annotation.getQualifiedName();
-            if (annotationName != null && (annotationName.equals(CONTROLLER.getQualifiedName())
-                    || annotationName.equals(RESTCONTROLLER.getQualifiedName()))) {
-                return true;
-            }
-        }
-        return false;
+
+        PsiAnnotation annotation0 = psiClass.getAnnotation(SpringBootClassAnnotation.CONTROLLER.getQualifiedName());
+        PsiAnnotation annotation1 = psiClass.getAnnotation(SpringBootClassAnnotation.RESTCONTROLLER.getQualifiedName());
+
+        return Objects.nonNull(annotation0) || Objects.nonNull(annotation1);
+//        PsiAnnotation[] annotations = psiClass.getAnnotations();
+//        for (PsiAnnotation annotation : annotations) {
+//            String annotationName = annotation.getQualifiedName();
+//            if (annotationName != null && (annotationName.equals(CONTROLLER.getQualifiedName())
+//                    || annotationName.equals(RESTCONTROLLER.getQualifiedName()))) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     /**

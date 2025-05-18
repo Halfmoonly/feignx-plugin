@@ -281,6 +281,13 @@ invalidated at: see attachment
 
 1. 优化了ApiController控制器侧的UI
 
+### 🐞 FeignClient Assistant v5.6.3.2更新内容
+修复分支：hotfix/main-fix-duplicate-TestEntityManagerAutoConfiguration
+
+1. 使用intellij自家判断注解的API，修复了java.lang.Throwable: PersistentFS[connected: true, ownData: com.intellij.openapi.vfs.newvfs.impl.VfsData@675c6da6] returned duplicate file names('TestEntityManagerAutoConfiguration.class', 'TestEntityManagerAutoConfiguration.class') caseSensitive: true SystemInfo.isFileSystemCaseSensitive: false isCaseSensitive(): true SystemInfo.OS: Windows 10.0 wasChildrenLoaded: true in the dir: jar://C:/Users/hasee/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.0.0/spring-boot-test-autoconfigure-3.0.0.jar!/org/springframework/boot/test/autoconfigure/orm/jpa; 9 children: ["AutoConfigureDataJpa.class"; nameId: 189261; id: 98540 (unknown), "DataJpaTypeExcludeFilter.class"; nameId: 189274; id: 98542 (unknown), "TestEntityManagerAutoConfiguration.class"; nameId: 189302; id: 98544 (unknown), "DataJpaTestContextBootstrapper.class"; nameId: 189323; id: 98547 (unknown), "Te...
+
+
+
 
 https://plugins.jetbrains.com/plugin/25604-feignclient-assistant
 

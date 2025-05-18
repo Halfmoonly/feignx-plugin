@@ -16,9 +16,9 @@
     <description><![CDATA[
 <a href="https://github.com/Halfmoonly/feignx-plugin">GitHub 欢迎Star</a> | <a href="https://github.com/Halfmoonly/feignx-plugin/issues">Issues 欢迎提问</a> | <a href="https://github.com/Halfmoonly/feignx-plugin/pulls">PR 欢迎贡献</a>
 <br>
-插件作者：刘岩 我的主页：<a href="https://github.com/Halfmoonly">https://github.com/Halfmoonly</a>
+插件作者：刘岩 <a href="https://github.com/Halfmoonly/feignx-plugin">说明文档</a>
 <br>
-<b>中文说明：FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。</b>
+<b>FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。</b>
 <br>
 曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
 <br>
@@ -64,13 +64,13 @@ used name：[FeignX]/[Navigator4URL OpenFeign RestController]
 
     <change-notes>
         <![CDATA[
-        ### v5.6.3.1更新内容
+        ### v5.6.3.2更新内容
         <br>
-        1. 优化了ApiController控制器侧的UI
+        1. 修复了java.lang.Throwable: PersistentFS[connected: true, ownData: com.intellij.openapi.vfs.newvfs.impl.VfsData@675c6da6] returned duplicate file names('TestEntityManagerAutoConfiguration.class', 'TestEntityManagerAutoConfiguration.class') caseSensitive: true SystemInfo.isFileSystemCaseSensitive: false isCaseSensitive(): true SystemInfo.OS: Windows 10.0 wasChildrenLoaded: true in the dir: jar://C:/Users/hasee/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.0.0/spring-boot-test-autoconfigure-3.0.0.jar!/org/springframework/boot/test/autoconfigure/orm/jpa; 9 children: ["AutoConfigureDataJpa.class"; nameId: 189261; id: 98540 (unknown), "DataJpaTypeExcludeFilter.class"; nameId: 189274; id: 98542 (unknown), "TestEntityManagerAutoConfiguration.class"; nameId: 189302; id: 98544 (unknown), "DataJpaTestContextBootstrapper.class"; nameId: 189323; id: 98547 (unknown), "Te...
         ]]>
     </change-notes>
     <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
-    <version>5.6.3.1</version>
+    <version>5.6.3.2</version>
     <!--插件支持版本 2020.3+-->
     <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
