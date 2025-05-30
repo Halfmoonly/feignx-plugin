@@ -8,69 +8,63 @@
     <name>FeignClient Assistant</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="liuyanoutsee@outlook.com" url="https://github.com/Halfmoonly">Halfmoonly</vendor>
+    <vendor email="liuyanoutsee@outlook.com" url="https://github.com/brush4j">brush4j</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[
-<a href="https://github.com/Halfmoonly/feignx-plugin">GitHub 欢迎Star</a> | <a href="https://github.com/Halfmoonly/feignx-plugin/issues">Issues 欢迎提问</a> | <a href="https://github.com/Halfmoonly/feignx-plugin/pulls">PR 欢迎贡献</a>
-<br>
-插件作者：刘岩 <a href="https://github.com/Halfmoonly/feignx-plugin">说明文档</a>
-<br>
-<b>FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。</b>
-<br>
-曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
-<br>
-1. 受MybatisX和方法级导航槽‘ Bird ’的启发，您可以灵活并且跨模块的在FeignClient客户端和远程服务ApiController之间来回跳转。
-<br>
-如。feignClient -> ApiController。
-<br>
-如。ApiController -> feignClient。
-<br>
-2. FeignClient Assistant支持yml/yaml/属性解析，如'server.servlet.context-path'和'spring.mvc.servlet.path’
-<br>
-3. FeignClient Assistant精确定位目标接口，在多目标接口场景下，FeignClient Assistant给用户提供多选项
-<br>
-4. FeignClient Assistant基于双边缓存与PSI缓存优化，具有足够好的性能
-<br>
-5. FeignClient Assistant支持实时动态解析目标接口，无需手动刷新缓存
-<br>
-6. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
-<br>
-<br>
-<b>EN：FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant.</b>
-<br>
-used name：[FeignX]/[Navigator4URL OpenFeign RestController]
-<br>
-1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module.
-<br>
- eg. feignClient -> ApiController.
-<br>
- eg. ApiController -> feignClient.
-<br>
-2. By parsing yml/yaml/properties, FeignClient Assistant supports `server.servlet.context-path` and `spring.mvc.servlet.path`
-<br>
-3. FeignClient Assistant is sufficiently accurate with options, after many rounds of optimization.
-<br>
-4. FeignClient Assistant supports real-time dynamic parsing of the target interface without the need for manual cache refreshing
-<br>
-5. FeignClient Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
-<br>
-6. FeignClient Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
-<br>
+    <description>
+        <![CDATA[<a href="https://github.com/brush4j/feignx-plugin">GitHub 欢迎Star</a> | <a href="https://github.com/brush4j/feignx-plugin/issues">Issues 欢迎提问</a> | <a href="https://github.com/brush4j/feignx-plugin/pulls">PR 欢迎贡献</a>
+        <br>
+        <b>FeignClient Assistant是一个免费的SpringCloud FeignClient与远程SpringBoot ApiController之间的代码导航助手。</b>
+        <br>
+        曾用名：[FeignX]/[Navigator4URL OpenFeign RestController]
+        <br>
+        1. 受MybatisX和方法级导航槽‘ Bird ’的启发，您可以灵活并且跨模块的在FeignClient客户端和远程服务ApiController之间来回跳转。
+        <br>
+        如。feignClient -> ApiController。
+        <br>
+        如。ApiController -> feignClient。
+        <br>
+        2. FeignClient Assistant支持yml/yaml/属性解析，如'server.servlet.context-path'和'spring.mvc.servlet.path’
+        <br>
+        3. FeignClient Assistant精确定位目标接口，在多目标接口场景下，FeignClient Assistant给用户提供多选项
+        <br>
+        4. FeignClient Assistant基于双边缓存与PSI缓存优化，具有足够好的性能
+        <br>
+        5. FeignClient Assistant支持实时动态解析目标接口，无需手动刷新缓存
+        <br>
+        6. FeignClient Assistant支持url全路径复制到剪贴板（包括Feign和Controller接口），以帮助Vim朋友。
+        <br>
+        <br>
+        <b>EN：FeignClient Assistant is a Free SpringCloud Feign Navigation Assistant.</b>
+        <br>
+        used name：[FeignX]/[Navigator4URL OpenFeign RestController]
+        <br>
+        1. Inspired by MybatisX and method-level navigation gutter `bird`, You can flexibly jump back and forth between FeignClient and remote service ApiController cross-module.
+        <br>
+        eg. feignClient -> ApiController.
+        <br>
+        eg. ApiController -> feignClient.
+        <br>
+        2. By parsing yml/yaml/properties, FeignClient Assistant supports `server.servlet.context-path` and `spring.mvc.servlet.path`
+        <br>
+        3. FeignClient Assistant is sufficiently accurate with options, after many rounds of optimization.
+        <br>
+        4. FeignClient Assistant supports real-time dynamic parsing of the target interface without the need for manual cache refreshing
+        <br>
+        5. FeignClient Assistant is sufficiently high-performance with Bilateral-cache, after many rounds of optimization.
+        <br>
+        6. FeignClient Assistant supports url full path copying to the clipboard (both Feign and Controller interfaces), In order to help the Vim friends.
+        <br>
 ]]>
     </description>
 
     <change-notes>
-        <![CDATA[
-        ### v5.6.4.0更新内容
-        <br>
-        1. 我们发现在大型项目中插件的初始化速度较慢，v5.6.4.0通过排除三方依赖中的libs，仅保留用户文件的扫描，提升了PSI扫描的速度
-        ]]>
+        <![CDATA[更新日志：https://github.com/brush4j/feignx-plugin/blob/main/feignx/docs/updateLog.md]]>
     </change-notes>
     <!--虽然build.gradle.kts指定过版本，但这里为了上架官方市场，还需再次执行版本-->
-    <version>5.6.4.0</version>
+    <version>5.6.4.1</version>
     <!--插件支持版本 2020.3+-->
     <idea-version since-build="203.0"/>
     <!-- Product and plugin compatibility requirements.
